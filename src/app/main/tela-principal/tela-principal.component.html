@@ -1,0 +1,30 @@
+<div class="toolbar">
+  <div class="nav-left">
+    <button style="border: none; background-color: transparent" [routerLink]="['']">
+      <mat-label>MyM</mat-label>
+    </button>
+  </div>
+
+  <div class="nav-fill">
+    <button mat-icon-button>
+      <mat-icon>search</mat-icon>
+    </button>
+  </div>
+
+  <div class="nav-right">
+    <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
+      <button mat-icon-button [routerLink]="['/management']"><mat-icon>account_circle</mat-icon></button>
+    </div>
+    <div [ngClass]="{'sign': !conta, 'displayNone': conta}">
+      <button mat-icon-button [routerLink]="['/login']">Sign in</button>
+      <button mat-icon-button [routerLink]="['/cadastro']">Sign up</button>
+    </div>
+  </div>
+</div>
+
+<div class="screen">
+  <img src="assets/tasks.png">
+  <div>
+    <h1>My Individual <br>Management</h1>
+  </div>
+</div>

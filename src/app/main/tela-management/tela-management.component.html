@@ -1,0 +1,22 @@
+<div class="telagrid">
+  <div class="top-left">
+    <img src="assets/eu.jpg">
+    <p>wellingtonPLF</p>
+  </div>
+  <div class="bottom-left">
+    <table style="margin: 10px 0px 0px 10px">
+      <tr><button [routerLink]="['']">Home</button></tr>
+      <tr>Manhã</tr>
+      <tr>Tarde</tr>
+      <tr>Noite</tr>
+    </table>
+  </div>
+  <div class="top-right">
+    <button>Search</button>
+    <button>Cronograma</button>
+    <button (click)="signOut()" [routerLink]="['']">Sign out</button>
+  </div>
+  <div class="bottom-right">
+    <button>Add</button>
+  </div>
+</div>
