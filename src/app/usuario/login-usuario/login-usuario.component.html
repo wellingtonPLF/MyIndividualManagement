@@ -9,15 +9,20 @@
       <label class="text-info">Username:</label>
       <input [(ngModel)]="usuario.nome">
       <label class="text-info">Password:</label>
-      <input [(ngModel)]="usuario.senha">
-      <div [ngClass]="{'invalide': senhaInv, 'incorrectPassw': !senhaInv}">
-        <b style="width: 100%">Invalide User! Please try again!</b>
+      <div class="password">
+        <input [type]="password" [(ngModel)]="usuario.senha" autocomplete="new-password">
+        <div (click)="showpassword()">
+          <i [ngClass]="{'fas fa-eye': !show, 'far fa-eye-slash': show}"></i>
+        </div>
+      </div>
+      <div [ngClass]="{'invalide': senhaInv,  'alreadyOn': signOn, 'incorrectPassw': !senhaInv}">
+        <b style="width: 100%">{{mensage}}</b>
         <b style="text-align: end;">{{count}}</b>
       </div>
     </div>
     <div class="optionalAuth">
       <b style="margin-left: 48px; cursor: default">Remember me</b>
-      <input style="margin: 7px 0px 0px 5px" type="checkbox">
+      <input style="margin: 7px 0px 0px 5px" type="checkbox" [(ngModel)]="check">
       <div>
         <a [routerLink]="['/cadastro']" class="registerHere">
           <b>Register here</b>
@@ -25,7 +30,7 @@
       </div>
     </div>
     <div class="buttonAuth">
-      <button mat-button [routerLink]="['/management']" (click)="validateUser()">Confirmar</button>
+      <button mat-button (click)="validateUser()">Confirmar</button>
       <button mat-button [routerLink]="['']">Cancelar</button>
     </div>
   </div>

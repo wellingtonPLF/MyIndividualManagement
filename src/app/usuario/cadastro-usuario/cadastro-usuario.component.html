@@ -7,11 +7,30 @@
     <h3><b>Cadastre-se</b></h3>
     <div class="inputAuth">
       <label class="text-info">Username:</label>
-      <input  matInput [(ngModel)]='usuario.nome'>
+      <input [(ngModel)]='usuario.nome'>
       <label class="text-info">Password:</label>
-      <input matInput [(ngModel)]='usuario.senha'>
-      <label class="text-info">Email:</label>
-      <input  matInput  [(ngModel)]='usuario.email'>
+
+      <div class="password">
+        <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password">
+        <div (click)="showpassword()">
+          <i [ngClass]="{'fas fa-eye': !showPw, 'far fa-eye-slash': showPw}"></i>
+        </div>
+      </div>
+
+      <div [ngClass]="{'red': invalidePassword}">
+        <label class="text-info">Confirm Password:</label>
+
+        <div class="password">
+          <input [(ngModel)]='confirmpassword' [type]="repeatpassword" autocomplete="new-password">
+          <div (click)="showconfirmpassword()">
+            <i [ngClass]="{'fas fa-eye': !showConfirmPassword, 'far fa-eye-slash': showConfirmPassword}"></i>
+          </div>
+        </div>
+      </div>
+      <div id="email" [ngClass]="{'red': invalideEmail}">
+        <label class="text-info">Email:</label>
+        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email'>
+      </div>
     </div>
     <div class="buttonAuth">
       <button mat-button (click)="cadastroUsuario()">Confirmar</button>

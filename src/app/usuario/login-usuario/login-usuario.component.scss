@@ -28,6 +28,24 @@
   flex-direction: column;
 }
 
+.password{
+  display: flex;
+}
+
+.password input{
+  width: 258px;
+}
+
+.password :nth-child(2){
+  border: 1px solid #6e6b6b;
+  text-align: center;
+  padding-top: 2px;
+  margin-left: 2px;
+  border-radius: 3px;
+  width: 40px;
+  height: 30px;
+}
+
 .optionalAuth{
   display: flex;
   width: 100%;
@@ -73,6 +91,14 @@
   transform: scale(0.7);
   border-radius: 100%;
   background-color: red;
+}
+
+.alreadyOn{
+  color: #01ac01;
+}
+
+.alreadyOn :nth-child(2){
+  display: none;
 }
 
 .incorrectPassw{

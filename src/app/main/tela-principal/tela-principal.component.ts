@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
-import {AccountManagementService} from "../../shared/service/account-management.service";
+import {SessionStorageService} from "../../shared/service/session-storage.service";
+import {LocalStorageService} from "../../shared/service/local-storage.service";
+
 
 @Component({
   selector: 'app-tela-principal',
@@ -11,10 +13,11 @@ export class TelaPrincipalComponent implements OnInit {
 
   conta: boolean = false;
 
-  constructor(private accountService: AccountManagementService) {}
+  constructor(private accountService: SessionStorageService,
+              private accountServiceLocal: LocalStorageService) {}
 
   ngOnInit(): void {
-    if(this.accountService.getToken()){
+    if(this.accountService.getToken() || this.accountServiceLocal.getToken()){
       this.conta = true;
     }
     else {

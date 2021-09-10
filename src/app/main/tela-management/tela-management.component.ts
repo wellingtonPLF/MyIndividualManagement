@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {AccountManagementService} from "../../shared/service/account-management.service";
+import {SessionStorageService} from "../../shared/service/session-storage.service";
+import {LocalStorageService} from "../../shared/service/local-storage.service";
 
 @Component({
   selector: 'app-tela-management',
@@ -8,12 +9,15 @@ import {AccountManagementService} from "../../shared/service/account-management.
 })
 export class TelaManagementComponent implements OnInit {
 
-  constructor(private accountService: AccountManagementService) { }
+  constructor(private accountService: SessionStorageService,
+              private accountServiceLocal: LocalStorageService) { }
 
   ngOnInit(): void {
   }
 
   signOut(): void{
     this.accountService.removeToken('my-token');
+    this.accountServiceLocal.removeToken('my-token');
   }
 }
+

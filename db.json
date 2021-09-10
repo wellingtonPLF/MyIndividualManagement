@@ -7,10 +7,16 @@
       "id": 1
     },
     {
-      "nome": "larissa",
-      "senha": "123",
-      "email": "larissa@gmail.com",
+      "nome": "ricardo",
+      "senha": "12345",
+      "email": "ricardo@gail.com",
       "id": 2
+    },
+    {
+      "nome": "gwen",
+      "senha": "gwen123",
+      "email": "gwen@gmail.com",
+      "id": 3
     }
   ]
 }
