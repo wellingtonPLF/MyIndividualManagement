@@ -7,7 +7,8 @@ import {MatButtonModule} from "@angular/material/button";
 import {MatInputModule} from "@angular/material/input";
 import { LoginUsuarioComponent } from './login-usuario/login-usuario.component';
 import { AuthenticationuserComponent } from './authenticationuser/authenticationuser.component';
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from "@angular/forms";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 
 
@@ -23,7 +24,9 @@ import {FormsModule} from "@angular/forms";
     MatIconModule,
     MatInputModule,
     MatButtonModule,
-    FormsModule
+    ReactiveFormsModule,
+    FormsModule,
+    MatSnackBarModule
   ]
 })
 export class UsuarioModule { }

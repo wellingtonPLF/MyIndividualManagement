@@ -7,10 +7,10 @@
     <h3><b style="cursor: default">Login</b></h3>
     <div class="inputAuth">
       <label class="text-info">Username:</label>
-      <input [(ngModel)]="usuario.nome">
+      <input (keyup.enter)="onEnter()" [(ngModel)]="usuario.nome">
       <label class="text-info">Password:</label>
       <div class="password">
-        <input [type]="password" [(ngModel)]="usuario.senha" autocomplete="new-password">
+        <input (keyup.enter)="onEnter()" [type]="password" [(ngModel)]="usuario.senha" autocomplete="new-password">
         <div (click)="showpassword()">
           <i [ngClass]="{'fas fa-eye': !show, 'far fa-eye-slash': show}"></i>
         </div>

@@ -27,12 +27,17 @@ export class UsuarioService {
   }
 
   pesquisarPorId(id: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>('${this.URL_USUARIOS}/${id}');
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`);
   }
 
   pesquisarPorUsuario(usuario: Usuario): Observable<Usuario []> {
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
       map(users=> users.filter(u => u.nome == usuario.nome && u.senha == usuario.senha)));
+  }
+
+  pesquisarPorEmail(usuario: Usuario): Observable<Usuario []>{
+    return  this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
+      map(users=> users.filter(u => u.email == usuario.email)));
   }
 
   atualizar(usuario: Usuario, it: Usuario): Observable<Usuario> {

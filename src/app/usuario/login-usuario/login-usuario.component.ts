@@ -4,6 +4,7 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {Router} from "@angular/router";
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
+import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login-usuario',
@@ -27,11 +28,16 @@ export class LoginUsuarioComponent implements OnInit {
     this.usuario = new Usuario();
   }
 
+  onEnter(){
+    this.validateUser()
+  }
+
   ngOnInit(): void {
   }
 
   validateUser(): void{
-    if (this.usuario.nome!= null && this.usuario.senha!= null){
+    if (this.usuario.nome!= null && this.usuario.senha!= null &&
+      this.usuario.nome!= "" && this.usuario.senha!= ""){
       this.ususarioService.pesquisarPorUsuario(this.usuario).subscribe(
         it => {
           if (it.length != 0){
@@ -49,7 +55,7 @@ export class LoginUsuarioComponent implements OnInit {
               else {
                 this.accountService.setToken('my-token');
               }
-              this.router.navigate(['/management'])
+              this.router.navigate(['/management', it[0].id])
             }
           }
           else {

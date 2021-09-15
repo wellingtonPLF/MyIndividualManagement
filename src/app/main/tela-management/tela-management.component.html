@@ -1,14 +1,11 @@
 <div class="telagrid">
   <div class="top-left">
-    <img src="assets/eu.jpg">
-    <p>wellingtonPLF</p>
+    <button class="userimg" (click)="chooseImg()">+</button>
+    <p>{{usuario.nome}}</p>
   </div>
   <div class="bottom-left">
     <table style="margin: 10px 0px 0px 10px">
-      <tr><button [routerLink]="['']">Home</button></tr>
-      <tr>Manhã</tr>
-      <tr>Tarde</tr>
-      <tr>Noite</tr>
+      <tr><button [routerLink]="['']" [queryParams] = "{id: usuario.id}">Home</button></tr>
     </table>
   </div>
   <div class="top-right">

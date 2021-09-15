@@ -37,6 +37,10 @@ const routes: Routes = [
           {
             path: 'management',
             component: TelaManagementComponent,
+          },
+          {
+            path: 'management/:id',
+            component: TelaManagementComponent,
           }
           ]
       }

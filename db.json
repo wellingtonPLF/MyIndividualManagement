@@ -1,22 +1,10 @@
 {
   "usuarios": [
     {
-      "nome": "well",
-      "email": "wellington@gmail.com",
-      "senha": "123",
+      "nome": "wellington",
+      "senha": "W10ell10@#!",
+      "email": "well@gmail.com",
       "id": 1
-    },
-    {
-      "nome": "ricardo",
-      "senha": "12345",
-      "email": "ricardo@gail.com",
-      "id": 2
-    },
-    {
-      "nome": "gwen",
-      "senha": "gwen123",
-      "email": "gwen@gmail.com",
-      "id": 3
     }
   ]
 }

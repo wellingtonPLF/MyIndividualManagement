@@ -57,19 +57,11 @@
   background-color: #ffffff;
 }
 
-.text-info{
+.boldertext{
   font-weight: bold;
 }
 
-.password{
-  display: flex;
-}
-
-.password input{
-  width: 258px;
-}
-
-.password :nth-child(2){
+.eye{
   border: 1px solid #6e6b6b;
   text-align: center;
   padding-top: 2px;
@@ -79,18 +71,57 @@
   height: 30px;
 }
 
+.changingeye{
+  display: flex;
+}
+
+.changingeye input{
+  width: 258px;
+}
+
 .red input{
   border-color: red;
 }
 
 .red :first-child{
-  color: red !important;
+  color: red;
 }
 
-.red .password :nth-child(2){
+.red .eye{
   border-color: red;
 }
 #email {
   display: flex;
   flex-direction: column;
+}
+
+#test{
+  display: flex;
+  margin-top: 8px;
+  margin-left: 7px;
+}
+
+#test div{
+  border: 1px solid #d40909;
+  color: red;
+  border-radius: 100%;
+  width: 12px;
+  height: 12px;
+  margin-left: 5px;
+}
+
+#test div:hover::after{
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  background-color: white;
+  content: attr(data-tooltip);
+  position: absolute;
+  top: 34.8vh;
+  margin-left: 10px;
+}
+
+.greenToolTip{
+  border-color: #03b703 !important;
+  color: #03b703 !important;
 }

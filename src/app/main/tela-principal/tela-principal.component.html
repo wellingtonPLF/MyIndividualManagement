@@ -13,7 +13,8 @@
 
   <div class="nav-right">
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
-      <button mat-icon-button [routerLink]="['/management']"><mat-icon>account_circle</mat-icon></button>
+      <button mat-icon-button [routerLink]="['/management', usuario.id]">
+        <mat-icon>account_circle</mat-icon></button>
     </div>
     <div [ngClass]="{'sign': !conta, 'displayNone': conta}">
       <button mat-icon-button [routerLink]="['/login']">Sign in</button>

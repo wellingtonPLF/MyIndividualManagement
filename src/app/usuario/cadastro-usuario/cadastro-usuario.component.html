@@ -1,40 +1,66 @@
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
 <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 
 <div class="authentication">
   <div class="containerAuth">
     <h3><b>Cadastre-se</b></h3>
-    <div class="inputAuth">
-      <label class="text-info">Username:</label>
-      <input [(ngModel)]='usuario.nome'>
-      <label class="text-info">Password:</label>
-
-      <div class="password">
-        <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password">
-        <div (click)="showpassword()">
-          <i [ngClass]="{'fas fa-eye': !showPw, 'far fa-eye-slash': showPw}"></i>
+    <form class="inputAuth" [formGroup]="reactiveForm">
+      <!-- UserName Validation -->
+      <div style="display: flex; flex-direction: column" [ngClass]="{'red': invalideusername}">
+        <label class="boldertext">Username:</label>
+        <input [(ngModel)]='usuario.nome' formControlName="usernamevalidation">
+      </div>
+      <!-- Password Validation -->
+      <div [ngClass]="{'red': invalidePassword}">
+        <div style="display: flex">
+          <label class="boldertext">Password:</label>
+          <div id="test">
+            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('minlength')}"
+                 *ngIf="!validations.passwordvalidation.hasError('required')"
+                 data-tooltip="Must be at least 8 characters!"></div>
+            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasNumber')}"
+                 *ngIf="!validations.passwordvalidation.hasError('required')"
+                 data-tooltip="Must contain at least 1 number!"></div>
+            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasCapitalCase')}"
+                 *ngIf="!validations.passwordvalidation.hasError('required')"
+                 data-tooltip="Must contain at least 1 letter in capital case!"></div>
+            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasSmallCase')}"
+                 *ngIf="!validations.passwordvalidation.hasError('required')"
+                 data-tooltip="Must contain at least 1 letter in small case!"></div>
+            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasSpecialCharacters')}"
+                 *ngIf="!validations.passwordvalidation.hasError('required')"
+                 data-tooltip="Must contain at least 3 special character!"></div>
+          </div>
+        </div>
+        <div class="changingeye">
+          <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password" formControlName="passwordvalidation">
+          <div (click)="showpassword()" class="eye">
+            <i [ngClass]="{'fas fa-eye': !showPw, 'far fa-eye-slash': showPw}"></i>
+          </div>
         </div>
       </div>
-
-      <div [ngClass]="{'red': invalidePassword}">
-        <label class="text-info">Confirm Password:</label>
-
-        <div class="password">
-          <input [(ngModel)]='confirmpassword' [type]="repeatpassword" autocomplete="new-password">
-          <div (click)="showconfirmpassword()">
+      <!-- ConfirmPassword Validation -->
+      <div [ngClass]="{'red': invalideconfirmPassword}">
+        <label class="boldertext">Confirm Password:</label>
+        <div class="changingeye">
+          <input [(ngModel)]='confirmpassword' [type]="repeatpassword" autocomplete="new-password" formControlName="confirmpasswordvalidation">
+          <div (click)="showconfirmpassword()" class="eye">
             <i [ngClass]="{'fas fa-eye': !showConfirmPassword, 'far fa-eye-slash': showConfirmPassword}"></i>
           </div>
         </div>
       </div>
+      <!-- Email Validation -->
       <div id="email" [ngClass]="{'red': invalideEmail}">
-        <label class="text-info">Email:</label>
-        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email'>
+        <label class="boldertext">Email:</label>
+        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email' formControlName="emailvalidation">
       </div>
-    </div>
-    <div class="buttonAuth">
-      <button mat-button (click)="cadastroUsuario()">Confirmar</button>
-      <button mat-button [routerLink]="['']">Cancelar</button>
-    </div>
+      <!-- Submit Point -->
+      <div class="buttonAuth">
+        <button mat-button (click)="validateSignUp()">Confirmar</button>
+        <button mat-button [routerLink]="['']">Cancelar</button>
+      </div>
+      <!-- EveryThing is Done! -->
+    </form>
   </div>
 </div>
