@@ -7,53 +7,68 @@
     <h3><b>Cadastre-se</b></h3>
     <form class="inputAuth" [formGroup]="reactiveForm">
       <!-- UserName Validation -->
-      <div style="display: flex; flex-direction: column" [ngClass]="{'red': invalideusername}">
-        <label class="boldertext">Username:</label>
-        <input [(ngModel)]='usuario.nome' formControlName="usernamevalidation">
+      <div style="display: flex; flex-direction: column"
+           [ngClass]="{'red': redinvalideusername}">
+        <div style="display: flex;">
+          <label class="boldertext">Username:</label>
+          <div [ngClass]="{'doubt': true,'atleastfive': redinvalideusername,
+          'displayNone': !appearnamequestion, 'question': toolTipNameInUse}">
+            <i class="fas fa-question-circle" data-tooltip="Name already used!"
+               minlength-tooltip="At least 5 characters!"></i>
+          </div>
+        </div>
+        <input [(ngModel)]='usuario.nome' formControlName="username">
       </div>
       <!-- Password Validation -->
-      <div [ngClass]="{'red': invalidePassword}">
+      <div [ngClass]="{'red': redInvalidePassword}">
         <div style="display: flex">
           <label class="boldertext">Password:</label>
           <div id="test">
-            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('minlength')}"
-                 *ngIf="!validations.passwordvalidation.hasError('required')"
+            <div [ngClass]="{'greenToolTip': !validations.password.hasError('minlength')}"
+                 *ngIf="!validations.password.hasError('required')"
                  data-tooltip="Must be at least 8 characters!"></div>
-            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasNumber')}"
-                 *ngIf="!validations.passwordvalidation.hasError('required')"
+            <div [ngClass]="{'greenToolTip': !validations.password.hasError('hasNumber')}"
+                 *ngIf="!validations.password.hasError('required')"
                  data-tooltip="Must contain at least 1 number!"></div>
-            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasCapitalCase')}"
-                 *ngIf="!validations.passwordvalidation.hasError('required')"
+            <div [ngClass]="{'greenToolTip': !validations.password.hasError('hasCapitalCase')}"
+                 *ngIf="!validations.password.hasError('required')"
                  data-tooltip="Must contain at least 1 letter in capital case!"></div>
-            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasSmallCase')}"
-                 *ngIf="!validations.passwordvalidation.hasError('required')"
+            <div [ngClass]="{'greenToolTip': !validations.password.hasError('hasSmallCase')}"
+                 *ngIf="!validations.password.hasError('required')"
                  data-tooltip="Must contain at least 1 letter in small case!"></div>
-            <div [ngClass]="{'greenToolTip': !validations.passwordvalidation.hasError('hasSpecialCharacters')}"
-                 *ngIf="!validations.passwordvalidation.hasError('required')"
+            <div [ngClass]="{'greenToolTip': !validations.password.hasError('hasSpecialCharacters')}"
+                 *ngIf="!validations.password.hasError('required')"
                  data-tooltip="Must contain at least 3 special character!"></div>
           </div>
         </div>
         <div class="changingeye">
-          <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password" formControlName="passwordvalidation">
-          <div (click)="showpassword()" class="eye">
+          <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password"
+                 formControlName="password">
+          <div (click)="showpassword('password')" class="eye">
             <i [ngClass]="{'fas fa-eye': !showPw, 'far fa-eye-slash': showPw}"></i>
           </div>
         </div>
       </div>
       <!-- ConfirmPassword Validation -->
-      <div [ngClass]="{'red': invalideconfirmPassword}">
+      <div [ngClass]="{'red': redInvalideconfirmPassword}">
         <label class="boldertext">Confirm Password:</label>
         <div class="changingeye">
-          <input [(ngModel)]='confirmpassword' [type]="repeatpassword" autocomplete="new-password" formControlName="confirmpasswordvalidation">
-          <div (click)="showconfirmpassword()" class="eye">
+          <input [type]="repeatpassword" autocomplete="new-password" formControlName="confirmPassword">
+          <div (click)="showpassword('confirmPassword')" class="eye">
             <i [ngClass]="{'fas fa-eye': !showConfirmPassword, 'far fa-eye-slash': showConfirmPassword}"></i>
           </div>
         </div>
       </div>
       <!-- Email Validation -->
-      <div id="email" [ngClass]="{'red': invalideEmail}">
-        <label class="boldertext">Email:</label>
-        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email' formControlName="emailvalidation">
+      <div id="email" [ngClass]="{'red': redInvalideEmail}">
+        <div style="display: flex;">
+          <label class="boldertext">Email:</label>
+          <div [ngClass]="{'doubt': true, 'question': true, 'displayNone': !appearemailquestion}">
+            <i class="fas fa-question-circle"
+               data-tooltip="E-mail already in use!"></i>
+          </div>
+        </div>
+        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email' formControlName="email">
       </div>
       <!-- Submit Point -->
       <div class="buttonAuth">

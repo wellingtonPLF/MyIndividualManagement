@@ -17,15 +17,10 @@ export class CustomValidators {
   }
 
   static passwordMatchValidator(control: AbstractControl) {
-    // @ts-ignore
-    const password: string = control.get('password').value; // get password from our password form control
-    // @ts-ignore
-    const confirmPassword: string = control.get('confirmPassword').value; // get password from our confirmPassword form control
-    // compare is the password math
+      const password: string = control.get('password')?.value;
+      const confirmPassword: string = control.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
-      // if they don't match, set an error in our confirmPassword form control
-      // @ts-ignore
-      control.get('confirmPassword').setErrors({ NoPassswordMatch: true });
+      control.get('confirmPassword')?.setErrors({ NoPassswordMatch: true });
     }
   }
 }

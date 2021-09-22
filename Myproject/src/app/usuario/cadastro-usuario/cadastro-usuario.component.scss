@@ -26,6 +26,7 @@
   display: flex;
   width: 300px;
   flex-direction: column;
+  margin-top: 10px;
 }
 
 .optionalAuth{
@@ -124,4 +125,33 @@
 .greenToolTip{
   border-color: #03b703 !important;
   color: #03b703 !important;
+}
+
+.doubt{
+  transform: scale(0.9);
+  margin-top: 0.8px;
+  margin-left: 5px;
+  color: red;
+}
+
+.doubt i:hover::after{
+  border: 1px solid black;
+  border-radius: 10px;
+  padding: 10px;
+  width: 158px;
+  background-color: white;
+  position: absolute;
+  margin-left: 10px;
+}
+
+.displayNone{
+  display: none;
+}
+
+.atleastfive i:hover:after{
+  content: attr(minlength-tooltip);
+}
+
+.question i:hover::after{
+  content: attr(data-tooltip);
 }

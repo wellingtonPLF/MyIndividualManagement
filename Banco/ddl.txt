@@ -1,0 +1,9 @@
+create table Usuarios(
+	id SERIAL not null,
+	nome varchar(100) not null,
+	email varchar(100) not null,
+	imagem varchar (20) default 'userImg' null,
+	senha varchar(20) not null,
+	constraint Pk_Usuarios Primary key (id),
+	constraint Ak_Usuarios_email Unique (email)
+)

@@ -35,9 +35,9 @@ export class UsuarioService {
       map(users=> users.filter(u => u.nome == usuario.nome && u.senha == usuario.senha)));
   }
 
-  pesquisarPorEmail(usuario: Usuario): Observable<Usuario []>{
-    return  this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
-      map(users=> users.filter(u => u.email == usuario.email)));
+  pesquisarPorValidacao(usuario: Usuario): Observable<Usuario []>{
+    return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
+      map(users=> users.filter(u => u.email == usuario.email || u.nome == usuario.nome)));
   }
 
   atualizar(usuario: Usuario, it: Usuario): Observable<Usuario> {
