@@ -2,17 +2,18 @@
   <div *ngFor="let atividade of atividades; let i = index">
     <div style="display: flex">
       <span>{{atividade.nome}}</span>
-      <div class="dropdown">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Dropdown button
-        </button>
-        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-          <a class="dropdown-item" href="#">Action</a>
-          <a class="dropdown-item" href="#">Another action</a>
-          <a class="dropdown-item" href="#">Something else here</a>
+      <div class="row">
+        <div class="col">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
+            <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
+              <button ngbDropdownItem (click)="removerAtividade(i)">Remove</button>
+              <button ngbDropdownItem (click)="atualizarNome()">Editar</button>
+            </div>
+          </div>
         </div>
       </div>
     </div>
   </div>
-  <button class="add" (click)="addAtividade()">+</button>
+  <button class="add" mat-raised-button style="background-color: #1976d2" (click)="addAtividade()">+</button>
 </div>

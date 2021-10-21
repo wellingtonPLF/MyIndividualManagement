@@ -22,14 +22,21 @@ export class AtividadeComponent implements OnInit {
 
   addAtividade(): void{
     const atv = new Atividade();
-    atv.nome = "Nome Aqui!";
+    atv.nome = "Atividade!";
 
     this.atividadeService.inserir(atv).subscribe(
       it => console.log(it)
     )
   }
 
-  atualizarNome(index: number): void{
+  atualizarNome(): void{
 
+  }
+
+  removerAtividade(index: number): void{
+    /*this.atividadeService.remover(index.toString()).subscribe(
+      it => console.log(it)
+    )*/
+    console.log(index);
   }
 }

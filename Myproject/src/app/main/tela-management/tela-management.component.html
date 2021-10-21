@@ -11,9 +11,13 @@
     <app-atividade></app-atividade>
   </div>
   <div class="top-right">
-    <button>Search</button>
-    <button [routerLink]="['']" [queryParams] = "{id: usuario.id}">Home</button>
-    <button (click)="signOut()" [routerLink]="['']">Sign out</button>
+    <button mat-raised-button style="background-color: #1976d2">Search</button>
+    <button mat-icon-button style="color:#1976d2"
+            [routerLink]="['']" [queryParams] = "{id: usuario.id}">
+      <mat-icon color="white">home</mat-icon>
+    </button>
+    <button mat-raised-button style="background-color: #1976d2" (click)="signOut()" [routerLink]="['']">
+      Sign out</button>
   </div>
 
   <div class="first-middle-right">
@@ -25,6 +29,6 @@
   </div>
 
   <div class="bottom-right">
-    <button>Add</button>
+      <p>Ocupação</p>
   </div>
 </div>
