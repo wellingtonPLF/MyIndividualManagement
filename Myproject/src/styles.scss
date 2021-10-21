@@ -8,3 +8,8 @@ snack-bar-container.success{
   background-color: white;
   border-radius: 2%;
 }
+
+@import "~bootstrap/dist/css/bootstrap-grid.min.css";
+
+/* Importing Bootstrap SCSS file. */
+@import '~bootstrap/scss/bootstrap';

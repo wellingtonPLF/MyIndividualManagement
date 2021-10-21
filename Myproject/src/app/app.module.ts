@@ -8,6 +8,7 @@ import {MainModule} from "./main/main.module";
 import {RouterModule} from "@angular/router";
 import {UsuarioModule} from "./usuario/usuario.module";
 import {HttpClientModule} from "@angular/common/http";
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import {HttpClientModule} from "@angular/common/http";
         HttpClientModule,
         MainModule,
         UsuarioModule,
-        RouterModule
+        RouterModule,
+        NgbModule
     ],
   providers: [],
   bootstrap: [AppComponent]
