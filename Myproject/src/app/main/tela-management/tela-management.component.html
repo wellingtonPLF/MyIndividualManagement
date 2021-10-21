@@ -1,18 +1,29 @@
 <div class="telagrid">
   <div class="top-left">
     <button class="userimg" (click)="chooseImg()">+</button>
-    <p>{{usuario.nome}}</p>
   </div>
+
+  <div class="middle-left">
+    <div>{{usuario.nome}}</div>
+  </div>
+
   <div class="bottom-left">
-    <table style="margin: 10px 0px 0px 10px">
-      <tr><button [routerLink]="['']" [queryParams] = "{id: usuario.id}">Home</button></tr>
-    </table>
+    <app-atividade></app-atividade>
   </div>
   <div class="top-right">
     <button>Search</button>
-    <button>Cronograma</button>
+    <button [routerLink]="['']" [queryParams] = "{id: usuario.id}">Home</button>
     <button (click)="signOut()" [routerLink]="['']">Sign out</button>
   </div>
+
+  <div class="first-middle-right">
+      <p>Janelas</p>
+  </div>
+
+  <div class="second-middle-right">
+      <p>Subareas</p>
+  </div>
+
   <div class="bottom-right">
     <button>Add</button>
   </div>

@@ -19,17 +19,17 @@ public class UsuarioController {
    @Autowired
    private UsuarioService usuarioService;
 
-   @GetMapping("/usuarios")
+   @GetMapping("/usuario")
    public List<Usuario> getUsuarios() {
        return this.usuarioService.getUsuarios();
    }
    
-   @GetMapping("/usuarios/{id}")
+   @GetMapping("/usuario/{id}")
    public Usuario getUsuarioPorId(@PathVariable("id") Long id) {
        return this.usuarioService.getUsuariosPorId(id);
    }
 
-   @PostMapping("/usuarios")
+   @PostMapping("/usuario")
    public Usuario inserirUsuario(@RequestBody Usuario usuario){
        return this.usuarioService.inserirUser(usuario);
    }

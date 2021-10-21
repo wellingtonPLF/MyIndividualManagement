@@ -1,12 +1,18 @@
 package project.gerenciamentoIndividual.main.model;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "usuarios")
+@Table(name = "usuario")
 public class Usuario {
 
    @Id
@@ -16,6 +22,14 @@ public class Usuario {
    private String email;
    private String imagem;
    private String senha;
+   private String token;
+   
+   @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
+   private List<Atividade> atividades = new ArrayList<Atividade>();
+   
+   public Usuario() {
+	   	
+   }
    
 	public Long getId() {
 		return id;
@@ -46,5 +60,17 @@ public class Usuario {
 	}
 	public void setImagem(String imagem) {
 		this.imagem = imagem;
-	}	   
+	}
+	public String getToken() {
+		return token;
+	}
+	public void setToken(String token) {
+		this.token = token;
+	}
+	public List<Atividade> getAtividades() {
+		return atividades;
+	}
+	public void setAtividades(List<Atividade> atividades) {
+		this.atividades = atividades;
+	}	
 }

@@ -1,0 +1,38 @@
+Ideia: Um gerenciador de tarefas individuais
+
+Processo: 
+O usuario terá que se cadastrar no sistema para poder registrar suas tarefas.
+Ao adentrar na tela de gerenciamento o mesmo recebe a permissão para alterar 
+o seu perfil da maneira que desejar, conseguindo modificar alguns atributos como
+email, nome, senha, imagem de perfil e token de identificação da conta. 
+Durante a tela de gerenciamento, o usuario poderá criar suas abas de atividades, 
+a qual a cada aba terá um workspace em que poderá adicionar janelas de criação, assim podendo 
+introduzir determinadas subareas, sendo as recomendadas: diarias (que são as tarefas que deverão ser feitas
+todos os dias), longa data (que possui data de conclusão futura) e principais (as quais deverão 
+ser feitas na semana que foi registrada). O usuario poderá configurar um cronograma que especificará os 
+horarios para o cumprimento de cada atividade, além de poder entrar/sair da conta já 
+cadastrada e pesquisar suas tarefas pela tela de gerenciamento sem qualquer dificuldade. 
+Quando o usuario criar uma tarefa a mesma deverá ser endereçada a uma classe seja ela uma padronizada
+(definida como "All") ou uma atribuida. A classe sempre estará relacionada a uma ocupação, sendo 
+inscrita a uma janela de criação podendo ser uma padrão (caracteriza-se pelo tipo "Geral") ou
+uma customizada que então atribuida pelo proprio usuario. 
+De inicio haverá dois templates, uma chamada "To do List" que ficará responsavel por todas 
+as tarefas existentes, e a outra chamada "Do List" que receberá as tarefas que serão trabalhadas.
+No "To do List" haverá  sub areas, sendo elas: Main, Diarias, Long Date e Gerais, enquanto no "Do List"
+haverá uma unica sub area que ficará responsavel por cada tipo de tarefa. 
+Toda tarefa terá as seguintes propriedades: data (Ex: 01/01/21), tempo (Easy = 1h, Medium = 3h, Hard = 6h, 
+Expert = 12h, Problem = 24h e God Level = 1 week) [Hold on = Easy, Medium e Hard], tipo(projeto ou casual), 
+descrição, comentarios e nome da tarefa. A janela de criação conterá expecificações sobre os 
+termos de tempo de uma tarefa. Por padrão quando uma tarefa endereçada a janela "Do List" não é 
+conclusa, a mesma irá voltar para a janela do "To do List", podendo ou não receber uma tag "problemas",
+que irá depender do motivo de sua inconclusão seja ela por tempo ou por bugs. Durante a criação de uma classe o
+usuario poderá responder um inicial way (Objetivo, Porque, O que e Como), sendo que ao final 
+da sua criação alguns arquivos (Ambiente, Prática, Projeto, Study e Dúvidas) serão criados. O usuario também poderá 
+analisar o modelo criado, assim como criar um arquivo adicional ao modelo apresentado, essa escolha em particular é chamada de fragmento. 
+Com relação a criação das tasks, o usuario poderá encadear as tarefas ao coloca-las umas a cima das outras, 
+além de que o mesmo deverá escolher alguma das áreas do modelo gerado (classificação "Type") em sua classe para sua identificação.
+Na subarea principal será possivel criar ocupações/classes/tasks, enquanto nas diarias, gerais e long data 
+só poderam ser criadas classes/tasks. Cada crição terá como fazer sua arquivação para o seu
+encerramento, sejá ela por conclusão ou drop. Haverá um formatador de templates, em que você poderá escolher entre 
+o template padrão ou os seus pré customizados. Por fim, o usuario terá acesso ao terminal de comando
+para fazer o que desejar, e conseguirá utilizar um cronometro para o uso do pomodoro;

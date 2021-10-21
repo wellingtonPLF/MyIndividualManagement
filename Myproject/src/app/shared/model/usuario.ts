@@ -4,6 +4,7 @@ export class Usuario{
   email!: string;
   senha!: string;
   imagem!: string;
+  token!: string;
 
   constructor() {
   }

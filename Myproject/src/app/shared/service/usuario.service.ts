@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 })
 export class UsuarioService {
 
-  URL_USUARIOS = 'http://localhost:8080/usuarios';
+  URL_USUARIOS = 'http://localhost:3000/usuario';
 
   constructor(private httpClient: HttpClient) {
   }

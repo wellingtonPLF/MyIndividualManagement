@@ -10,6 +10,7 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 import { TelaManagementComponent } from './tela-management/tela-management.component';
 import {MatTreeModule} from "@angular/material/tree";
 import {MatTabsModule} from "@angular/material/tabs";
+import {ManagementModule} from "../management/management.module";
 
 
 
@@ -21,16 +22,17 @@ import {MatTabsModule} from "@angular/material/tabs";
     exports: [
         TelaPrincipalComponent
     ],
-  imports: [
-    CommonModule,
-    MatIconModule,
-    BrowserAnimationsModule,
-    MatFormFieldModule,
-    MatButtonModule,
-    MatDialogModule,
-    MatTreeModule,
-    MatTabsModule,
-    RouterModule
-  ]
+    imports: [
+        CommonModule,
+        MatIconModule,
+        BrowserAnimationsModule,
+        MatFormFieldModule,
+        MatButtonModule,
+        MatDialogModule,
+        MatTreeModule,
+        MatTabsModule,
+        RouterModule,
+        ManagementModule
+    ]
 })
 export class MainModule { }
