@@ -7,15 +7,15 @@ import javax.persistence.Table;
 @Table(name = "casual")
 public class Casual extends Task{
 
-	private String descricao;
+	private String texto;
 	
 	public Casual() {}
 
-	public String getDescricao() {
-		return descricao;
+	public String getTexto() {
+		return texto;
 	}
 
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
+	public void setTexto(String texto) {
+		this.texto = texto;
 	}	
 }

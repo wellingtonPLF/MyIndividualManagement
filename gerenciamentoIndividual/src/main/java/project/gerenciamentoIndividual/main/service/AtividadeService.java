@@ -24,8 +24,12 @@ public class AtividadeService {
    }
 
    @Transactional
-   public Atividade inserirAtividade(Atividade atividade) {
+   public Atividade inserirOuAtualizar(Atividade atividade) {
        Atividade atividadeInserido = this.atividadeRepository.save(atividade);
        return atividadeInserido;
+   }
+   
+   public void apagar(Long idatividade) {
+	   this.atividadeRepository.deleteById(idatividade);
    }
 }

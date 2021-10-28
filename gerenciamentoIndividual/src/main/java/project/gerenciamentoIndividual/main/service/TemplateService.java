@@ -24,8 +24,12 @@ public class TemplateService {
    }
 
    @Transactional
-   public Template inserirTemplate(Template template) {
+   public Template inserirOuAtualizar(Template template) {
 	   Template templateInserido = this.templateRepository.save(template);
        return templateInserido;
+   }
+   
+   public void apagar(Long idtemplate) {
+	   this.templateRepository.deleteById(idtemplate);
    }
 }

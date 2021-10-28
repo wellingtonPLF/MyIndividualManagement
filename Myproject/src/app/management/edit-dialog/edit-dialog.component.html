@@ -1,0 +1,8 @@
+<div *ngIf="object" class="editDialog">
+  <div id="titleDialog"><b>Atividade</b></div>
+  <input [(ngModel)]="object.nome">
+  <div class="btns">
+      <button mat-dialog-close mat-raised-button (click)="confirmButton()">Confirm</button>
+      <button mat-dialog-close mat-raised-button>Cancel</button>
+  </div>
+</div>

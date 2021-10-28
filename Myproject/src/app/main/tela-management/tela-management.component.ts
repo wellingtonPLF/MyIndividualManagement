@@ -4,6 +4,8 @@ import {LocalStorageService} from "../../shared/service/local-storage.service";
 import {ActivatedRoute} from "@angular/router";
 import {UsuarioService} from "../../shared/service/usuario.service";
 import {Usuario} from "../../shared/model/usuario";
+import {Janela} from "../../shared/model/janela";
+import {Atividade} from "../../shared/model/atividade";
 
 @Component({
   selector: 'app-tela-management',
@@ -12,10 +14,13 @@ import {Usuario} from "../../shared/model/usuario";
 })
 export class TelaManagementComponent implements OnInit {
   usuario!: Usuario;
+  atividade!: Atividade;
 
   constructor(private accountService: SessionStorageService, private rotalAtual: ActivatedRoute,
               private accountServiceLocal: LocalStorageService, private usuarioService: UsuarioService) {
     this.usuario = new Usuario();
+    // Initiated to solve ExpressionChangedAfterItHasBeenCheckedError
+    this.atividade = new Atividade('');
   }
 
   ngOnInit(): void {
@@ -34,5 +39,9 @@ export class TelaManagementComponent implements OnInit {
 
   chooseImg(): void{
     console.log("Open Imgs");
+  }
+
+  enviarJanela(evento: Atividade): void{
+    this.atividade = evento;
   }
 }

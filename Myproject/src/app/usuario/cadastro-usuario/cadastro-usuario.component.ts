@@ -5,6 +5,11 @@ import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {SignupvalidationService} from "../../shared/service/signupvalidation.service";
 import {MensagemService} from "../../shared/service/mensagem.service";
+import {Atividade} from "../../shared/model/atividade";
+import {Janela} from "../../shared/model/janela";
+import {TemplateService} from "../../shared/service/template.service";
+import {JanelaService} from "../../shared/service/janela.service";
+import {Template} from "../../shared/model/template";
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -57,6 +62,11 @@ export class CadastroUsuarioComponent implements OnInit {
       this.usuarioService.pesquisarPorValidacao(this.usuario).subscribe(
         validar => {
           if (validar.length == 0){
+            const atividade = new Atividade("Let's Work")
+            let janela = new Janela();
+            janela.nome = "Main";
+            atividade.janelas.push(janela);
+            this.usuario.atividades.push(atividade);
             this.usuarioService.inserir(this.usuario).subscribe(
               it => {
                 this.snackResult.success("Cadastro realizado com sucesso!")

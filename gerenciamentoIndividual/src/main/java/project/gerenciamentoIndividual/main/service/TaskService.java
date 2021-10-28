@@ -24,8 +24,12 @@ public class TaskService {
    }
 
    @Transactional
-   public Task inserirTask(Task task) {
+   public Task inserirOuAtualizar(Task task) {
 	   Task taskInserido = this.taskRepository.save(task);
        return taskInserido;
+   }
+   
+   public void apagar(Long idtask) {
+	   this.taskRepository.deleteById(idtask);
    }
 }

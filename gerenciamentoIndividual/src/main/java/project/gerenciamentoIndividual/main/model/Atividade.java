@@ -1,5 +1,6 @@
 package project.gerenciamentoIndividual.main.model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -13,29 +14,46 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import org.hibernate.annotations.OnDelete;
+import org.hibernate.annotations.OnDeleteAction;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "atividade")
-public class Atividade {
+public class Atividade{
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long idatividade;
+	private int ordem;
 	private String nome;
 	
 	@ManyToOne
-	private Usuario usuario = new Usuario();
+	@JsonBackReference(value="usuario_Atv")
+	private Usuario usuario;
 	
-	@OneToMany(mappedBy="atividade", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
-	private List<Janela> janelas = new ArrayList<Janela>();
+	@OneToMany(mappedBy="atividade", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@JsonManagedReference(value="atv_Janela")
+	private List<Janela> janelas = new ArrayList<Janela>(); 
 	
 	public Atividade() {}
 
-	public Long getId() {
-		return id;
+	public Long getIdatividade() {
+		return idatividade;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdatividade(Long idatividade) {
+		this.idatividade = idatividade;
+	}
+	
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
 	}
 
 	public String getNome() {

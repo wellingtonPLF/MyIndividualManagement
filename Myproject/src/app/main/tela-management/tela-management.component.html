@@ -1,6 +1,6 @@
 <div class="telagrid">
   <div class="top-left">
-    <button class="userimg" (click)="chooseImg()">+</button>
+    <div class="userimg" (click)="chooseImg()">+</div>
   </div>
 
   <div class="middle-left">
@@ -8,27 +8,19 @@
   </div>
 
   <div class="bottom-left">
-    <app-atividade></app-atividade>
+    <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
   </div>
   <div class="top-right">
     <button mat-raised-button style="background-color: #1976d2">Search</button>
     <button mat-icon-button style="color:#1976d2"
-            [routerLink]="['']" [queryParams] = "{id: usuario.id}">
+            [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
       <mat-icon color="white">home</mat-icon>
     </button>
-    <button mat-raised-button style="background-color: #1976d2" (click)="signOut()" [routerLink]="['']">
+    <button mat-raised-button style="background-color: #d21969" (click)="signOut()" [routerLink]="['']">
       Sign out</button>
   </div>
 
-  <div class="first-middle-right">
-      <p>Janelas</p>
-  </div>
-
-  <div class="second-middle-right">
-      <p>Subareas</p>
-  </div>
-
   <div class="bottom-right">
-      <p>Ocupação</p>
+    <app-workspace *ngIf="atividade" [activity]="atividade"></app-workspace>
   </div>
 </div>

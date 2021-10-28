@@ -1,0 +1,30 @@
+insert into janela values (1, 'MySpace', 0, null, null);
+insert into subarea values (1, 'Main', 1);
+insert into ocupacao values (1, 'Gerais', 1);
+insert into classe values (1, null, 'All', null, null, null, 1);
+
+insert into janela values (2, 'Planning', 0, null, null);
+insert into subarea values (2, 'Main', 2);
+insert into ocupacao values (2, 'Ocupacao', 2);
+insert into classe values (2, null, 'Classe', null, null, null, 2);
+insert into subarea values (3, 'Diarias',2);
+insert into ocupacao values (3, 'Ocupacao', 3);
+insert into classe values (3, null, 'Classe', null, null, null, 3);
+insert into subarea values (4, 'Long', 2);
+insert into ocupacao values (4, 'Ocupacao', 4);
+insert into classe values (4, null, 'Classe', null, null, null, 4);
+insert into subarea values (5, 'Date', 2);
+insert into ocupacao values (5, 'Ocupacao', 5);
+insert into classe values (5, null, 'Classe', null, null, null, 5);
+insert into subarea values (6, 'Gerais', 2);
+insert into ocupacao values (6, 'Ocupacao', 6);
+insert into classe values (6, null, 'Classe', null, null, null, 6);
+
+insert into janela values (3, 'Execution', 0, null, null);
+insert into subarea values (7, 'Main', 3);
+insert into ocupacao values (7, 'Ocupacao', 7);
+insert into classe values (7, null, 'Classe', null, null, null, 7);
+
+insert into template values (1, 'Default', 1, null);
+insert into template values (2, 'To Do List', 2, null);
+insert into template values (3, 'Do List', 3, null);

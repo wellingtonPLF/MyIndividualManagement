@@ -10,7 +10,7 @@ import {Atividade} from "../model/atividade";
 })
 export class AtividadeService {
 
-  URL_ATIVIDADE = 'http://localhost:3000/atividade';
+  URL_ATIVIDADE = 'http://localhost:8080/atividade';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -31,12 +31,7 @@ export class AtividadeService {
     return this.httpClient.get<Atividade>(`${this.URL_ATIVIDADE}/${id}`);
   }
 
-  pesquisarPorAtividade(atividade: Atividade): Observable<Atividade []> {
-    return this.httpClient.get<Atividade []>(this.URL_ATIVIDADE).pipe(
-      map(users=> users.filter(a => a.nome == atividade.nome)));
-  }
-
-  atualizar(atividade: Atividade, it: Atividade): Observable<Atividade> {
-    return this.httpClient.put<Atividade>(`${this.URL_ATIVIDADE}/${atividade.id}`, it);
+  atualizar(atividade: Atividade): Observable<Atividade> {
+    return this.httpClient.put<Atividade>(`${this.URL_ATIVIDADE}/${atividade.idatividade}`, atividade);
   }
 }

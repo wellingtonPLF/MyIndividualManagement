@@ -3,8 +3,10 @@ package project.gerenciamentoIndividual.main.controller;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.UsuarioService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -24,14 +26,25 @@ public class UsuarioController {
        return this.usuarioService.getUsuarios();
    }
    
-   @GetMapping("/usuario/{id}")
-   public Usuario getUsuarioPorId(@PathVariable("id") Long id) {
-       return this.usuarioService.getUsuariosPorId(id);
+   @GetMapping("/usuario/{idusuario}")
+   public Usuario getUsuarioPorId(@PathVariable("idusuario") Long idusuario) {
+       return this.usuarioService.getUsuariosPorId(idusuario);
    }
 
    @PostMapping("/usuario")
    public Usuario inserirUsuario(@RequestBody Usuario usuario){
-       return this.usuarioService.inserirUser(usuario);
+       return this.usuarioService.inserirOuAtualizar(usuario);
    }
+   
+   @PutMapping("/usuario/{idusuario}")
+   public Usuario atualizarUsuario(@RequestBody Usuario usuario){
+       return this.usuarioService.inserirOuAtualizar(usuario);
+   }
+
+   @DeleteMapping("/usuario/{idusuario}")
+   public void apagarUsuario(@PathVariable("idusuario") Long idusuario) {
+       this.usuarioService.apagar(idusuario);
+   }
+
 }
 

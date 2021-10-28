@@ -24,8 +24,12 @@ public class SubareaService {
    }
 
    @Transactional
-   public Subarea inserirSubarea(Subarea subarea) {
+   public Subarea inserirOuAtualizar(Subarea subarea) {
 	   Subarea subareaInserido = this.subareaRepository.save(subarea);
        return subareaInserido;
+   }
+   
+   public void apagar(Long idsubarea) {
+	   this.subareaRepository.deleteById(idsubarea);
    }
 }

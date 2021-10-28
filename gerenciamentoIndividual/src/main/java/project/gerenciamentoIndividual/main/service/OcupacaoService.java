@@ -24,8 +24,12 @@ public class OcupacaoService {
    }
 
    @Transactional
-   public Ocupacao inserirOcupacao(Ocupacao ocupacao) {
+   public Ocupacao inserirOuAtualizar(Ocupacao ocupacao) {
        Ocupacao ocupacaoInserido = this.ocupacaoRepository.save(ocupacao);
        return ocupacaoInserido;
+   }
+   
+   public void apagar(Long idocupacao) {
+	   this.ocupacaoRepository.deleteById(idocupacao);
    }
 }

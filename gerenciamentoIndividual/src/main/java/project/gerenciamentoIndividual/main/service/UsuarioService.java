@@ -18,13 +18,17 @@ public class UsuarioService {
        return this.usuarioRepository.findAll();
    }
    
-   public Usuario getUsuariosPorId(Long id) {
-       return this.usuarioRepository.findById(id).orElse(null);
+   public Usuario getUsuariosPorId(Long idusuario) {
+       return this.usuarioRepository.findById(idusuario).orElse(null);
    }
 
    @Transactional
-   public Usuario inserirUser(Usuario usuario) {
+   public Usuario inserirOuAtualizar(Usuario usuario) {
        Usuario usuarioInserido = this.usuarioRepository.save(usuario);
        return usuarioInserido;
+   }
+   
+   public void apagar(Long idusuario) {
+	   this.usuarioRepository.deleteById(idusuario);
    }
 }

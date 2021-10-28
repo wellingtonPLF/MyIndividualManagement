@@ -55,7 +55,7 @@ export class LoginUsuarioComponent implements OnInit {
               else {
                 this.accountService.setToken('my-token');
               }
-              this.router.navigate(['/management', it[0].id])
+              this.router.navigate(['/management', it[0].idusuario])
             }
           }
           else {

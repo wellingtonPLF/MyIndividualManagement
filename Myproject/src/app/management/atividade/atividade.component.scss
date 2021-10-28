@@ -1,4 +1,4 @@
-.atvcomponente span{
+.atividade{
   background-color: #02AAC9;
   color: white;
   width: 150px;
@@ -7,24 +7,21 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  cursor: pointer;
 }
 
-.atividade{
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  background-color: #02AAC9;
-  text-align: center;
-  margin-top: 10px;
-  width: 32px;
-  height: 30px;
-  cursor: pointer;
+.atividade:hover{
+  background-color: #048098;
+}
+
+.atividade:focus{
+  background-color: #1976d2;
 }
 
 .add{
   margin-top: 10px;
-  width: 180px;
+  width: 185px;
+  background-color: #075aa9;
 }
 
 #dropdownBasic1{

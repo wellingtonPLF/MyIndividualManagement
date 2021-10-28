@@ -1,19 +1,19 @@
-<div class="atvcomponente">
+<div>
   <div *ngFor="let atividade of atividades; let i = index">
     <div style="display: flex">
-      <span>{{atividade.nome}}</span>
+      <div class="atividade" (click)="mandarJanelas(i)" tabindex="1">{{atividade.nome}}</div>
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle></button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button ngbDropdownItem (click)="removerAtividade(i)">Remove</button>
-              <button ngbDropdownItem (click)="atualizarNome()">Editar</button>
+              <button ngbDropdownItem (click)="atualizarNome(i)">Editar</button>
             </div>
           </div>
         </div>
       </div>
     </div>
   </div>
-  <button class="add" mat-raised-button style="background-color: #1976d2" (click)="addAtividade()">+</button>
+  <button class="add" mat-raised-button (click)="addAtividade()">+</button>
 </div>

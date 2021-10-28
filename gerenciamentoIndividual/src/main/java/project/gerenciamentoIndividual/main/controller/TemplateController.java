@@ -3,14 +3,17 @@ package project.gerenciamentoIndividual.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.gerenciamentoIndividual.main.model.Template;
+import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.TemplateService;
 
 @RestController
@@ -32,6 +35,16 @@ public class TemplateController {
 
    @PostMapping("/template")
    public Template inserirTemplate(@RequestBody Template template){
-       return this.templateService.inserirTemplate(template);
+       return this.templateService.inserirOuAtualizar(template);
+   }
+   
+   @PutMapping("/template/{idtemplate}")
+   public Template atualizarTemplate(@RequestBody Template template){
+       return this.templateService.inserirOuAtualizar(template);
+   }
+
+   @DeleteMapping("/template/{idtemplate}")
+   public void apagarTemplate(@PathVariable("idtemplate") Long idtemplate) {
+       this.templateService.apagar(idtemplate);
    }
 }

@@ -1,24 +1,4 @@
 {
-  "usuario": [
-    {
-      "nome": "wellington",
-      "senha": "W10ell10@#!",
-      "email": "wellplf@gmail.com",
-      "id": 1
-    }
-  ],
-  "atividade": [
-    {
-      "id": 1,
-      "nome": "Nome Aqui!"
-    },
-    {
-      "nome": "Nome Aqui!",
-      "id": 2
-    },
-    {
-      "nome": "Nome Aqui!",
-      "id": 3
-    }
-  ]
+  "usuario": [],
+  "atividade": []
 }

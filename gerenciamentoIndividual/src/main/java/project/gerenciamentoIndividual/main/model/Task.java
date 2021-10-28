@@ -20,13 +20,15 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
 @Table(name = "task")
 public class Task{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long idtask;
 	private String nome;
 	
 	@Temporal(TemporalType.DATE) 
@@ -39,20 +41,22 @@ public class Task{
 	private String comentario;
 	private String etiqueta;
 	
-	@ManyToOne
+	@ManyToOne//(cascade=CascadeType.ALL)
+	//@JsonBackReference
 	private Task encadeamento;
 	
 	@ManyToOne
-	private Classe classe = new Classe();
+	@JsonBackReference(value="classe_Task")
+	private Classe classe;
 	
 	public Task() {}
 
-	public Long getId() {
-		return id;
+	public Long getIdtask() {
+		return idtask;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdtask(Long idtask) {
+		this.idtask = idtask;
 	}
 
 	public String getNome() {

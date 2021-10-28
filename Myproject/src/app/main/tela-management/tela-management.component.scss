@@ -6,8 +6,8 @@
   grid-template-rows: 70px 60px 50px 40px 1fr;
   grid-template-areas:
     "user menu menu"
-    "user janela janela"
-    "user  subarea subarea"
+    "user room room"
+    "user  room room"
     "nome room room"
     "listagem room room";
 }
@@ -42,22 +42,7 @@
   align-items: center;
   grid-area: menu;
   border-top: #1976d2 solid 3px;
-  border-bottom: #1976d2 solid 3px;
   border-right: #1976d2 solid 3px;
-}
-
-.first-middle-right{
-  border:  #1976d2 solid 3px;
-  border-top: none;
-  border-left: none;
-  grid-area: janela;
-}
-
-.second-middle-right{
-  border:  #1976d2 solid 3px;
-  border-top: none;
-  border-left: none;
-  grid-area: subarea;
 }
 
 .top-right button{
@@ -83,9 +68,11 @@
 }
 
 .userimg{
+  display: flex;
+  justify-content: center;
+  align-items: center;
   text-align: center;
-  border: 2px solid black;
-  border-radius: 100%;
+  padding-bottom: 15px;
   width: 100px;
   height: 100px;
   font-size: 80px;

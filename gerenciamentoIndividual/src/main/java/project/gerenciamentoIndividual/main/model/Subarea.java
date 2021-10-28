@@ -13,29 +13,34 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "subarea")
 public class Subarea {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long idsubarea;
 	private String nome;
 	
 	@ManyToOne
-	private Template template = new Template();
+	@JsonBackReference(value="janela_Subarea")
+	private Janela janela;
 	
-	@OneToMany(mappedBy="subarea", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="subarea", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@JsonManagedReference(value="subarea_Ocupacao")
 	private List<Ocupacao> ocupacoes = new ArrayList<Ocupacao>();
 	
 	public Subarea() {}
 
-	public Long getId() {
-		return id;
+	public Long getIdsubarea() {
+		return idsubarea;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdsubarea(Long idsubarea) {
+		this.idsubarea = idsubarea;
 	}
 
 	public String getNome() {
@@ -46,14 +51,6 @@ public class Subarea {
 		this.nome = nome;
 	}
 
-	public Template getTemplate() {
-		return template;
-	}
-
-	public void setTemplate(Template template) {
-		this.template = template;
-	}
-
 	public List<Ocupacao> getOcupacao() {
 		return ocupacoes;
 	}
@@ -61,6 +58,4 @@ public class Subarea {
 	public void setOcupacao(List<Ocupacao> ocupacao) {
 		this.ocupacoes = ocupacao;
 	}
-	
-	
 }

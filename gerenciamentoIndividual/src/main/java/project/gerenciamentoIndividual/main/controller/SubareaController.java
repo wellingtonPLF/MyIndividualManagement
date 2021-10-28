@@ -3,14 +3,17 @@ package project.gerenciamentoIndividual.main.controller;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.gerenciamentoIndividual.main.model.Subarea;
+import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.SubareaService;
 
 @RestController
@@ -32,6 +35,16 @@ public class SubareaController {
 
    @PostMapping("/subarea")
    public Subarea inserirSubarea(@RequestBody Subarea subarea){
-       return this.subareaService.inserirSubarea(subarea);
+       return this.subareaService.inserirOuAtualizar(subarea);
+   }
+   
+   @PutMapping("/subarea/{idsubarea}")
+   public Subarea atualizarSubarea(@RequestBody Subarea subarea){
+       return this.subareaService.inserirOuAtualizar(subarea);
+   }
+
+   @DeleteMapping("/subarea/{idsubarea}")
+   public void apagarSubarea(@PathVariable("idsubarea") Long idsubarea) {
+       this.subareaService.apagar(idsubarea);
    }
 }

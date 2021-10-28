@@ -1,10 +1,15 @@
+import {Atividade} from "./atividade";
+import {Template} from "./template";
+
 export class Usuario{
-  id!: number;
+  idusuario!: number;
   nome!: string;
   email!: string;
   senha!: string;
-  imagem!: string;
+  img!: string;
   token!: string;
+  atividades: Array<Atividade> = new Array<Atividade>();
+  templates: Array<Template> = new Array<Template>();
 
   constructor() {
   }

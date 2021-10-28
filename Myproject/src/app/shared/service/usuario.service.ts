@@ -9,7 +9,7 @@ import {map} from "rxjs/operators";
 })
 export class UsuarioService {
 
-  URL_USUARIOS = 'http://localhost:3000/usuario';
+  URL_USUARIOS = 'http://localhost:8080/usuario';
 
   constructor(private httpClient: HttpClient) {
   }
@@ -40,7 +40,7 @@ export class UsuarioService {
       map(users=> users.filter(u => u.email == usuario.email || u.nome == usuario.nome)));
   }
 
-  atualizar(usuario: Usuario, it: Usuario): Observable<Usuario> {
-    return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.id}`, it);
+  atualizar(usuario: Usuario): Observable<Usuario> {
+    return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.idusuario}`, usuario);
   }
 }

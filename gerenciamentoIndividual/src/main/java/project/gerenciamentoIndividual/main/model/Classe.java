@@ -13,13 +13,16 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 @Entity
 @Table(name = "classe")
 public class Classe {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long id;
+	private Long idclasse;
 	private String nome;
 	private String objetivo;
 	private String porque;
@@ -27,19 +30,21 @@ public class Classe {
 	private String como;
 	
 	@ManyToOne
-	private Ocupacao ocupacao = new Ocupacao();
+	@JsonBackReference(value="ocupacao_Classe")
+	private Ocupacao ocupacao;
 	
-	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER)
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@JsonManagedReference(value="classe_Task")
 	private List<Task> tasks = new ArrayList<Task>();
 	
 	public Classe() {}
 
-	public Long getId() {
-		return id;
+	public Long getIdclasse() {
+		return idclasse;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdclasse(Long idclasse) {
+		this.idclasse = idclasse;
 	}
 
 	public String getNome() {

@@ -24,8 +24,12 @@ public class JanelaService {
    }
 
    @Transactional
-   public Janela inserirJanela(Janela janela) {
+   public Janela inserirOuAtualizar(Janela janela) {
        Janela janelaInserido = this.janelaRepository.save(janela);
        return janelaInserido;
+   }
+   
+   public void apagar(Long idjanela) {
+	   this.janelaRepository.deleteById(idjanela);
    }
 }

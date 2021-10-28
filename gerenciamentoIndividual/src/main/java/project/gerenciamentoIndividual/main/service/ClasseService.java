@@ -24,8 +24,12 @@ public class ClasseService {
    }
 
    @Transactional
-   public Classe inserirClasse(Classe classe) {
+   public Classe inserirOuAtualizar(Classe classe) {
        Classe classeInserido = this.classeRepository.save(classe);
        return classeInserido;
+   }
+   
+   public void apagar(Long idclasse) {
+	   this.classeRepository.deleteById(idclasse);
    }
 }
