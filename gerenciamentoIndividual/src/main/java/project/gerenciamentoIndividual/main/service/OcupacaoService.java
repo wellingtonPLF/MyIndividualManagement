@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import project.gerenciamentoIndividual.main.model.Ocupacao;
+import project.gerenciamentoIndividual.main.model.Subarea;
 import project.gerenciamentoIndividual.main.repositories.OcupacaoRepository;
 
 @Service
@@ -22,11 +23,14 @@ public class OcupacaoService {
    public Ocupacao getOcupacaoPorId(Long id) {
        return this.ocupacaoRepository.findById(id).orElse(null);
    }
+   
+   public Subarea getSubareaByIdOcupacao(Long id) {
+	   return this.ocupacaoRepository.getSubareaByIdOcupacao(id);
+   }
 
    @Transactional
    public Ocupacao inserirOuAtualizar(Ocupacao ocupacao) {
-       Ocupacao ocupacaoInserido = this.ocupacaoRepository.save(ocupacao);
-       return ocupacaoInserido;
+       return this.ocupacaoRepository.save(ocupacao);
    }
    
    public void apagar(Long idocupacao) {

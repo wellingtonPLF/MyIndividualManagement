@@ -21,6 +21,8 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "task")
@@ -30,6 +32,7 @@ public class Task{
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idtask;
 	private String nome;
+	private int ordem;
 	
 	@Temporal(TemporalType.DATE) 
 	@DateTimeFormat(pattern = "dd/MM/yyyy") 
@@ -41,8 +44,7 @@ public class Task{
 	private String comentario;
 	private String etiqueta;
 	
-	@ManyToOne//(cascade=CascadeType.ALL)
-	//@JsonBackReference
+	@ManyToOne
 	private Task encadeamento;
 	
 	@ManyToOne
@@ -121,5 +123,13 @@ public class Task{
 
 	public void setClasse(Classe classe) {
 		this.classe = classe;
+	}
+
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
 	}
 }

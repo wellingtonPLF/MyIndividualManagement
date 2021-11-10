@@ -13,15 +13,25 @@ import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 })
 export class LoginUsuarioComponent implements OnInit {
   usuario!: Usuario;
-  senhaInv: boolean = false
-  count: number = 0;
+
+  //Show Passowrd
   show: boolean = false;
   password: string = 'password';
-  mensage!: string;
+
+  //Invalid User
+  menssage!: string;
+  senhaInv: boolean = false
+
+  //Numero de Tentativas
+  count: number = 0;
+
+  //AlreadyOnline
   signOn: boolean = false;
+
+  //CheckButton
   check!: boolean;
 
-  constructor(private ususarioService: UsuarioService,
+  constructor(private usuarioService: UsuarioService,
               private router: Router,
               private accountService: SessionStorageService,
               private accountServiceLocal: LocalStorageService) {
@@ -38,34 +48,35 @@ export class LoginUsuarioComponent implements OnInit {
   validateUser(): void{
     if (this.usuario.nome!= null && this.usuario.senha!= null &&
       this.usuario.nome!= "" && this.usuario.senha!= ""){
-      this.ususarioService.pesquisarPorUsuario(this.usuario).subscribe(
-        it => {
-          if (it.length != 0){
-            if(this.accountServiceLocal.getToken() || this.accountService.getToken()){
-              this.mensage = "An user is already sign in!";
-              this.senhaInv = true;
-              this.signOn = true;
+      this.usuarioService.getUsuarioByNome(this.usuario.nome).subscribe(
+          it => {
+            if(it != undefined || it != null){
+              if(it.senha == this.usuario.senha){
+                if(this.accountServiceLocal.getToken() || this.accountService.getToken()){
+                  this.menssage = "An user is already sign in!";
+                  this.senhaInv = true;
+                  this.signOn = true;
+                }
+                else {
+                  this.senhaInv = false
+                  this.count = 0;
+                  if (this.check){
+                    this.accountServiceLocal.setToken('my-token');
+                  }
+                  else {
+                    this.accountService.setToken('my-token');
+                  }
+                  this.router.navigate(['/management', it.idusuario])
+                }
+              }
+              else{
+                this.usuarioInvalido();
+              }
             }
-            else {
-              this.senhaInv = false
-              this.count = 0;
-              if (this.check){
-                this.accountServiceLocal.setToken('my-token');
-              }
-              else {
-                this.accountService.setToken('my-token');
-              }
-              this.router.navigate(['/management', it[0].idusuario])
+            else{
+              this.usuarioInvalido();
             }
           }
-          else {
-            this.senhaInv = true
-            this.usuario.nome = '';
-            this.usuario.senha = this.usuario.nome;
-            this.count += 1;
-            this.mensage = 'Invalide User! Please try again!';
-          }
-        }
       );
     }
   }
@@ -78,5 +89,13 @@ export class LoginUsuarioComponent implements OnInit {
         this.password = 'password';
         this.show = false;
       }
+  }
+
+  usuarioInvalido(): void{
+    this.senhaInv = true
+    this.usuario.nome = '';
+    this.usuario.senha = this.usuario.nome;
+    this.count += 1;
+    this.menssage = 'Invalide User! Please try again!';
   }
 }

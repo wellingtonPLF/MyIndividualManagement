@@ -5,8 +5,9 @@ import {Janela} from "./janela";
 export class Subarea{
   idsubarea!: number;
   nome!: string;
+  ordem!: number;
   janela!: Janela;
-  ocupacao: Array<Ocupacao> = new Array<Ocupacao>();
+  ocupacoes: Array<Ocupacao> = new Array<Ocupacao>();
 
   constructor() {
   }

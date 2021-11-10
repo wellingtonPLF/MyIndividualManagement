@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Subarea} from "../model/subarea";
+import {Janela} from "../model/janela";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class SubareaService {
 
   pesquisarPorId(id: number): Observable<Subarea> {
     return this.httpClient.get<Subarea>(`${this.URL_SUBAREA}/${id}`);
+  }
+
+  pesquisarJanelaPorIdSubarea(id: number): Observable<Janela> {
+    return this.httpClient.get<Janela>(`${this.URL_SUBAREA}/mySubarea/janela/${id}`);
   }
 
   atualizar(subarea: Subarea): Observable<Subarea> {

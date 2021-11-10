@@ -11,19 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "classe")
 public class Classe {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="classe_sequence")
+	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 8)
 	private Long idclasse;
 	private String nome;
+	private int ordem;
 	private String objetivo;
 	private String porque;
 	private String oque;
@@ -101,5 +106,13 @@ public class Classe {
 
 	public void setTasks(List<Task> tasks) {
 		this.tasks = tasks;
+	}
+
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
 	}
 }

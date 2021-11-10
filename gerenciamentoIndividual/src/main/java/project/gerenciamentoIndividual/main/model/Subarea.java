@@ -11,19 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "subarea")
 public class Subarea {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="subarea_sequence")
+	@SequenceGenerator(name="subarea_sequence", sequenceName="subarea_seq",  allocationSize = 1, initialValue = 8)
 	private Long idsubarea;
 	private String nome;
+	private int ordem;
 	
 	@ManyToOne
 	@JsonBackReference(value="janela_Subarea")
@@ -51,11 +56,27 @@ public class Subarea {
 		this.nome = nome;
 	}
 
-	public List<Ocupacao> getOcupacao() {
+	public List<Ocupacao> getOcupacoes() {
 		return ocupacoes;
 	}
 
-	public void setOcupacao(List<Ocupacao> ocupacao) {
-		this.ocupacoes = ocupacao;
+	public void setOcupacoes(List<Ocupacao> ocupacoes) {
+		this.ocupacoes = ocupacoes;
+	}
+
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
+	}
+
+	public Janela getJanela() {
+		return janela;
+	}
+
+	public void setJanela(Janela janela) {
+		this.janela = janela;
 	}
 }

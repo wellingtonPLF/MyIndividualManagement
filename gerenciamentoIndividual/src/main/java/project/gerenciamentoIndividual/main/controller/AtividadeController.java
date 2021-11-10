@@ -32,6 +32,11 @@ public class AtividadeController {
    public Atividade getAtividadePorId(@PathVariable("idatividade") Long idatividade) {
        return this.atividadeService.getAtividadePorId(idatividade);
    }
+   
+   @GetMapping("/atividade/myActivity/{idatividade}")
+   public Usuario getUsuarioByIdAtividade(@PathVariable("idatividade") Long idatividade) {
+       return this.atividadeService.getUsuarioByIdAtividade(idatividade);
+   }
 
    @PostMapping("/atividade")
    public Atividade inserirAtividade(@RequestBody Atividade atividade){

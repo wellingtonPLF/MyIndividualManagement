@@ -14,18 +14,22 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+//import project.gerenciamentoIndividual.main.model.Usuario;
+
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "atividade")
 public class Atividade{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idatividade;
 	private int ordem;
 	private String nome;
@@ -79,6 +83,4 @@ public class Atividade{
 	public void setJanelas(List<Janela> janelas) {
 		this.janelas = janelas;
 	}
-	
-	
 }

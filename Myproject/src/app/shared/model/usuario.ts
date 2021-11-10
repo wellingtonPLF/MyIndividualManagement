@@ -1,5 +1,6 @@
 import {Atividade} from "./atividade";
 import {Template} from "./template";
+import {UsuarioTemplate} from "./usuarioTemplate";
 
 export class Usuario{
   idusuario!: number;
@@ -9,7 +10,7 @@ export class Usuario{
   img!: string;
   token!: string;
   atividades: Array<Atividade> = new Array<Atividade>();
-  templates: Array<Template> = new Array<Template>();
+  usuarioTemplates: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
 
   constructor() {
   }

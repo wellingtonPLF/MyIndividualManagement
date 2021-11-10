@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import project.gerenciamentoIndividual.main.model.Janela;
 import project.gerenciamentoIndividual.main.model.Subarea;
 import project.gerenciamentoIndividual.main.repositories.SubareaRepository;
 
@@ -22,11 +23,14 @@ public class SubareaService {
    public Subarea getSubareaPorId(Long id) {
        return this.subareaRepository.findById(id).orElse(null);
    }
+   
+   public Janela getJanelaByIdSubarea(Long id) {
+       return this.subareaRepository.getJanelaByIdSubarea(id);
+   }
 
    @Transactional
    public Subarea inserirOuAtualizar(Subarea subarea) {
-	   Subarea subareaInserido = this.subareaRepository.save(subarea);
-       return subareaInserido;
+	   return this.subareaRepository.save(subarea);
    }
    
    public void apagar(Long idsubarea) {

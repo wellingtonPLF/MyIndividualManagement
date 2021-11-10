@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.gerenciamentoIndividual.main.model.Janela;
 import project.gerenciamentoIndividual.main.model.Subarea;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.SubareaService;
@@ -31,6 +32,11 @@ public class SubareaController {
    @GetMapping("/subarea/{id}")
    public Subarea getSubareaPorId(@PathVariable("id") Long id) {
        return this.subareaService.getSubareaPorId(id);
+   }
+   
+   @GetMapping("/subarea/mySubarea/janela/{id}")
+   public Janela getJanelaByIdSubarea(@PathVariable("id") Long id) {
+       return this.subareaService.getJanelaByIdSubarea(id);
    }
 
    @PostMapping("/subarea")

@@ -1,0 +1,36 @@
+<div style="margin-top: 20px; margin-left: 20px"
+     *ngFor="let ocupacao of ocupacoes; let i = index">
+  <div class="ocupacao">
+    <div style="display:flex;">
+      <div class="icon" (click)="showClasse(i)"><i class="fas fa-angle-down"></i></div>
+      <div class="ocupacaoNome">
+        <b>-</b>&nbsp;&nbsp;&nbsp;
+        <input [(ngModel)]="ocupacao.nome"  maxlength="12" size="11"
+               (keyup)="saveEdit($event, i)" spellcheck="false">
+        <b>-</b>&nbsp;&nbsp;&nbsp;</div>
+    </div>
+    <div class="threeDots">
+      <i class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
+    </div>
+  </div>
+  <div [hidden]="show != i" class="classe">
+    <div class="setaEsquerda">
+      <button mat-icon-button>
+        <i class="fas fa-caret-left"></i>
+      </button>
+    </div>
+    <div id="tasks">
+      <div class="task">{{ocupacao.classes[0]}}</div>
+      <div class="task" style="font-size: 30px; font-weight: normal">+</div>
+      <div class="task dotes"></div>
+      <div class="task dotes"></div>
+      <div class="task dotes"></div>
+    </div>
+    <div class="setaDireita">
+      <button mat-icon-button>
+        <i class="fas fa-caret-right"></i>
+      </button>
+    </div>
+  </div>
+</div>
+<div class="addOcupacao" (click)="addOcupacao()"><b>+</b></div>

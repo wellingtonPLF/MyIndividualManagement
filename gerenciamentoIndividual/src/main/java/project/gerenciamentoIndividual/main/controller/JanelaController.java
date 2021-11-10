@@ -12,8 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.gerenciamentoIndividual.main.model.Atividade;
 import project.gerenciamentoIndividual.main.model.Janela;
-import project.gerenciamentoIndividual.main.model.Usuario;
+import project.gerenciamentoIndividual.main.model.Template;
 import project.gerenciamentoIndividual.main.service.JanelaService;
 
 @RestController
@@ -32,7 +33,17 @@ public class JanelaController {
    public Janela getJanelaPorId(@PathVariable("id") Long id) {
        return this.janelaService.getJanelaPorId(id);
    }
-
+   
+   @GetMapping("/janela/myWindow/template/{id}")
+   public Template getTemplateNameByIdjanela(@PathVariable("id") Long id) {
+       return this.janelaService.getTemplateByIdjanela(id);
+   }
+   
+   @GetMapping("/janela/myWindow/atividade/{id}")
+   public Atividade getAtividadeByIdjanela(@PathVariable("id") Long id) {
+       return this.janelaService.getAtividadeByIdjanela(id);
+   }
+   
    @PostMapping("/janela")
    public Janela inserirJanela(@RequestBody Janela janela){
        return this.janelaService.inserirOuAtualizar(janela);

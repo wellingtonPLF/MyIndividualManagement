@@ -25,8 +25,7 @@ public class TaskService {
 
    @Transactional
    public Task inserirOuAtualizar(Task task) {
-	   Task taskInserido = this.taskRepository.save(task);
-       return taskInserido;
+	   return this.taskRepository.save(task);
    }
    
    public void apagar(Long idtask) {

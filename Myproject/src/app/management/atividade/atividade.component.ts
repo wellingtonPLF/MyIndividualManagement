@@ -3,10 +3,11 @@ import {Atividade} from "../../shared/model/atividade";
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
-import {Janela} from "../../shared/model/janela";
 import {Usuario} from "../../shared/model/usuario";
 import {UsuarioService} from "../../shared/service/usuario.service";
+import {TemplateService} from "../../shared/service/template.service";
 import {JanelaService} from "../../shared/service/janela.service";
+import {AtividadeFactory} from "../../shared/factoryDirectory/atividadeFactory";
 
 @Component({
   selector: 'app-atividade',
@@ -15,33 +16,49 @@ import {JanelaService} from "../../shared/service/janela.service";
 })
 export class AtividadeComponent implements OnInit {
   atividades!:  Array<Atividade>;
-  //Index usado para saber em qual parte da lista vc se encontrar,
-  // para então poder alterar a apresentação das janelas, no metodo remover;
+  //Index usado para saber em qual parte da ista vc se encontra;
   index!: number;
   @Input() usuario!: Usuario;
   @Output() newEmitter = new EventEmitter<Atividade>();
 
-  constructor(private usuarioService: UsuarioService, private janelaService: JanelaService,
+  constructor(private usuarioService: UsuarioService, private templateService: TemplateService,
               private atividadeService: AtividadeService, public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
-    this.atividades = this.usuario.atividades;
+    const listaOrdem = [];
+    const atividadesEmOrdem = new Array<Atividade>();
+    for(let atividade of this.usuario.atividades){
+      listaOrdem.push(atividade.ordem);
+    }
+    listaOrdem.sort();
+    for(let i = 0; i < listaOrdem.length; i++){
+      for(let j = 0; j < listaOrdem.length; j++){
+         if(listaOrdem[i] == this.usuario.atividades[j].ordem){
+            atividadesEmOrdem.push(this.usuario.atividades[j])
+            break
+         }
+      }
+    }
+    this.atividades = atividadesEmOrdem;
     this.newEmitter.emit(this.atividades[0]);
     this.index = 0;
   }
 
   addAtividade(): void{
-    const atv = new Atividade("New");
-    atv.usuario = this.usuario;
+    let atv!: Atividade;
+    const ordem = this.atividades[this.atividades.length - 1].ordem + 1;
 
-    const janela = new Janela();
-    janela.nome = "Test";
-    atv.janelas.push(janela);
-
-    this.atividadeService.inserir(atv).subscribe(
-      it => {
-        this.atividades.push(it)
+    this.templateService.pesquisarPorId(1).subscribe(
+      result => {
+        atv = AtividadeFactory.criarAtividade(result, ordem);
+        atv.nome = "New";
+        atv.usuario = this.usuario;
+        this.atividadeService.inserir(atv).subscribe(
+          it => {
+            this.atividades.push(it)
+          }
+        )
       }
     )
   }

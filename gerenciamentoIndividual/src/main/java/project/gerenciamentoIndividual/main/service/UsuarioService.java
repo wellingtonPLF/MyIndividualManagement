@@ -21,12 +21,15 @@ public class UsuarioService {
    public Usuario getUsuariosPorId(Long idusuario) {
        return this.usuarioRepository.findById(idusuario).orElse(null);
    }
-
+   
+   public Usuario getUsuarioByNome(String nome) {
+	   return this.usuarioRepository.findUsuarioByNome(nome);
+   }
+   
    @Transactional
    public Usuario inserirOuAtualizar(Usuario usuario) {
-       Usuario usuarioInserido = this.usuarioRepository.save(usuario);
-       return usuarioInserido;
-   }
+       return this.usuarioRepository.save(usuario);
+   } 
    
    public void apagar(Long idusuario) {
 	   this.usuarioRepository.deleteById(idusuario);

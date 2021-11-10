@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Classe} from "../model/classe";
+import {Ocupacao} from "../model/ocupacao";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class ClasseService {
 
   pesquisarPorId(id: number): Observable<Classe> {
     return this.httpClient.get<Classe>(`${this.URL_CLASSE}/${id}`);
+  }
+
+  pesquisarOcupacaoPorIdClasse(id: number): Observable<Ocupacao> {
+    return this.httpClient.get<Ocupacao>(`${this.URL_CLASSE}/myClasse/${id}`);
   }
 
   atualizar(classe: Classe): Observable<Classe> {

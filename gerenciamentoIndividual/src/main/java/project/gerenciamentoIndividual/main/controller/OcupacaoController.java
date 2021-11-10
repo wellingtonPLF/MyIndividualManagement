@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.gerenciamentoIndividual.main.model.Ocupacao;
+import project.gerenciamentoIndividual.main.model.Subarea;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.OcupacaoService;
 
@@ -32,7 +33,12 @@ public class OcupacaoController {
    public Ocupacao getOcupacaoPorId(@PathVariable("id") Long id) {
        return this.ocupacaoService.getOcupacaoPorId(id);
    }
-
+   
+   @GetMapping("/ocupacao/subareaByOcupation/{id}")
+   public Subarea getSubareaByIdOcupacao(@PathVariable("id") Long id) {
+       return this.ocupacaoService.getSubareaByIdOcupacao(id);
+   }
+   
    @PostMapping("/ocupacao")
    public Ocupacao inserirOcupacao(@RequestBody Ocupacao ocupacao){
        return this.ocupacaoService.inserirOuAtualizar(ocupacao);

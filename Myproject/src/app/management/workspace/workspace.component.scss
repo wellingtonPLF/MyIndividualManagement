@@ -6,7 +6,17 @@
   color: white;
   width: 115px;
   height: 30px;
+  cursor: pointer;
   clip-path: polygon(0% 90%, 10% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+
+.janela:hover{
+  background-color: #048098;
+}
+
+.changeColor{
+  background-color: #1976d2;
+  pointer-events: none;
 }
 
 #dropdownBasic1{
@@ -126,16 +136,4 @@
 #regras{
   cursor: pointer;
   transform: scale(1.3, 1.3);
-}
-
-#subarea{
-  display: flex;
-  align-items: center;
-  color: #989898;
-  height: 20px;
-  font-size: 12px;
-  margin-top: 3px;
-  cursor: pointer;
-  background-color: #e9e9e9;
-  padding: 0px 15px;
 }

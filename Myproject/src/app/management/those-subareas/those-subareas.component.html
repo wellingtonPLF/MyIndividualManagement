@@ -1,0 +1,9 @@
+<div style="display: flex; margin-left: 20px; align-items: center">
+  <div style="margin-right: 10px; font-size: 15px">
+    <b>-</b>&nbsp;&nbsp;&nbsp;{{templateName}}&nbsp;&nbsp;&nbsp;<b>-</b>
+  </div>
+  <div style="display: flex" *ngFor="let subarea of subareas; let i = index">
+    <div (click)="enviarSubarea(i)" class="subarea">{{subarea.nome}}</div>
+  </div>
+  <div style="margin-left: 5px; cursor:pointer;" (click)="addSubarea()"><b>+</b></div>
+</div>

@@ -8,8 +8,18 @@ import {MensagemService} from "../../shared/service/mensagem.service";
 import {Atividade} from "../../shared/model/atividade";
 import {Janela} from "../../shared/model/janela";
 import {TemplateService} from "../../shared/service/template.service";
-import {JanelaService} from "../../shared/service/janela.service";
+import {Subarea} from "../../shared/model/subarea";
+import {SubareaService} from "../../shared/service/subarea.service";
+import {Ocupacao} from "../../shared/model/ocupacao";
+import {Classe} from "../../shared/model/classe";
 import {Template} from "../../shared/model/template";
+import {UsuarioTemplate} from "../../shared/model/usuarioTemplate";
+import {ClasseFactory} from "../../shared/factoryDirectory/classeFactory";
+import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
+import {SubareaFactory} from "../../shared/factoryDirectory/subareaFactory";
+import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
+import {AtividadeFactory} from "../../shared/factoryDirectory/atividadeFactory";
+import {UsuarioFactory} from "../../shared/factoryDirectory/usuarioFactory";
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -19,70 +29,58 @@ import {Template} from "../../shared/model/template";
 export class CadastroUsuarioComponent implements OnInit {
   usuario: Usuario;
 
-  //ShowPassword Method
+  //ShowPassword
   password: string = 'password';
+  showPassword: boolean = false;
   repeatpassword: string = 'password';
-  showPw: boolean = false;
   showConfirmPassword: boolean = false;
 
-  //Validation Method
+  //Validation
   reactiveForm!: FormGroup;
-  redinvalideusername: boolean = false;
-  redInvalidePassword: boolean = false;
-  redInvalideconfirmPassword: boolean = false;
-  redInvalideEmail: boolean = false;
-  appearemailquestion: boolean = false;
-  appearnamequestion: boolean = false;
-  toolTipNameInUse: boolean = false;
+  invalid: Array<string> = [];
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(private usuarioService: UsuarioService, private templateService: TemplateService,
               private router: Router, private validate : SignupvalidationService,
+              private subareaService: SubareaService,
               private snackResult : MensagemService) {
     this.usuario = new Usuario();
     this.reactiveForm = this.validate.createSignupForm();
   }
 
-  get validations (){
-    return this.reactiveForm.controls
-  }
-
   ngOnInit(): void {
   }
 
+  validations(): any{
+    return this.reactiveForm.controls
+  }
+
   validateSignUp(): void{
-    this.toolTipNameInUse = false;
-    this.appearnamequestion = false;
-    this.appearemailquestion = false;
-    this.redInvalideEmail = false;
-    this.redInvalidePassword = false;
-    this.redinvalideusername = false;
-    this.redInvalideconfirmPassword = false;
+    this.invalid = []
 
     if(!this.reactiveForm.invalid){
       this.usuarioService.pesquisarPorValidacao(this.usuario).subscribe(
         validar => {
           if (validar.length == 0){
-            const atividade = new Atividade("Let's Work")
-            let janela = new Janela();
-            janela.nome = "Main";
-            atividade.janelas.push(janela);
-            this.usuario.atividades.push(atividade);
-            this.usuarioService.inserir(this.usuario).subscribe(
-              it => {
-                this.snackResult.success("Cadastro realizado com sucesso!")
-                this.router.navigate(['management'])
+            this.templateService.pesquisarPorId(1).subscribe(
+              result => {
+                UsuarioFactory.criarUsuario(result, this.usuario)
+                this.usuarioService.inserir(this.usuario).subscribe(
+                  it => {
+                    this.snackResult.success("Cadastro realizado com sucesso!")
+                    this.router.navigate(['management'])
+                  }
+                )
               }
             )
           }
           else {
             if(validar[0].nome == this.usuario.nome){
-              this.redinvalideusername = true;
-              this.toolTipNameInUse = true;
-              this.appearnamequestion = true;
+              this.invalid.push('username')
+              this.invalid.push('nameInUse')
             }
             if(validar[0].email == this.usuario.email){
-              this.redInvalideEmail = true;
-              this.appearemailquestion = true;
+              this.invalid.push('email')
+              this.invalid.push('emailInUse')
             }
           }
         }
@@ -90,20 +88,21 @@ export class CadastroUsuarioComponent implements OnInit {
     }
     else{
       if(this.reactiveForm.controls.password.errors){
-        this.redInvalidePassword = true;
+        this.invalid.push('password')
       }
 
       if(this.reactiveForm.controls.confirmPassword.errors){
-        this.redInvalideconfirmPassword = true;
+        this.invalid.push('confirmPassword')
       }
 
       if(this.reactiveForm.controls.username.errors){
-        this.redinvalideusername = true;
-        this.appearnamequestion = true;
+        this.invalid.push('username');
+        this.invalid.push('atleastfive');
       }
 
       if(this.reactiveForm.controls.email.errors){
-        this.redInvalideEmail = true;
+        this.invalid.push('email');
+        this.invalid.push('fakeMail');
       }
     }
   }
@@ -112,10 +111,10 @@ export class CadastroUsuarioComponent implements OnInit {
     if(run == 'password'){
       if (this.password === 'password') {
         this.password = 'text';
-        this.showPw = true;
+        this.showPassword = true;
       } else {
         this.password = 'password';
-        this.showPw = false;
+        this.showPassword = false;
       }
     }
     if(run == 'confirmPassword'){

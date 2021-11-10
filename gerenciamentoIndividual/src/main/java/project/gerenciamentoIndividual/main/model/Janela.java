@@ -13,17 +13,21 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "janela")
 public class Janela{
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="janela_sequence")
+	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 4)
 	private Long idjanela;
 	private String nome;
 	private int ordem;
@@ -40,7 +44,7 @@ public class Janela{
 	@JsonBackReference(value="template_Janela_Compoe")
 	private Template compoeTemplate;
 	
-	@OneToMany(mappedBy="janela", cascade=CascadeType.MERGE, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="janela", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	@JsonManagedReference(value="janela_Subarea")
 	private List<Subarea> subareas = new ArrayList<Subarea>();
 	

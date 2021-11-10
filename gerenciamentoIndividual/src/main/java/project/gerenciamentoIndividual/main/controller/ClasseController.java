@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import project.gerenciamentoIndividual.main.model.Classe;
+import project.gerenciamentoIndividual.main.model.Ocupacao;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.ClasseService;
 
@@ -31,6 +32,11 @@ public class ClasseController {
    @GetMapping("/classe/{id}")
    public Classe getClassePorId(@PathVariable("id") Long id) {
        return this.classeService.getClassePorId(id);
+   }
+   
+   @GetMapping("/classe/myClasse/{id}")
+   public Ocupacao getOcupacaoByIdclasse(@PathVariable("id") Long id) {
+       return this.classeService.getOcupacaoByIdclasse(id);
    }
 
    @PostMapping("/classe")

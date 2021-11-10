@@ -4,6 +4,8 @@ import {Observable} from "rxjs";
 import {Usuario} from "../model/usuario";
 import {map} from "rxjs/operators";
 import {Janela} from "../model/janela";
+import {Template} from "../model/template";
+import {Atividade} from "../model/atividade";
 
 @Injectable({
   providedIn: 'root'
@@ -29,6 +31,14 @@ export class JanelaService {
 
   pesquisarPorId(id: number): Observable<Janela> {
     return this.httpClient.get<Janela>(`${this.URL_JANELAS}/${id}`);
+  }
+
+  pesquisarTemplateByIdJanela(id: number): Observable<Template> {
+    return this.httpClient.get<Template>(`${this.URL_JANELAS}/myWindow/template/${id}`);
+  }
+
+  pesquisarAtividadeByIdJanela(id: number): Observable<Atividade> {
+    return this.httpClient.get<Atividade>(`${this.URL_JANELAS}/myWindow/atividade/${id}`);
   }
 
   atualizar(janela: Janela): Observable<Janela> {

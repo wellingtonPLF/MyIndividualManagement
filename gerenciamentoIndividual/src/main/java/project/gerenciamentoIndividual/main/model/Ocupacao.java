@@ -11,19 +11,24 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "ocupacao")
 public class Ocupacao {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ocupacao_sequence")
+	@SequenceGenerator(name="ocupacao_sequence", sequenceName="ocupacao_seq",  allocationSize = 1, initialValue = 8)
 	private Long idocupacao;
 	private String nome;
+	private int ordem;
 	
 	@ManyToOne
 	@JsonBackReference(value="subarea_Ocupacao")
@@ -66,6 +71,12 @@ public class Ocupacao {
 	public void setClasses(List<Classe> classes) {
 		this.classes = classes;
 	}
-	
-	
+
+	public int getOrdem() {
+		return ordem;
+	}
+
+	public void setOrdem(int ordem) {
+		this.ordem = ordem;
+	}
 }

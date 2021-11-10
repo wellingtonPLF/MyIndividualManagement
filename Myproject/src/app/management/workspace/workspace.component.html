@@ -1,7 +1,8 @@
 <div *ngIf="windows">
   <div style="display: flex; border-bottom: 3px solid #1372d6">
     <div *ngFor="let janela of windows; let i = index" style="display: flex; margin-right: 10px;">
-      <div class="janela">{{janela.nome}}</div>
+      <div class="janela" [ngClass]="{'changeColor': index == i}"
+           (click)="enviarJanela(i)">{{janela.nome}}</div>
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">
@@ -23,13 +24,9 @@
     <div class="addJanela" *ngIf="windows" (click)="addJanela()"><b>+</b></div>
   </div>
   <div id="abaixoDaJanela">
-    <div style="display: flex; margin-left: 20px; align-items: center">
-      <div style="margin-right: 10px"><b>-</b>&nbsp;&nbsp;&nbsp;Nome&nbsp;&nbsp;&nbsp;<b>-</b></div>
-      <div style="display: flex">
-        <div id="subarea">Main</div>
-        <div style="margin-left: 5px; cursor:pointer;"><b>+</b></div>
-      </div>
-    </div>
+
+    <app-those-subareas [janela]="janela" (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
+
     <div style="display: flex; margin-right: 20px; align-items: center">
       <div id="terminal">
         <i class="fas fa-terminal"></i>
@@ -42,4 +39,9 @@
       </div>
     </div>
   </div>
+
+  <div>
+      <app-ocupacao-geral [subarea]="subarea"></app-ocupacao-geral>
+  </div>
+
 </div>

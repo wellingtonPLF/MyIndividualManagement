@@ -2,6 +2,7 @@ package project.gerenciamentoIndividual.main.controller;
 
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.UsuarioService;
+import project.gerenciamentoIndividual.main.repositories.UsuarioRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -29,6 +30,11 @@ public class UsuarioController {
    @GetMapping("/usuario/{idusuario}")
    public Usuario getUsuarioPorId(@PathVariable("idusuario") Long idusuario) {
        return this.usuarioService.getUsuariosPorId(idusuario);
+   }
+   
+   @GetMapping("/usuario/myuser/{nome}")
+   public Usuario getUsuarioByNomeAndSenha(@PathVariable("nome") String nome) {
+       return usuarioService.getUsuarioByNome(nome);
    }
 
    @PostMapping("/usuario")

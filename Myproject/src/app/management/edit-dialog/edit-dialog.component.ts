@@ -8,6 +8,7 @@ import {JanelaService} from "../../shared/service/janela.service";
 import {Janela} from "../../shared/model/janela";
 import {I_nome} from "../../shared/interfaces/I_nome";
 import {Template} from "../../shared/model/template";
+import {forkJoin} from "rxjs";
 
 
 @Component({
@@ -53,20 +54,32 @@ export class EditDialogComponent implements OnInit {
     if(this.data.type == "atividade"){
       // Referenced to solve TypeError: object references an unsaved transient instance - save
       this.atividade.usuario = this.data.key;
-      this.atividadeService.atualizar(this.atividade).subscribe(
-        it => {
-          this.usuarioService.pesquisarPorId(this.data.key.idusuario).subscribe(
-            result => this.submitClicked.emit(result.atividades.pop())
+      const lista_template_by_janela = [];
+      for (const janela of this.atividade.janelas){
+        const getTemplateObservable = this.janelaService.pesquisarTemplateByIdJanela(janela.idjanela);
+        lista_template_by_janela.push(getTemplateObservable);
+      }
+      forkJoin(lista_template_by_janela).subscribe(
+        response => {
+          const result = this.atividade.janelas.map(
+            (janela, index) => {
+              janela['template'] = response[index];
+              return janela;
+            }
+          )
+          this.atividadeService.atualizar(this.atividade).subscribe(
+            it => this.submitClicked.emit(it)
           )
         }
       )
     }
     if(this.data.type == "janela"){
       this.janela.atividade = this.data.key;
-      this.janelaService.atualizar(this.janela).subscribe(
-        it => {
-          this.atividadeService.pesquisarPorId(this.data.key.idatividade).subscribe(
-            result => this.submitClicked.emit(result.janelas.pop())
+      this.janelaService.pesquisarTemplateByIdJanela(this.janela.idjanela).subscribe(
+        templat => {
+          this.janela.template = templat
+          this.janelaService.atualizar(this.janela).subscribe(
+            it => this.submitClicked.emit(it)
           )
         }
       )

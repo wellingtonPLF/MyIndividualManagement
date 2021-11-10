@@ -7,13 +7,17 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
 import { WorkspaceComponent } from './workspace/workspace.component';
+import { ThoseSubareasComponent } from './those-subareas/those-subareas.component';
+import { OcupacaoGeralComponent } from './ocupacao-geral/ocupacao-geral.component';
 
 
 @NgModule({
     declarations: [
         AtividadeComponent,
         EditDialogComponent,
-        WorkspaceComponent
+        WorkspaceComponent,
+        ThoseSubareasComponent,
+        OcupacaoGeralComponent
     ],
   exports: [
     AtividadeComponent,

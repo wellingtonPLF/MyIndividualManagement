@@ -96,13 +96,13 @@
   flex-direction: column;
 }
 
-#test{
+#validation{
   display: flex;
   margin-top: 8px;
   margin-left: 7px;
 }
 
-#test div{
+#validation div{
   border: 1px solid #d40909;
   color: red;
   border-radius: 100%;
@@ -111,7 +111,7 @@
   margin-left: 5px;
 }
 
-#test div:hover::after{
+#validation div:hover::after{
   border: 1px solid black;
   border-radius: 10px;
   padding: 10px;
@@ -148,10 +148,10 @@
   display: none;
 }
 
-.atleastfive i:hover:after{
-  content: attr(minlength-tooltip);
+.invalidToolTip i:hover:after{
+  content: attr(invalid-tooltip);
 }
 
-.question i:hover::after{
+.inUse i:hover::after{
   content: attr(data-tooltip);
 }

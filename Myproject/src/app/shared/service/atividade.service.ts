@@ -31,6 +31,10 @@ export class AtividadeService {
     return this.httpClient.get<Atividade>(`${this.URL_ATIVIDADE}/${id}`);
   }
 
+  pesquisarUsuarioPorIdAtividade(id: number): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.URL_ATIVIDADE}/myActivity/${id}`);
+  }
+
   atualizar(atividade: Atividade): Observable<Atividade> {
     return this.httpClient.put<Atividade>(`${this.URL_ATIVIDADE}/${atividade.idatividade}`, atividade);
   }

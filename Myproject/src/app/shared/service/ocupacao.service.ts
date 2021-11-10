@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Ocupacao} from "../model/ocupacao";
+import {Subarea} from "../model/subarea";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class OcupacaoService {
 
   pesquisarPorId(id: number): Observable<Ocupacao> {
     return this.httpClient.get<Ocupacao>(`${this.URL_OCUPACAO}/${id}`);
+  }
+
+  pesquisarSubareaPorIdOcupacao(id: number): Observable<Subarea>{
+    return this.httpClient.get<Subarea>(`${this.URL_OCUPACAO}/subareaByOcupation/${id}`);
   }
 
   atualizar(ocupacao: Ocupacao): Observable<Ocupacao> {

@@ -30,9 +30,13 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`);
   }
 
-  pesquisarPorUsuario(usuario: Usuario): Observable<Usuario []> {
+  /*pesquisarPorUsuario(usuario: Usuario): Observable<Usuario []> {
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
       map(users=> users.filter(u => u.nome == usuario.nome && u.senha == usuario.senha)));
+  }*/
+
+  getUsuarioByNome(nome: String): Observable<Usuario>{
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/myuser/${nome}`);
   }
 
   pesquisarPorValidacao(usuario: Usuario): Observable<Usuario []>{

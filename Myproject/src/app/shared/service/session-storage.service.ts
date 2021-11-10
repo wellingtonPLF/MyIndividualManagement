@@ -13,12 +13,10 @@ export class SessionStorageService {
 
   setToken(token: string): void{
     sessionStorage.setItem('token', token);
-    console.log("Token Add");
   }
 
   removeToken(token: string): void{
     sessionStorage.removeItem(token);
     sessionStorage.clear();
-    console.log("Token Removido");
   }
 }

@@ -10,33 +10,31 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
 @Table(name = "template")
-public class Template {
-
+public class Template{
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="template_sequence")
+	@SequenceGenerator(name="template_sequence", sequenceName="template_seq",  allocationSize = 1, initialValue = 4)
 	private Long idtemplate;
 	private String nome;
 	
-	@ManyToOne
-	@JsonBackReference(value="usuario_Template")
-	private Usuario usuario;
+	@OneToMany(mappedBy="template", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@JsonManagedReference(value="template_UsuarioTemplates")
+	private List<UsuarioTemplate> usuarioTemplates = new ArrayList<UsuarioTemplate>();
 	
 	@OneToOne
 	@JoinColumn(name="janela_c")
 	@JsonManagedReference(value="template_Janela_Compoe")
 	private Janela janela_c;
 	
-	@OneToMany(mappedBy="template", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="template", cascade= {CascadeType.PERSIST})
 	@JsonManagedReference(value="template_Janela")
 	private List<Janela> janelas = new ArrayList<Janela>();
 	
@@ -72,5 +70,13 @@ public class Template {
 
 	public void setJanela_c(Janela janela_c) {
 		this.janela_c = janela_c;
+	}
+
+	public List<UsuarioTemplate> getUsuarioTemplates() {
+		return usuarioTemplates;
+	}
+
+	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
+		this.usuarioTemplates = usuarioTemplates;
 	}
 }

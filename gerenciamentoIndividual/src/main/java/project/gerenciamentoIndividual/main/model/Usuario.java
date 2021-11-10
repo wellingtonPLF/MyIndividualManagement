@@ -1,10 +1,8 @@
 package project.gerenciamentoIndividual.main.model;
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -12,16 +10,14 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
-
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-
 
 @Entity
 @Table(name = "usuario")
 public class Usuario{
 
    @Id
-   @GeneratedValue(strategy = GenerationType.AUTO)
+   @GeneratedValue(strategy = GenerationType.IDENTITY)
    private Long idusuario;
    private String nome;
    private String email;
@@ -30,15 +26,15 @@ public class Usuario{
    private String token;
    
    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
-   @JsonManagedReference(value="usuario_Template")
-   private List<Template> templates = new ArrayList<Template>();
+   @JsonManagedReference(value="usuario_UsuarioTemplates")
+   private List<UsuarioTemplate> usuarioTemplates = new ArrayList<UsuarioTemplate>();
    
    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
    @JsonManagedReference(value="usuario_Atv")
    private List<Atividade> atividades = new ArrayList<Atividade>();
    
-   public Usuario() {
-	   	
+   public Usuario() { 	
+	   
    }
    
 	public Long getIdusuario() {
@@ -96,12 +92,12 @@ public class Usuario{
 	public void setAtividades(List<Atividade> atividades) {
 		this.atividades = atividades;
 	}
-	
-	public List<Template> getTemplates() {
-		return templates;
+
+	public List<UsuarioTemplate> getUsuarioTemplates() {
+		return usuarioTemplates;
 	}
 
-	public void setTemplates(List<Template> templates) {
-		this.templates = templates;
-	}	
+	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
+		this.usuarioTemplates = usuarioTemplates;
+	}
 }

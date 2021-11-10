@@ -27,7 +27,9 @@ export class TelaManagementComponent implements OnInit {
     if (this.rotalAtual.snapshot.paramMap.has('id')) {
       const id = Number(this.rotalAtual.snapshot.paramMap.get('id'));
       this.usuarioService.pesquisarPorId(id).subscribe(
-        it => this.usuario = it
+        it => {
+          this.usuario = it
+        }
       );
     }
   }
