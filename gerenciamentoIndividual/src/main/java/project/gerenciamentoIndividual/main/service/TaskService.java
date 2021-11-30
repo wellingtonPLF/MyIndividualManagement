@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import project.gerenciamentoIndividual.main.model.Classe;
 import project.gerenciamentoIndividual.main.model.Task;
 import project.gerenciamentoIndividual.main.repositories.TaskRepository;
 
@@ -21,6 +22,10 @@ public class TaskService {
    
    public Task getTaskPorId(Long id) {
        return this.taskRepository.findById(id).orElse(null);
+   }
+   
+   public Classe getClasseByIdTask(Long id) {
+       return this.taskRepository.getClasseByIdTask(id);
    }
 
    @Transactional

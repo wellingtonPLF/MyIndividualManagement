@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Task} from "../model/task";
+import {Classe} from "../model/classe";
 
 @Injectable({
   providedIn: 'root'
@@ -27,6 +28,10 @@ export class TaskService {
 
   pesquisarPorId(id: number): Observable<Task> {
     return this.httpClient.get<Task>(`${this.URL_TASK}/${id}`);
+  }
+
+  pesquisarClassePorIdTask(id: number): Observable<Classe> {
+    return this.httpClient.get<Classe>(`${this.URL_TASK}/myTask/classe/${id}`);
   }
 
   atualizar(task: Task): Observable<Task> {

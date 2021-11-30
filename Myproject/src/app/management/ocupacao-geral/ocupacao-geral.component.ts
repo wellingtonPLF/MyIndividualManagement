@@ -5,6 +5,7 @@ import {OcupacaoService} from "../../shared/service/ocupacao.service";
 import {TemplateService} from "../../shared/service/template.service";
 import {SubareaService} from "../../shared/service/subarea.service";
 import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
+import {OrdemDependency} from "../../shared/solid/ordemDependency";
 
 @Component({
   selector: 'app-ocupacao-geral',
@@ -12,7 +13,7 @@ import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
   styleUrls: ['./ocupacao-geral.component.scss']
 })
 export class OcupacaoGeralComponent implements OnInit {
-  show: number | undefined = undefined;
+  show: number | undefined = 0;
   @Input() subarea!: Subarea;
   ocupacoes!: Array<Ocupacao>;
   timeout: any = null;
@@ -24,24 +25,10 @@ export class OcupacaoGeralComponent implements OnInit {
   }
 
   ngOnChanges(): void{
-    const listaOrdem = Array<number>();
     if(this.subarea != undefined){
-      const ocupacoesEmOrdem = new Array<Ocupacao>();
       this.subareaService.pesquisarPorId(this.subarea.idsubarea).subscribe(
         it => {
-          for(let ocupacao of it.ocupacoes){
-            listaOrdem.push(ocupacao.ordem);
-          }
-          listaOrdem.sort();
-          for(let i = 0; i < listaOrdem.length; i++){
-            for(let j = 0; j < listaOrdem.length; j++){
-              if(listaOrdem[i] == it.ocupacoes[j].ordem){
-                ocupacoesEmOrdem.push(it.ocupacoes[j])
-                break
-              }
-            }
-          }
-          this.ocupacoes = ocupacoesEmOrdem;
+          this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
         }
       )
     }
@@ -90,21 +77,23 @@ export class OcupacaoGeralComponent implements OnInit {
   }
 
   addOcupacao(): void{
-    let ocupacao!: Ocupacao;
-    const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
+    if(this.ocupacoes.length < 7){
+      let ocupacao!: Ocupacao;
+      const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
 
-    this.templateService.pesquisarPorId(1).subscribe(
-      result => {
-        ocupacao = OcupacaoFactory.criarOcupacao(result, ordem);
-        ocupacao.nome = "New";
-        ocupacao.subarea = this.subarea;
+      this.templateService.pesquisarPorId(1).subscribe(
+        result => {
+          ocupacao = OcupacaoFactory.criarOcupacao(result, ordem);
+          ocupacao.nome = "New";
+          ocupacao.subarea = this.subarea;
 
-        this.ocupacaoService.inserir(ocupacao).subscribe(
-          it => {
-            this.ocupacoes.push(it)
-          }
-        )
-      }
-    )
+          this.ocupacaoService.inserir(ocupacao).subscribe(
+            it => {
+              this.ocupacoes.push(it)
+            }
+          )
+        }
+      )
+    }
   }
 }

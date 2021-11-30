@@ -10,6 +10,7 @@ export class ClasseFactory{
     classe.oque = template.janela_c.subareas[0].ocupacoes[0].classes[0].oque;
     classe.como = template.janela_c.subareas[0].ocupacoes[0].classes[0].como;
     classe.ordem = ordem;
+    classe.objectType = 'Classe';
     return classe;
   }
 }

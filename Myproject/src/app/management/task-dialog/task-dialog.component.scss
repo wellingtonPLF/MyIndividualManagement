@@ -1,0 +1,47 @@
+#buttons{
+  display: flex;
+  margin-top: 10px;
+}
+
+#buttons button{
+  margin: 0px 5px;
+}
+
+#buttons div button:first-child{
+  margin-left: 0px;
+  background-color: #02AAC9;
+}
+
+#buttons div button:nth-child(2){
+  color: black;
+  background-color: white;
+}
+
+#taskName{
+  text-align: center;
+  margin-right: 12px;
+}
+
+#taskName input{
+  margin-bottom: 10px;
+  font-size: 20px;
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  padding-right: 8px;
+  height: 25px;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.deleteTask{
+  margin-top: 5px;
+  color: white;
+  background-color: #d21969;
+  width: 50px;
+  min-width: 50px;
+  display: flex;
+  justify-content: center;
+}

@@ -1,0 +1,40 @@
+// Extra
+#myCarousel{
+  display: flex;
+  align-items: center;
+  background-color: transparent;
+  height: 145px;
+}
+
+.containerItens{
+  display: flex;
+}
+
+.counteiner-item{
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  justify-content: center;
+  align-items: center;
+  background-color: white;
+  width: 120px;
+  margin-left: 7.5px;
+  margin-right: 7.5px;
+  border: 2px solid #e5e5e5;
+  height: 70px;
+}
+
+.counteiner-item:hover{
+  border-color: #1284c3;
+  color: #1284c3;
+  font-weight: 620;
+}
+
+.displayWrap{
+  display: flex;
+  flex-wrap: wrap
+}
+
+.displayNone{
+  display: none;
+}

@@ -1,0 +1,110 @@
+#body{
+  background-color: #efefef;
+  color: #515151;
+  height: 100%;
+}
+
+#classeMenu button{
+  border: none;
+  background-color: transparent;
+  text-align: center;
+  margin-right: 20px;
+}
+
+#classeNome{
+  font-weight: 600;
+  font-size: 20px;
+  margin-left: 20px;
+}
+
+#classeNome input{
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  padding-right: 8px;
+  height: 25px;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+#classeMenu{
+  display: flex;
+  background-color: white;
+  justify-content: space-between;
+  height: 45px;
+  align-items: center;
+}
+
+.estrutura {
+  width: 98vw;
+  height: 90vh;
+  padding-left: 30px;
+  padding-top: 15px;
+  background-color: #efefef;
+}
+
+.tasks{
+  display: flex;
+  width: 90%;
+}
+.my-tasks{
+  display: flex;
+  align-items: center;
+  width: 97%;
+  height: 145px;
+}
+
+.task{
+  cursor: pointer;
+  display: flex;
+  font-size: 14px;
+  align-items: center;
+  justify-content: center;
+  background-color: white;
+  width: 120px;
+  margin-left: 7.5px;
+  margin-right: 7.5px;
+  border: 2px solid #e5e5e5;
+  height: 70px;
+}
+
+.task:hover{
+  border-color: #1284c3;
+  color: #1284c3;
+  font-weight: 620;
+}
+
+.dotes{
+  border-style: dashed;
+}
+
+.setaEsquerda{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  margin-left: 4px;
+  height: 145px;
+}
+
+.setaDireita{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-right: 10px;
+  width: 70px;
+  height: 145px;
+}
+
+.dificuldade{
+  margin-top: 15px;
+  margin-bottom: 5px;
+  border-bottom: 4px solid white;
+  width: 97%;
+}
+
+.dificuldade:first-child{
+  margin-top: 0px;
+}

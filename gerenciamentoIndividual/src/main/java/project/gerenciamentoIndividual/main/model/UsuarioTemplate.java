@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -16,12 +17,15 @@ public class UsuarioTemplate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idusuarioTemplate;
+	private String objectType;
 	
 	@ManyToOne
+	@JoinColumn(name="idusuario")
 	@JsonBackReference(value="usuario_UsuarioTemplates")
 	private Usuario usuario;
 	
 	@ManyToOne
+	@JoinColumn(name="idtemplate")
 	@JsonBackReference(value="template_UsuarioTemplates")
 	private Template template;
 	
@@ -42,5 +46,11 @@ public class UsuarioTemplate {
 	}
 	public void setIdusuarioTemplate(Long idusuarioTemplate) {
 		this.idusuarioTemplate = idusuarioTemplate;
+	}
+	public String getObjectType() {
+		return objectType;
+	}
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

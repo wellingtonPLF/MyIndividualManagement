@@ -10,6 +10,7 @@ export class Janela implements I_nome{
   atividade!: Atividade;
   template!: Template;
   compoeTemplate!: Template;
+  objectType!: string;
   subareas: Array<Subarea> = new Array<Subarea>();
 
   constructor() {

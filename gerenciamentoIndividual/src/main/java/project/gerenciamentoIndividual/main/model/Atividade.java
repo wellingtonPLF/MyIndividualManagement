@@ -1,6 +1,5 @@
 package project.gerenciamentoIndividual.main.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -10,19 +9,13 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
-//import project.gerenciamentoIndividual.main.model.Usuario;
-
-import org.hibernate.annotations.OnDelete;
-import org.hibernate.annotations.OnDeleteAction;
-
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "atividade")
@@ -33,8 +26,10 @@ public class Atividade{
 	private Long idatividade;
 	private int ordem;
 	private String nome;
+	private String objectType;
 	
 	@ManyToOne
+	@JoinColumn(name="idusuario")
 	@JsonBackReference(value="usuario_Atv")
 	private Usuario usuario;
 	
@@ -82,5 +77,13 @@ public class Atividade{
 
 	public void setJanelas(List<Janela> janelas) {
 		this.janelas = janelas;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

@@ -9,6 +9,10 @@ import {MatDialogModule} from "@angular/material/dialog";
 import { WorkspaceComponent } from './workspace/workspace.component';
 import { ThoseSubareasComponent } from './those-subareas/those-subareas.component';
 import { OcupacaoGeralComponent } from './ocupacao-geral/ocupacao-geral.component';
+import { ClasseCreationComponent } from './classe-creation/classe-creation.component';
+import {RouterModule} from "@angular/router";
+import { TaskDialogComponent } from './task-dialog/task-dialog.component';
+import { CarouselComponent } from './carousel/carousel.component';
 
 
 @NgModule({
@@ -17,7 +21,10 @@ import { OcupacaoGeralComponent } from './ocupacao-geral/ocupacao-geral.componen
         EditDialogComponent,
         WorkspaceComponent,
         ThoseSubareasComponent,
-        OcupacaoGeralComponent
+        OcupacaoGeralComponent,
+        ClasseCreationComponent,
+        TaskDialogComponent,
+        CarouselComponent
     ],
   exports: [
     AtividadeComponent,
@@ -28,7 +35,8 @@ import { OcupacaoGeralComponent } from './ocupacao-geral/ocupacao-geral.componen
         FormsModule,
         MatButtonModule,
         NgbModule,
-        MatDialogModule,
+        RouterModule,
+        MatDialogModule
     ]
 })
 export class ManagementModule { }

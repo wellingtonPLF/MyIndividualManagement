@@ -1,0 +1,18 @@
+<div style="color: black">
+  <div *ngIf="task != undefined" id="taskName">
+    <b>-</b>&nbsp;&nbsp;&nbsp;
+    <input [(ngModel)]="task.nome"  maxlength="12" size="11"
+           (keyup)="saveEdit($event)" spellcheck="false">
+    <b>-</b>
+  </div>
+  <textarea *ngIf="task != undefined" [(ngModel)]="task.descricao" rows="4" cols="50"></textarea>
+  <div id="buttons">
+    <div style="flex-basis: 95%">
+      <button mat-button mat-raised-button mat-dialog-close (click)="updateTask()">Confirm</button>
+      <button mat-button mat-raised-button mat-dialog-close>Cancel</button>
+    </div>
+    <button mat-button mat-raised-button (click)="removerTask()" class="deleteTask">
+      <i  class="fas fa-trash"></i>
+    </button>
+  </div>
+</div>

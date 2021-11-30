@@ -1,0 +1,39 @@
+<div id="myCarousel" [style]="carousel">
+  <!-- Left Button-->
+  <button mat-icon-button (click)="left()">
+    <i class="fas fa-caret-left"></i>
+  </button>
+  <!--carousel body -->
+  <div class="containerItens" [style]="containerItens" *ngIf="lista != undefined">
+    <div class="displayWrap" *ngFor="let paginas of counter(pages); let i = index">
+      <div *ngFor="let range of counter(qntItens); let j = index"
+           (click)="show((i * qntItens) + j)"
+           [ngClass]="{'counteiner-item': escolhido == i, 'displayNone': escolhido != i}">
+        {{lista[(i * qntItens) + j].nome}}
+      </div>
+    </div>
+    <div class="displayWrap" *ngIf="(resto) != 0; else elseBlock">
+      <div *ngFor="let paginas of counter(resto); let i = index;"
+           (click)="show(multiplo() +i)"
+           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+        {{lista[multiplo() + i].nome}}
+      </div>
+      <div [ngClass]="{'counteiner-item':  escolhido == pages, 'displayNone': escolhido != pages}"
+           (click)="add()" style="font-size: 30px; font-weight: normal"> + </div>
+      <div *ngFor="let paginas of counter(qntItens - resto - 1);" style="border-style: dashed;"
+           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+      </div>
+    </div>
+    <ng-template #elseBlock>
+      <div [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}"
+           (click)="add()" style="font-size: 30px; font-weight: normal"> + </div>
+      <div *ngFor="let paginas of counter(qntItens - resto - 1);" style="border-style: dashed;"
+           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+      </div>
+    </ng-template>
+  </div>
+ <!-- Right Button-->
+  <button mat-icon-button (click)="right()">
+    <i class="fas fa-caret-right"></i>
+  </button>
+</div>

@@ -7,6 +7,7 @@ export class Atividade implements I_nome{
   nome!: string;
   ordem!: number;
   usuario!: Usuario;
+  objectType!: string;
   janelas: Array<Janela> = new Array<Janela>();
 
   constructor(nome: string) {

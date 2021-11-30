@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import project.gerenciamentoIndividual.main.model.Classe;
 import project.gerenciamentoIndividual.main.model.Task;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.service.TaskService;
@@ -31,6 +32,11 @@ public class TaskController {
    @GetMapping("/task/{id}")
    public Task getTaskPorId(@PathVariable("id") Long id) {
        return this.taskService.getTaskPorId(id);
+   }
+   
+   @GetMapping("/task/myTask/classe/{id}")
+   public Classe getClasseByIdTask(@PathVariable("id") Long id) {
+       return this.taskService.getClasseByIdTask(id);
    }
 
    @PostMapping("/task")

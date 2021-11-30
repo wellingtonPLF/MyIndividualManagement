@@ -11,6 +11,7 @@ import {Ocupacao} from "../../shared/model/ocupacao";
 import {Classe} from "../../shared/model/classe";
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
+import {OrdemDependency} from "../../shared/solid/ordemDependency";
 
 @Component({
   selector: 'app-workspace',
@@ -32,26 +33,12 @@ export class WorkspaceComponent implements OnInit {
   }
 
   ngOnChanges() {
-    const listaOrdem = Array<number>();
     if(this.activity != undefined){
       if(this.activity.janelas.length != 0){
         this.index = 0;
-        const janelasEmOrdem = new Array<Janela>();
         this.atividadeService.pesquisarPorId(this.activity.idatividade).subscribe(
           it => {
-            for(let janela of it.janelas){
-              listaOrdem.push(janela.ordem);
-            }
-            listaOrdem.sort();
-            for(let i = 0; i < listaOrdem.length; i++){
-              for(let j = 0; j < listaOrdem.length; j++){
-                if(listaOrdem[i] == it.janelas[j].ordem){
-                  janelasEmOrdem.push(it.janelas[j])
-                  break
-                }
-              }
-            }
-            this.windows = janelasEmOrdem;
+            this.windows =  OrdemDependency.ordenar(it.janelas);
             this.janela = this.windows[0];
           }
         )
@@ -61,6 +48,10 @@ export class WorkspaceComponent implements OnInit {
 
   removerJanela(index: number): void{
     if(index != 0){
+      if (this.index == index){
+        this.janela = this.windows[index - 1];
+        this.index = index - 1;
+      }
       this.janelaService.remover((this.windows[index].idjanela).toString()).subscribe(
         result => this.windows.splice(index, 1)
       )
@@ -84,21 +75,23 @@ export class WorkspaceComponent implements OnInit {
   }
 
   addJanela(): void{
-    let window!: Janela;
-    const ordem = this.windows[this.windows.length - 1].ordem + 1;
+    if(this.windows.length < 6){
+      let window!: Janela;
+      const ordem = this.windows[this.windows.length - 1].ordem + 1;
 
-    this.templateService.pesquisarPorId(1).subscribe(
-      result => {
-        window = JanelaFactory.criarJanela(result, ordem);
-        window.nome = '. . .';
-        window.atividade = this.activity;
-        this.janelaService.inserir(window).subscribe(
-          result => {
-            this.windows.push(result)
-          }
-        )
-      }
-    )
+      this.templateService.pesquisarPorId(1).subscribe(
+        result => {
+          window = JanelaFactory.criarJanela(result, ordem);
+          window.nome = '. . .';
+          window.atividade = this.activity;
+          this.janelaService.inserir(window).subscribe(
+            it => {
+              this.windows.push(it)
+            }
+          )
+        }
+      )
+    }
   }
 
   enviarJanela(index: number): void{
@@ -108,5 +101,10 @@ export class WorkspaceComponent implements OnInit {
 
   throwSubarea(subarea: Subarea): void{
     this.subarea = subarea;
+  }
+
+  openTerminal(): void{
+    //var child_process = require('child_process');
+    //child_process.exec("start cmd.exe /K cd..");
   }
 }

@@ -7,6 +7,7 @@ export class OcupacaoFactory{
     const ocupacao = new Ocupacao();
     ocupacao.nome = template.janela_c.subareas[0].ocupacoes[0].nome;
     ocupacao.ordem = ordem;
+    ocupacao.objectType = 'Ocupacao';
     ocupacao.classes.push(ClasseFactory.criarClasse(template, 0));
     return ocupacao;
   }

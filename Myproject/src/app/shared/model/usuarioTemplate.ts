@@ -5,6 +5,7 @@ export class UsuarioTemplate{
   idusuarioTemplate!: number;
   usuario!: Usuario;
   template!: Template;
+  objectType!: string;
 
   constructor(template: Template) {
     this.template = template

@@ -7,6 +7,7 @@ export class SubareaFactory{
     const subarea = new Subarea();
     subarea.nome = template.janela_c.subareas[0].nome;
     subarea.ordem = ordem;
+    subarea.objectType = 'Subarea';
     subarea.ocupacoes.push(OcupacaoFactory.criarOcupacao(template, 0));
     return subarea;
   }

@@ -8,6 +8,7 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {TemplateService} from "../../shared/service/template.service";
 import {JanelaService} from "../../shared/service/janela.service";
 import {AtividadeFactory} from "../../shared/factoryDirectory/atividadeFactory";
+import {OrdemDependency} from "../../shared/solid/ordemDependency";
 
 @Component({
   selector: 'app-atividade',
@@ -26,41 +27,29 @@ export class AtividadeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    const listaOrdem = [];
-    const atividadesEmOrdem = new Array<Atividade>();
-    for(let atividade of this.usuario.atividades){
-      listaOrdem.push(atividade.ordem);
-    }
-    listaOrdem.sort();
-    for(let i = 0; i < listaOrdem.length; i++){
-      for(let j = 0; j < listaOrdem.length; j++){
-         if(listaOrdem[i] == this.usuario.atividades[j].ordem){
-            atividadesEmOrdem.push(this.usuario.atividades[j])
-            break
-         }
-      }
-    }
-    this.atividades = atividadesEmOrdem;
+    this.atividades = OrdemDependency.ordenar(this.usuario.atividades)
     this.newEmitter.emit(this.atividades[0]);
     this.index = 0;
   }
 
   addAtividade(): void{
-    let atv!: Atividade;
-    const ordem = this.atividades[this.atividades.length - 1].ordem + 1;
+    if(this.atividades.length < 10){
+      let atv!: Atividade;
+      const ordem = this.atividades[this.atividades.length - 1].ordem + 1;
 
-    this.templateService.pesquisarPorId(1).subscribe(
-      result => {
-        atv = AtividadeFactory.criarAtividade(result, ordem);
-        atv.nome = "New";
-        atv.usuario = this.usuario;
-        this.atividadeService.inserir(atv).subscribe(
-          it => {
-            this.atividades.push(it)
-          }
-        )
-      }
-    )
+      this.templateService.pesquisarPorId(1).subscribe(
+        result => {
+          atv = AtividadeFactory.criarAtividade(result, ordem);
+          atv.nome = "New";
+          atv.usuario = this.usuario;
+          this.atividadeService.inserir(atv).subscribe(
+            it => {
+              this.atividades.push(it)
+            }
+          )
+        }
+      )
+    }
   }
 
   atualizarNome(index: number): void{
@@ -83,6 +72,7 @@ export class AtividadeComponent implements OnInit {
     if(index != 0){
       if (this.index == index){
         this.newEmitter.emit(this.atividades[index - 1]);
+        this.index = index - 1;
       }
       this.atividadeService.remover((this.atividades[index].idatividade).toString()).subscribe(
         result => this.atividades.splice(index, 1)

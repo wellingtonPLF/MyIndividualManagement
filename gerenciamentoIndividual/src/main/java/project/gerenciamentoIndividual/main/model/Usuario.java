@@ -24,6 +24,7 @@ public class Usuario{
    private String img;
    private String senha;
    private String token;
+   private String objectType;
    
    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
    @JsonManagedReference(value="usuario_UsuarioTemplates")
@@ -99,5 +100,13 @@ public class Usuario{
 
 	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
 		this.usuarioTemplates = usuarioTemplates;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

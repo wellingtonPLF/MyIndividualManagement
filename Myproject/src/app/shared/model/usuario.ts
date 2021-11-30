@@ -9,6 +9,7 @@ export class Usuario{
   senha!: string;
   img!: string;
   token!: string;
+  objectType!: string;
   atividades: Array<Atividade> = new Array<Atividade>();
   usuarioTemplates: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
 

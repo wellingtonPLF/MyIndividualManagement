@@ -9,6 +9,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.SequenceGenerator;
@@ -29,8 +30,10 @@ public class Ocupacao {
 	private Long idocupacao;
 	private String nome;
 	private int ordem;
+	private String objectType;
 	
 	@ManyToOne
+	@JoinColumn(name="idsubarea")
 	@JsonBackReference(value="subarea_Ocupacao")
 	private Subarea subarea;
 	
@@ -78,5 +81,13 @@ public class Ocupacao {
 
 	public void setOrdem(int ordem) {
 		this.ordem = ordem;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

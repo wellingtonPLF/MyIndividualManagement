@@ -1,5 +1,3 @@
 Factory Method - Para a criação de cada entidade
 
-Ordem function Desgin Pattern
-
-Edit Dialog Desgin Pattern
+SOLID - Ordenação de Tarefas

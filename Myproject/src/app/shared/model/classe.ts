@@ -1,4 +1,5 @@
 import {Ocupacao} from "./ocupacao";
+import {Task} from "./task";
 
 export class Classe{
   idclasse!: number;
@@ -9,6 +10,7 @@ export class Classe{
   oque!: string;
   como!: string;
   ocupacao!: Ocupacao;
+  objectType!: string;
   tasks: Array<Task> = new Array<Task>();
 
   constructor() {

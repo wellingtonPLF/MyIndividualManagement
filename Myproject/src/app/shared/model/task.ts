@@ -5,19 +5,20 @@ export class Task{
   nome!: string;
   ordem!: number;
   data!: Date;
-  tempo!: Date;
+  tempo!: number;
   descricao!: string;
   comentario!: string;
   etiqueta!: string;
   encadeamento!: Task;
   classe!: Classe;
-  dtype!: string;
+  dificuldade!: string;
   texto!: string;
   planning!: string;
   fazer!: string;
   pendencia!: string;
   analise!: string;
   conclusao!: string;
+  objectType!: string;
 
   constructor() {
   }

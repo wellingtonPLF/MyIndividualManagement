@@ -28,7 +28,7 @@
     <app-those-subareas [janela]="janela" (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
 
     <div style="display: flex; margin-right: 20px; align-items: center">
-      <div id="terminal">
+      <div id="terminal" (click)="openTerminal()">
         <i class="fas fa-terminal"></i>
       </div>
       <div id="template">
@@ -40,8 +40,7 @@
     </div>
   </div>
 
-  <div>
+  <div style="overflow-y:scroll; height: 530px;">
       <app-ocupacao-geral [subarea]="subarea"></app-ocupacao-geral>
   </div>
-
 </div>

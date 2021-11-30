@@ -36,3 +36,5 @@ só poderam ser criadas classes/tasks. Cada crição terá como fazer sua arquiv
 encerramento, sejá ela por conclusão ou drop. Haverá um formatador de templates, em que você poderá escolher entre 
 o template padrão ou os seus pré customizados. Por fim, o usuario terá acesso ao terminal de comando
 para fazer o que desejar, e conseguirá utilizar um cronometro para o uso do pomodoro;
+
+Organização == Facil tomada de decisão

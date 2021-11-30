@@ -24,6 +24,7 @@ public class Template{
 	@SequenceGenerator(name="template_sequence", sequenceName="template_seq",  allocationSize = 1, initialValue = 4)
 	private Long idtemplate;
 	private String nome;
+	private String objectType;
 	
 	@OneToMany(mappedBy="template", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	@JsonManagedReference(value="template_UsuarioTemplates")
@@ -78,5 +79,13 @@ public class Template{
 
 	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
 		this.usuarioTemplates = usuarioTemplates;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

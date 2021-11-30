@@ -33,18 +33,20 @@ public class Task{
 	private Long idtask;
 	private String nome;
 	private int ordem;
+	private String dificuldade;
 	
 	@Temporal(TemporalType.DATE) 
 	@DateTimeFormat(pattern = "dd/MM/yyyy") 
 	private Date data;
-	
-	@Temporal(TemporalType.DATE) 
-	private Date tempo;
+
+	private Long tempo;
 	private String descricao;
 	private String comentario;
 	private String etiqueta;
+	private String objectType;
 	
 	@ManyToOne
+	@JoinColumn(name="idencadeamento")
 	private Task encadeamento;
 	
 	@ManyToOne
@@ -77,11 +79,11 @@ public class Task{
 		this.data = data;
 	}
 
-	public Date getTempo() {
+	public Long getTempo() {
 		return tempo;
 	}
 
-	public void setTempo(Date tempo) {
+	public void setTempo(Long tempo) {
 		this.tempo = tempo;
 	}
 
@@ -131,5 +133,21 @@ public class Task{
 
 	public void setOrdem(int ordem) {
 		this.ordem = ordem;
+	}
+
+	public String getDificuldade() {
+		return dificuldade;
+	}
+
+	public void setDificuldade(String dificuldade) {
+		this.dificuldade = dificuldade;
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
 	}
 }

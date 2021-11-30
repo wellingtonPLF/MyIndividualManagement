@@ -9,6 +9,8 @@ import {RouterModule} from "@angular/router";
 import {UsuarioModule} from "./usuario/usuario.module";
 import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
+import {MatDialogModule} from "@angular/material/dialog";
+import {MatButtonModule} from "@angular/material/button";
 
 @NgModule({
   declarations: [
@@ -20,6 +22,8 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
         BrowserAnimationsModule,
         HttpClientModule,
         MainModule,
+        MatDialogModule,
+        MatButtonModule,
         UsuarioModule,
         RouterModule,
         NgbModule

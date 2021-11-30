@@ -8,6 +8,7 @@ export class JanelaFactory{
     janela.nome = template.janela_c.nome;
     janela.ordem = ordem;
     janela.template = template;
+    janela.objectType = 'Janela';
     janela.subareas.push(SubareaFactory.criarSubarea(template, 0));
     return janela;
   }

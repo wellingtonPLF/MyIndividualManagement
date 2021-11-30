@@ -6,6 +6,7 @@ export class Template{
   nome!: string;
   usuarioTemplates: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
   janela_c!: Janela;
+  objectType!: string;
   janelas: Array<Janela> = new Array<Janela>();
 
   constructor() {

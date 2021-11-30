@@ -2,13 +2,12 @@ import {Component, OnInit, Inject, Output, EventEmitter} from '@angular/core';
 import {MAT_DIALOG_DATA} from '@angular/material/dialog';
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {Atividade} from "../../shared/model/atividade";
-import {Usuario} from "../../shared/model/usuario";
-import {UsuarioService} from "../../shared/service/usuario.service";
 import {JanelaService} from "../../shared/service/janela.service";
 import {Janela} from "../../shared/model/janela";
 import {I_nome} from "../../shared/interfaces/I_nome";
-import {Template} from "../../shared/model/template";
 import {forkJoin} from "rxjs";
+import {SubareaService} from "../../shared/service/subarea.service";
+import {Subarea} from "../../shared/model/subarea";
 
 
 @Component({
@@ -20,11 +19,12 @@ export class EditDialogComponent implements OnInit {
 
   object!: I_nome;
   atividade!: Atividade;
+  subarea!: Subarea;
   janela!: Janela;
   @Output() submitClicked = new EventEmitter<any>();
 
   constructor(@Inject(MAT_DIALOG_DATA) public data: any, private janelaService: JanelaService,
-              private atividadeService: AtividadeService, private usuarioService: UsuarioService) {
+              private atividadeService: AtividadeService, private subareaService: SubareaService) {
   }
 
   ngOnInit(): void {
@@ -43,6 +43,17 @@ export class EditDialogComponent implements OnInit {
           this.janela = it;
           if(this.janela.nome == ". . ."){
             this.janela.nome = "";
+          }
+          this.object = it;
+        }
+      )
+    }
+    if(this.data.type == "subarea"){
+      this.subareaService.pesquisarPorId(this.data.datakey).subscribe(
+        it => {
+          this.subarea = it;
+          if(this.subarea.nome == ". . ."){
+            this.subarea.nome = "";
           }
           this.object = it;
         }
@@ -82,6 +93,12 @@ export class EditDialogComponent implements OnInit {
             it => this.submitClicked.emit(it)
           )
         }
+      )
+    }
+    if(this.data.type == "subarea"){
+      this.subarea.janela = this.data.key;
+      this.subareaService.atualizar(this.subarea).subscribe(
+        it => this.submitClicked.emit(it)
       )
     }
   }

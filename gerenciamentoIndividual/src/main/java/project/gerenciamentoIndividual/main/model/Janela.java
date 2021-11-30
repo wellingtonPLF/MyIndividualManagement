@@ -10,6 +10,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
@@ -31,12 +32,15 @@ public class Janela{
 	private Long idjanela;
 	private String nome;
 	private int ordem;
+	private String objectType;
 	
 	@ManyToOne
+	@JoinColumn(name="idatividade")
 	@JsonBackReference(value="atv_Janela")
 	private Atividade atividade;
 	
 	@ManyToOne
+	@JoinColumn(name="idtemplate")
 	@JsonBackReference(value="template_Janela")
 	private Template template;
 	
@@ -104,5 +108,13 @@ public class Janela{
 
 	public void setSubareas(List<Subarea> subareas) {
 		this.subareas = subareas;
-	}	
+	}
+
+	public String getObjectType() {
+		return objectType;
+	}
+
+	public void setObjectType(String objectType) {
+		this.objectType = objectType;
+	}
 }

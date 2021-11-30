@@ -1,0 +1,41 @@
+<div id="body">
+  <div style="display: flex">
+    <div style="margin-left: 10px; margin-top: 10px">
+      <div id="classeMenu">
+        <div style="display: flex;">
+          <div *ngIf="classe != undefined" id="classeNome">
+            <b>-</b>&nbsp;&nbsp;&nbsp;
+            <input [(ngModel)]="classe.nome"  maxlength="12" size="10"
+                   (keyup)="saveEdit($event)" spellcheck="false">
+            &nbsp;&nbsp;&nbsp;<b>-</b>
+          </div>
+        </div>
+        <div style="display: flex; cursor: pointer">
+          <div (click)="removeClasse()" style="margin-top: 1.5px; color: #d21969">
+            <i class="fas fa-minus-circle"></i>
+          </div>
+          <div style="margin-top: 1.5px; margin-left: 10px; margin-right: 4px">
+            <i class="fas fa-info-circle"></i>
+          </div>
+          <button (click)="backClicked()">
+            <i class="fas fa-times"></i>
+          </button>
+        </div>
+      </div>
+      <div class="estrutura">
+        <div>
+          <div class="dificuldade" style="color: #02AAC9">Easy</div>
+          <app-carousel [qntItens]="6" [dificuldade]="'easy'" [objeto]="classe"></app-carousel>
+        </div>
+        <div>
+          <div class="dificuldade" style="color: #02b050">Medium</div>
+          <app-carousel [qntItens]="6" [dificuldade]="'medium'" [objeto]="classe"></app-carousel>
+        </div>
+        <div>
+          <div class="dificuldade" style="color: #f19817">Hard</div>
+          <app-carousel [qntItens]="6" [dificuldade]="'hard'" [objeto]="classe"></app-carousel>
+        </div>
+      </div>
+      </div>
+  </div>
+</div>
