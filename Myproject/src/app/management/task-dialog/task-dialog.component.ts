@@ -1,7 +1,8 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
 import {TaskService} from "../../shared/service/task.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Task} from "../../shared/model/task";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 
 @Component({
   selector: 'app-task-dialog',
@@ -14,7 +15,8 @@ export class TaskDialogComponent implements OnInit {
   @Output() submitClicked = new EventEmitter<any>();
   @Output() removedClicked = new EventEmitter<any>();
 
-  constructor(private taskService: TaskService, @Inject(MAT_DIALOG_DATA) public data: any) { }
+  constructor(private taskService: TaskService, private dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
     this.taskService.pesquisarPorId(this.data.datakey).subscribe(
@@ -50,9 +52,13 @@ export class TaskDialogComponent implements OnInit {
   }
 
   removerTask(): void{
-    this.taskService.remover((this.task.idtask).toString()).subscribe(
-      it => this.removedClicked.emit()
-    )
+    let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+    dialogRef.componentInstance.deleteClick.subscribe(
+      result =>{
+        this.taskService.remover((this.task.idtask).toString()).subscribe(
+          it => this.removedClicked.emit()
+        )
+      })
   }
 
   updateTask(): void{

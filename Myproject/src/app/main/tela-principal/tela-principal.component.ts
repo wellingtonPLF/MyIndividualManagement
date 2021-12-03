@@ -5,6 +5,7 @@ import {LocalStorageService} from "../../shared/service/local-storage.service";
 import {ActivatedRoute} from "@angular/router";
 import {Usuario} from "../../shared/model/usuario";
 import {UsuarioService} from "../../shared/service/usuario.service";
+import {IndisponivelComponent} from "../../management/indisponivel/indisponivel.component";
 
 
 @Component({
@@ -18,6 +19,7 @@ export class TelaPrincipalComponent implements OnInit {
   usuario!: Usuario;
 
   constructor(private accountService: SessionStorageService, private usuarioService: UsuarioService,
+              private dialog: MatDialog,
               private accountServiceLocal: LocalStorageService, private navUsuario: ActivatedRoute) {
     this.usuario = new Usuario();
   }
@@ -35,5 +37,9 @@ export class TelaPrincipalComponent implements OnInit {
     else {
       this.conta = false;
     }
+  }
+
+  search(): void{
+    this.dialog.open(IndisponivelComponent)
   }
 }

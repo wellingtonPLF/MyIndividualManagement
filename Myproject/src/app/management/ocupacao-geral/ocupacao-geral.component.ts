@@ -6,6 +6,8 @@ import {TemplateService} from "../../shared/service/template.service";
 import {SubareaService} from "../../shared/service/subarea.service";
 import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-ocupacao-geral',
@@ -18,7 +20,7 @@ export class OcupacaoGeralComponent implements OnInit {
   ocupacoes!: Array<Ocupacao>;
   timeout: any = null;
 
-  constructor(private ocupacaoService: OcupacaoService,
+  constructor(private ocupacaoService: OcupacaoService, private dialog: MatDialog,
               private templateService: TemplateService, private subareaService: SubareaService) { }
 
   ngOnInit(): void {
@@ -70,9 +72,13 @@ export class OcupacaoGeralComponent implements OnInit {
 
   removerOcupacao(index: number): void{
     if(index != 0){
-      this.ocupacaoService.remover((this.ocupacoes[index].idocupacao).toString()).subscribe(
-        it => this.ocupacoes.splice(index, 1)
-      )
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        result =>{
+          this.ocupacaoService.remover((this.ocupacoes[index].idocupacao).toString()).subscribe(
+            it => this.ocupacoes.splice(index, 1)
+          )
+        })
     }
   }
 

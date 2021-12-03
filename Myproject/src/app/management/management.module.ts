@@ -13,6 +13,8 @@ import { ClasseCreationComponent } from './classe-creation/classe-creation.compo
 import {RouterModule} from "@angular/router";
 import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { CarouselComponent } from './carousel/carousel.component';
+import { IndisponivelComponent } from './indisponivel/indisponivel.component';
+import { RemovalScreenDialogComponent } from './removal-screen-dialog/removal-screen-dialog.component';
 
 
 @NgModule({
@@ -24,7 +26,9 @@ import { CarouselComponent } from './carousel/carousel.component';
         OcupacaoGeralComponent,
         ClasseCreationComponent,
         TaskDialogComponent,
-        CarouselComponent
+        CarouselComponent,
+        IndisponivelComponent,
+        RemovalScreenDialogComponent
     ],
   exports: [
     AtividadeComponent,

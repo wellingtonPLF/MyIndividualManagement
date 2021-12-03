@@ -6,6 +6,10 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {Usuario} from "../../shared/model/usuario";
 import {Janela} from "../../shared/model/janela";
 import {Atividade} from "../../shared/model/atividade";
+import {Task} from "../../shared/model/task";
+import {TaskDialogComponent} from "../../management/task-dialog/task-dialog.component";
+import {MatDialog} from "@angular/material/dialog";
+import {IndisponivelComponent} from "../../management/indisponivel/indisponivel.component";
 
 @Component({
   selector: 'app-tela-management',
@@ -17,6 +21,7 @@ export class TelaManagementComponent implements OnInit {
   atividade!: Atividade;
 
   constructor(private accountService: SessionStorageService, private rotalAtual: ActivatedRoute,
+              private dialog: MatDialog,
               private accountServiceLocal: LocalStorageService, private usuarioService: UsuarioService) {
     this.usuario = new Usuario();
     // Initiated to solve ExpressionChangedAfterItHasBeenCheckedError
@@ -40,10 +45,14 @@ export class TelaManagementComponent implements OnInit {
   }
 
   chooseImg(): void{
-    console.log("Open Imgs");
+    this.dialog.open(IndisponivelComponent)
   }
 
   enviarJanela(evento: Atividade): void{
     this.atividade = evento;
+  }
+
+  search(): void{
+    this.dialog.open(IndisponivelComponent)
   }
 }

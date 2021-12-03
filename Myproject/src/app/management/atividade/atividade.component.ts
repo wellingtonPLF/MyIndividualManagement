@@ -9,6 +9,8 @@ import {TemplateService} from "../../shared/service/template.service";
 import {JanelaService} from "../../shared/service/janela.service";
 import {AtividadeFactory} from "../../shared/factoryDirectory/atividadeFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
+import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 
 @Component({
   selector: 'app-atividade',
@@ -70,13 +72,19 @@ export class AtividadeComponent implements OnInit {
 
   removerAtividade(index: number): void{
     if(index != 0){
-      if (this.index == index){
-        this.newEmitter.emit(this.atividades[index - 1]);
-        this.index = index - 1;
-      }
-      this.atividadeService.remover((this.atividades[index].idatividade).toString()).subscribe(
-        result => this.atividades.splice(index, 1)
-      )
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+
+      dialogRef.componentInstance.deleteClick.subscribe(
+        it => {
+          if (this.index == index){
+            this.newEmitter.emit(this.atividades[index - 1]);
+            this.index = index - 1;
+          }
+          this.atividadeService.remover((this.atividades[index].idatividade).toString()).subscribe(
+            result => this.atividades.splice(index, 1)
+          )
+        }
+      );
     }
   }
 

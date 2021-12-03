@@ -1,0 +1,16 @@
+.btns{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: black;
+  margin-top: 10px;
+}
+
+.btns button:first-child{
+  background-color: #d21969;
+}
+
+.btns button:nth-child(2){
+  background-color: white;
+  color: black;
+}

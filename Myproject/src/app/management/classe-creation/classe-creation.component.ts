@@ -3,7 +3,9 @@ import {Location} from '@angular/common';
 import {Classe} from "../../shared/model/classe";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ClasseService} from "../../shared/service/classe.service";
-import {MatDialog} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
+import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 
 @Component({
   selector: 'app-classe-creation',
@@ -13,23 +15,18 @@ import {MatDialog} from "@angular/material/dialog";
 export class ClasseCreationComponent implements OnInit {
   classe!: Classe;
   timeout: any = null;
+  @Output() updateClick = new EventEmitter<any>();
+  @Output() removedClick = new EventEmitter<any>();
 
-  constructor(private _location: Location, private rotalAtual: ActivatedRoute,
+  constructor(private rotalAtual: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any,
               private dialog: MatDialog, private classeService: ClasseService) { }
 
   ngOnInit(): void {
-    if (this.rotalAtual.snapshot.paramMap.has('id')) {
-      const id = Number(this.rotalAtual.snapshot.paramMap.get('id'));
-      this.classeService.pesquisarPorId(id).subscribe(
-        it => {
-          this.classe = it;
-        }
-      );
-    }
-  }
-
-  backClicked(): void{
-    this._location.back();
+    this.classeService.pesquisarPorId(this.data.datakey).subscribe(
+      it => {
+        this.classe = it;
+      }
+    );
   }
 
   saveEdit(event: any) {
@@ -39,7 +36,7 @@ export class ClasseCreationComponent implements OnInit {
       if (event.keyCode != 13) {
         $this.executeListing(event.target.value);
       }
-    }, 2000);
+    }, 1000);
   }
 
   private executeListing(value: string) {
@@ -50,7 +47,7 @@ export class ClasseCreationComponent implements OnInit {
         it => {
           classe.ocupacao = it;
           this.classeService.atualizar(classe).subscribe(
-            result => {}
+            result => this.updateClick.emit(result)
           )
         }
       )
@@ -59,9 +56,19 @@ export class ClasseCreationComponent implements OnInit {
 
   removeClasse(): void{
     if(this.classe.ordem != 0){
-      this.classeService.remover((this.classe.idclasse).toString()).subscribe(
-        it => this.backClicked()
-      )
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        result =>{
+          this.classeService.remover((this.classe.idclasse).toString()).subscribe(
+            it => {
+              this.removedClick.emit()
+            }
+          )
+        })
     }
+  }
+
+  showInfo(): void{
+    this.dialog.open(IndisponivelComponent);
   }
 }

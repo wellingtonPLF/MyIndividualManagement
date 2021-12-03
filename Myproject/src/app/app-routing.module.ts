@@ -21,11 +21,6 @@ const routes: Routes = [
     canActivate: [AuthGuard]
   },
   {
-    path: 'classe/:id',
-    component: ClasseCreationComponent,
-    canActivate: [AuthGuard]
-  },
-  {
     path:'',
     component: AppComponent,
     children: [

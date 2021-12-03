@@ -4,7 +4,12 @@
   height: 100%;
 }
 
-#classeMenu button{
+#classeMenu .iconFunctions{
+  display: flex;
+  cursor: pointer;
+}
+
+.iconFunctions:nth-child(2){
   border: none;
   background-color: transparent;
   text-align: center;

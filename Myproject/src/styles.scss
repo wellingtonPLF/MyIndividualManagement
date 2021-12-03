@@ -13,6 +13,18 @@ snack-bar-container.success{
   background-color: white;
 }
 
+.full-screen-modal .mat-dialog-container {
+  border-radius: unset;
+  padding: 0px;
+}
+
+.full-screen-modal{
+  max-width: 100vw !important;
+  width: 100vw;
+  overflow-y: unset;
+  height: 100vh;
+}
+
 @import "~bootstrap/dist/css/bootstrap-grid.min.css";
 
 /* Importing Bootstrap SCSS file. */

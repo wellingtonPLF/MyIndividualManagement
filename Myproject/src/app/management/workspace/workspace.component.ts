@@ -12,6 +12,8 @@ import {Classe} from "../../shared/model/classe";
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
+import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 
 @Component({
   selector: 'app-workspace',
@@ -25,7 +27,7 @@ export class WorkspaceComponent implements OnInit {
   index!: number;
   @Input() activity!: Atividade;
 
-  constructor(public dialog: MatDialog, private janelaService: JanelaService,
+  constructor(private dialog: MatDialog, private janelaService: JanelaService,
               private templateService: TemplateService, private atividadeService: AtividadeService) { }
 
   ngOnInit(): void {
@@ -48,13 +50,18 @@ export class WorkspaceComponent implements OnInit {
 
   removerJanela(index: number): void{
     if(index != 0){
-      if (this.index == index){
-        this.janela = this.windows[index - 1];
-        this.index = index - 1;
-      }
-      this.janelaService.remover((this.windows[index].idjanela).toString()).subscribe(
-        result => this.windows.splice(index, 1)
-      )
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        it =>{
+          if (this.index == index){
+            this.janela = this.windows[index - 1];
+            this.index = index - 1;
+          }
+          this.janelaService.remover((this.windows[index].idjanela).toString()).subscribe(
+            result => this.windows.splice(index, 1)
+          )
+        }
+      );
     }
   }
 
@@ -106,5 +113,14 @@ export class WorkspaceComponent implements OnInit {
   openTerminal(): void{
     //var child_process = require('child_process');
     //child_process.exec("start cmd.exe /K cd..");
+    this.dialog.open(IndisponivelComponent)
+  }
+
+  openTemplates(): void{
+    this.dialog.open(IndisponivelComponent)
+  }
+
+  openInfo(): void{
+    this.dialog.open(IndisponivelComponent)
   }
 }

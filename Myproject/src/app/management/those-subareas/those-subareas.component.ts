@@ -10,6 +10,7 @@ import {SubareaFactory} from "../../shared/factoryDirectory/subareaFactory";
 import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 
 @Component({
   selector: 'app-those-subareas',
@@ -94,13 +95,17 @@ export class ThoseSubareasComponent implements OnInit {
 
   deleteSubarea(index: number): void{
     if(index != 0){
-      if (this.index == index){
-        this.subareaEmitter.emit(this.subareas[index - 1]);
-        this.index = index - 1;
-      }
-      this.subareaService.remover((this.subareas[index].idsubarea).toString()).subscribe(
-        result => this.subareas.splice(index, 1)
-      )
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        it =>{
+          if (this.index == index){
+            this.subareaEmitter.emit(this.subareas[index - 1]);
+            this.index = index - 1;
+          }
+          this.subareaService.remover((this.subareas[index].idsubarea).toString()).subscribe(
+            result => this.subareas.splice(index, 1)
+          )
+        })
     }
   }
 }
