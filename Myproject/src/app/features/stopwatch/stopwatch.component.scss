@@ -1,0 +1,41 @@
+
+#playCronometro{
+  color: white;
+  background-color: lightseagreen;
+}
+
+#cancelCronometro{
+  color: black;
+  background-color: white;
+}
+
+#flexButtons{
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+#flexTemplates{
+  display: flex;
+  width: 200px;
+  background-color: #0ed9c6;
+  justify-content: flex-end;
+  margin-bottom: 10px;
+}
+
+#flexTemplates button{
+  color: white;
+  border: none;
+  padding-right: 0px;
+  background-color: transparent;
+}
+
+#flexTemplates button i:hover{
+  color: #015850;
+}
+
+#flexTemplates button:nth-child(2){
+  margin-right: 10px;
+  margin-left: 5px;
+}

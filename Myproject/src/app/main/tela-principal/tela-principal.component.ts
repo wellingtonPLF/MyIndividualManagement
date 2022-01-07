@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import {MatDialog} from "@angular/material/dialog";
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";

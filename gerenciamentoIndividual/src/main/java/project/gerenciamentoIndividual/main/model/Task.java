@@ -40,8 +40,13 @@ public class Task{
 	private Date data;
 
 	private Long tempo;
+
+	@Column(columnDefinition="TEXT")
 	private String descricao;
+	
+	@Column(columnDefinition="TEXT")
 	private String comentario;
+	
 	private String etiqueta;
 	private String objectType;
 	

@@ -9,9 +9,9 @@ import org.springframework.transaction.annotation.Transactional;
 import project.gerenciamentoIndividual.main.model.UsuarioTemplate;
 import project.gerenciamentoIndividual.main.repositories.UsuarioTemplateRepository;
 
-@Service
+//@Service
 public class UsuarioTemplateService {
-   
+  /* 
    @Autowired
    private UsuarioTemplateRepository usuarioTemplateRepository;
 
@@ -31,4 +31,5 @@ public class UsuarioTemplateService {
    public void apagar(Long idusuarioTemplate) {
 	   this.usuarioTemplateRepository.deleteById(idusuarioTemplate);
    }
+   */
 }

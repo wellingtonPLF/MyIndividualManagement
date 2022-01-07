@@ -15,11 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 import project.gerenciamentoIndividual.main.model.UsuarioTemplate;
 import project.gerenciamentoIndividual.main.service.UsuarioTemplateService;
 
-@RestController
-@RequestMapping("/")
+//@RestController
+//@RequestMapping("/")
 public class UsuarioTemplateController {
 	
-   @Autowired
+   /*@Autowired
    private UsuarioTemplateService usuarioTemplateService;
 
    @GetMapping("/usuarioTemplate")
@@ -45,5 +45,5 @@ public class UsuarioTemplateController {
    @DeleteMapping("/usuarioTemplate/{idusuarioTemplate}")
    public void apagarUsuarioTemplate(@PathVariable("idusuarioTemplate") Long idusuarioTemplate) {
        this.usuarioTemplateService.apagar(idusuarioTemplate);
-   }
+   }*/
 }

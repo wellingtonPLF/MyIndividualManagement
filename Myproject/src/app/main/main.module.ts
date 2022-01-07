@@ -11,6 +11,7 @@ import { TelaManagementComponent } from './tela-management/tela-management.compo
 import {MatTreeModule} from "@angular/material/tree";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ManagementModule} from "../management/management.module";
+import {FeaturesModule} from "../features/features.module";
 
 
 
@@ -32,7 +33,8 @@ import {ManagementModule} from "../management/management.module";
         MatTreeModule,
         MatTabsModule,
         RouterModule,
-        ManagementModule
+        ManagementModule,
+        FeaturesModule
     ]
 })
 export class MainModule { }

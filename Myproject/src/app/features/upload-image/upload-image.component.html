@@ -1,0 +1,11 @@
+<input type="file" (change)="onFileSelected($event)" style="display: none" #pickFile>
+
+<div *ngIf="usuario != undefined; else noUser"
+     (click)="pickFile.click()" class="imagemUser">
+  <img *ngIf="url != undefined || url != null" [src]="url" style="width: 194px; height: 174px;">
+  <div *ngIf="url == undefined || url == null">+</div>
+</div>
+
+<ng-template #noUser>
+  <div class="imagemUser">+</div>
+</ng-template>

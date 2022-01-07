@@ -25,6 +25,10 @@ snack-bar-container.success{
   height: 100vh;
 }
 
+.dialogPadding .mat-dialog-container{
+  padding: 0px;
+}
+
 @import "~bootstrap/dist/css/bootstrap-grid.min.css";
 
 /* Importing Bootstrap SCSS file. */

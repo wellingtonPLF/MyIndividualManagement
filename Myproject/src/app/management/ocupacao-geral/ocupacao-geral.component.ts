@@ -90,6 +90,7 @@ export class OcupacaoGeralComponent implements OnInit {
       this.templateService.pesquisarPorId(1).subscribe(
         result => {
           ocupacao = OcupacaoFactory.criarOcupacao(result, ordem);
+          //ocupacao.nome = "Digite Aqui!";
           ocupacao.nome = "New";
           ocupacao.subarea = this.subarea;
 

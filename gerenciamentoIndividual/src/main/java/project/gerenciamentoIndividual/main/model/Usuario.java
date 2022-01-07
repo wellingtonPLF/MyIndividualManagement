@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -21,14 +22,18 @@ public class Usuario{
    private Long idusuario;
    private String nome;
    private String email;
+   
+   @Column(columnDefinition="TEXT")
    private String img;
+   
    private String senha;
    private String token;
    private String objectType;
    
-   @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+   /*@OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
    @JsonManagedReference(value="usuario_UsuarioTemplates")
    private List<UsuarioTemplate> usuarioTemplates = new ArrayList<UsuarioTemplate>();
+   */
    
    @OneToMany(mappedBy="usuario", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
    @JsonManagedReference(value="usuario_Atv")
@@ -94,13 +99,13 @@ public class Usuario{
 		this.atividades = atividades;
 	}
 
-	public List<UsuarioTemplate> getUsuarioTemplates() {
+	/*public List<UsuarioTemplate> getUsuarioTemplates() {
 		return usuarioTemplates;
 	}
 
 	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
 		this.usuarioTemplates = usuarioTemplates;
-	}
+	}*/
 
 	public String getObjectType() {
 		return objectType;

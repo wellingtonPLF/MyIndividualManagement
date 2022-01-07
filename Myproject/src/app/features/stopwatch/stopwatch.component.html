@@ -1,0 +1,31 @@
+<div>
+  <div id="flexTemplates">
+    <button (click)="twentyFiveMinutes()">
+      <i class="far fa-dot-circle"></i>
+    </button>
+    <button (click)="fiveMinutes()" >
+      <i class="far fa-dot-circle"></i>
+    </button>
+  </div>
+  <div style="width: 200px;">
+    <div style="display: flex; justify-content: center;">
+      <input [(ngModel)]='hours' style="width: 50px" type="number"
+             min="0" max="23">
+      <label style="color: black; padding: 0px 3px">:</label>
+      <input [(ngModel)]='minutes' style="width: 50px" type="number"
+             min="0" max="59">
+      <label style="color: black; padding: 0px 3px">:</label>
+      <input [(ngModel)]='seconds' style="width: 50px" type="number"
+             min="0" max="59">
+    </div>
+    <div id="flexButtons">
+      <button id="playCronometro" (click)="playTime()"
+              mat-button mat-dialog-close mat-raised-button>
+        <i class="fas fa-stopwatch" style="transform: scale(1.5);"></i>
+      </button>
+      <button id="cancelCronometro" mat-button mat-dialog-close mat-raised-button>
+        <i class="fas fa-times" style="transform: scale(1.5);"></i>
+      </button>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
 package project.gerenciamentoIndividual.main.model;
 
+/*
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -9,12 +10,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+*/
 
-@Entity
-@Table(name = "usuarioTemplate")
+//@Entity
+//@Table(name = "usuarioTemplate")
 public class UsuarioTemplate {
 	 
-	@Id
+	/*@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long idusuarioTemplate;
 	private String objectType;
@@ -52,5 +54,5 @@ public class UsuarioTemplate {
 	}
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
-	}
+	}*/
 }

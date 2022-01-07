@@ -4,7 +4,6 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {Router} from "@angular/router";
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
-import {MatSnackBar, MatSnackBarConfig} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-login-usuario',

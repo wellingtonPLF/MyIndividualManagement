@@ -26,9 +26,10 @@ public class Template{
 	private String nome;
 	private String objectType;
 	
-	@OneToMany(mappedBy="template", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	/*@OneToMany(mappedBy="template", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
 	@JsonManagedReference(value="template_UsuarioTemplates")
 	private List<UsuarioTemplate> usuarioTemplates = new ArrayList<UsuarioTemplate>();
+	*/
 	
 	@OneToOne
 	@JoinColumn(name="janela_c")
@@ -73,13 +74,13 @@ public class Template{
 		this.janela_c = janela_c;
 	}
 
-	public List<UsuarioTemplate> getUsuarioTemplates() {
+	/*public List<UsuarioTemplate> getUsuarioTemplates() {
 		return usuarioTemplates;
 	}
 
 	public void setUsuarioTemplates(List<UsuarioTemplate> usuarioTemplates) {
 		this.usuarioTemplates = usuarioTemplates;
-	}
+	}*/
 
 	public String getObjectType() {
 		return objectType;

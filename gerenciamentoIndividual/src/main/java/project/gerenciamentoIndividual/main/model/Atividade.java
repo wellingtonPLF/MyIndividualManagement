@@ -33,7 +33,8 @@ public class Atividade{
 	@JsonBackReference(value="usuario_Atv")
 	private Usuario usuario;
 	
-	@OneToMany(mappedBy="atividade", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="atividade", cascade= {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH}, 
+			orphanRemoval=true, fetch=FetchType.LAZY)
 	@JsonManagedReference(value="atv_Janela")
 	private List<Janela> janelas = new ArrayList<Janela>(); 
 	
