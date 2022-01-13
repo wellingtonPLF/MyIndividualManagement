@@ -1,0 +1,46 @@
+<div style="display: flex; justify-content: flex-end">
+  <button mat-dialog-close class="closeButton" style="margin-top: 10px;
+  margin-right: 10px; outline: none">
+  <i class="fas fa-times"></i>
+  </button>
+</div>
+<div cdkDropListGroup class="example-boundary" style="display: flex">
+  <div class="example-container">
+    <div style="display: flex">
+      <div style="display: flex; flex-direction: column;">
+        <div *ngFor="let janela of janelas" class="labelJanela">{{janela.nome}}</div>
+      </div>
+      <div class="locking">
+        <div *ngFor="let janela of janelas_templates; let i = index"
+             cdkDropList
+             [cdkDropListData]="janela"
+             class="example-list"
+             (cdkDropListDropped)="drop($event, i)"
+             [cdkDropListEnterPredicate]="evenPredicate">
+          <div *ngFor="let item of janela;" class="example-box"
+               cdkDrag cdkDragBoundary=".example-boundary" cdkDragBoundary=".locking">
+            {{item.nome}}
+            <button class="closeButton" (click)="removeBox(i)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="example-container">
+    <div cdkDropList [cdkDropListData]="templates" class="example-list rec"
+         [cdkDropListSortingDisabled]="true"
+         (cdkDropListEntered)="entered()" (cdkDropListExited)="exited($event)">
+      <ng-container *ngFor="let item of templates">
+        <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [cdkDragData]="item.nome">
+          {{item.nome}}
+        </div>
+        <div class="example-box" *ngIf="transferringItem === item.nome">
+          {{item.nome}}
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+

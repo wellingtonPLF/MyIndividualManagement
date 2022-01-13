@@ -14,6 +14,7 @@ import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
+import {TemplatesComponent} from "../templates/templates.component";
 
 @Component({
   selector: 'app-workspace',
@@ -113,12 +114,25 @@ export class WorkspaceComponent implements OnInit {
   openTerminal(): void{
     //var child_process = require('child_process');
     //child_process.exec("start cmd.exe /K cd..");
-    //console.log("Running");
-    //this.dialog.open(IndisponivelComponent)
+    this.dialog.open(IndisponivelComponent)
   }
 
   openTemplates(): void{
-    this.dialog.open(IndisponivelComponent)
+    let dialogRef = this.dialog.open(TemplatesComponent, {
+      panelClass: 'dialogPadding',
+      data: this.activity
+    });
+
+    dialogRef.componentInstance.newEmitter.subscribe(
+      result => {
+        for (let i = 0; i < this.windows.length; i++){
+          if (this.windows[i].idjanela == result.idjanela){
+            this.windows.splice(i, 1, result)
+            this.janela = this.windows[i];
+          }
+        }
+      }
+    );
   }
 
   openInfo(): void{

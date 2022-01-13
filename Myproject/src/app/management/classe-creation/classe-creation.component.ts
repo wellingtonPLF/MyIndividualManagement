@@ -6,6 +6,7 @@ import {ClasseService} from "../../shared/service/classe.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
+import {ClasseInfoComponent} from "../classe-info/classe-info.component";
 
 @Component({
   selector: 'app-classe-creation',
@@ -69,6 +70,10 @@ export class ClasseCreationComponent implements OnInit {
   }
 
   showInfo(): void{
-    this.dialog.open(IndisponivelComponent);
+    this.dialog.open(ClasseInfoComponent, {
+      width: '800px',
+      height: '520px',
+      panelClass: 'dialogPadding'
+    });
   }
 }

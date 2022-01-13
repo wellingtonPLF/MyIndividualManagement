@@ -1,0 +1,89 @@
+.example-container {
+  max-width: 100%;
+  margin: 25px 25px 15px 0;
+  display: inline-block;
+  vertical-align: top;
+}
+
+.example-container:first-child{
+  margin-left: 25px;
+}
+
+.example-list {
+  border: solid 1px #ccc;
+  min-height: 60px;
+  background: white;
+  width: 240px;
+  overflow: hidden;
+  display: block;
+}
+
+.example-container:nth-child(2) .example-list{
+  border: none;
+}
+
+.example-container:first-child .example-list{
+  margin-bottom: 10px;
+  height: 63px;
+}
+
+.example-box {
+  padding: 20px 10px;
+  margin-bottom: 10px;
+  color: rgba(0, 0, 0, 0.87);
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+  box-sizing: border-box;
+  cursor: pointer;
+  background: white;
+  font-size: 14px;
+}
+
+.example-container:nth-child(2) .example-list .example-box{
+  border: solid 1px #ccc;
+}
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+  0 8px 10px 1px rgba(0, 0, 0, 0.14),
+  0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0;
+}
+
+.rec .cdk-drag-placeholder {
+  opacity: unset;
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.example-list.cdk-drop-list-dragging .example-box:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+//-----------------------------------------------------------------------------
+
+.labelJanela{
+  background-color: red;
+  color: white;
+  text-align: center;
+  height: 63px;
+  width: 100px;
+  padding: 20px;
+  margin-bottom: 10px;
+}
+
+.closeButton{
+  height: 15px;
+  background-color: transparent;
+  border: none;
+  display: flex;
+}

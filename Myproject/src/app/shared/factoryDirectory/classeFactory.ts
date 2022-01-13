@@ -1,15 +1,17 @@
 import {Classe} from "../model/classe";
 import {Template} from "../model/template";
+import {Ocupacao} from "../model/ocupacao";
 
 export class ClasseFactory{
-  public static criarClasse(template: Template, ordem: number): Classe{
+  public static criarClasse(ocupacao: Ocupacao, ordem: number): Classe{
     const classe = new Classe();
-    classe.nome = template.janela_c.subareas[0].ocupacoes[0].classes[0].nome;
-    classe.objetivo = template.janela_c.subareas[0].ocupacoes[0].classes[0].objetivo;
-    classe.porque = template.janela_c.subareas[0].ocupacoes[0].classes[0].porque;
-    classe.oque = template.janela_c.subareas[0].ocupacoes[0].classes[0].oque;
-    classe.como = template.janela_c.subareas[0].ocupacoes[0].classes[0].como;
     classe.ordem = ordem;
+
+    if (ocupacao.classes[ordem] == undefined){
+      ordem = 0;
+    }
+
+    classe.nome = ocupacao.classes[ordem].nome;
     classe.objectType = 'Classe';
     return classe;
   }

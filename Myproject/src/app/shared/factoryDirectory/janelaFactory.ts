@@ -9,7 +9,10 @@ export class JanelaFactory{
     janela.ordem = ordem;
     janela.template = template;
     janela.objectType = 'Janela';
-    janela.subareas.push(SubareaFactory.criarSubarea(template, 0));
+    for (let i = 0; i< template.janela_c.subareas.length; i++){
+      janela.subareas.push(SubareaFactory.criarSubarea(template, i));
+    }
+
     return janela;
   }
 }

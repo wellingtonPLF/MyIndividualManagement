@@ -42,10 +42,6 @@ export class TelaManagementComponent implements OnInit{
     this.accountServiceLocal.removeToken('my-token');
   }
 
-  chooseImg(): void{
-    this.dialog.open(IndisponivelComponent)
-  }
-
   enviarJanela(evento: Atividade): void{
     this.atividade = evento;
   }

@@ -15,6 +15,11 @@ import { TaskDialogComponent } from './task-dialog/task-dialog.component';
 import { CarouselComponent } from './carousel/carousel.component';
 import { IndisponivelComponent } from './indisponivel/indisponivel.component';
 import { RemovalScreenDialogComponent } from './removal-screen-dialog/removal-screen-dialog.component';
+import { ClasseInfoComponent } from './classe-info/classe-info.component';
+import { TemplatesComponent } from './templates/templates.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
+import { BrowserModule } from '@angular/platform-browser';
+import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
 
 
 @NgModule({
@@ -28,7 +33,9 @@ import { RemovalScreenDialogComponent } from './removal-screen-dialog/removal-sc
         TaskDialogComponent,
         CarouselComponent,
         IndisponivelComponent,
-        RemovalScreenDialogComponent
+        RemovalScreenDialogComponent,
+        ClasseInfoComponent,
+        TemplatesComponent
     ],
   exports: [
     AtividadeComponent,
@@ -40,7 +47,10 @@ import { RemovalScreenDialogComponent } from './removal-screen-dialog/removal-sc
         MatButtonModule,
         NgbModule,
         RouterModule,
-        MatDialogModule
+        DragDropModule,
+        MatDialogModule,
+        BrowserModule,
+        BrowserAnimationsModule
     ]
 })
 export class ManagementModule { }

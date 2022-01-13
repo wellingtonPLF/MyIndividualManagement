@@ -97,7 +97,7 @@ export class CarouselComponent implements OnInit {
 
       this.templateService.pesquisarPorId(1).subscribe(
         result => {
-          classe = ClasseFactory.criarClasse(result, ordem);
+          classe = ClasseFactory.criarClasse(result.janela_c.subareas[0].ocupacoes[0], ordem);
           classe.nome = "New";
           classe.ocupacao = this.objeto;
           this.classeService.inserir(classe).subscribe(
