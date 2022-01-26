@@ -7,6 +7,7 @@ export class Subarea implements I_nome{
   idsubarea!: number;
   nome!: string;
   ordem!: number;
+  tipo!: number;
   janela!: Janela;
   objectType!: string;
   ocupacoes: Array<Ocupacao> = new Array<Ocupacao>();

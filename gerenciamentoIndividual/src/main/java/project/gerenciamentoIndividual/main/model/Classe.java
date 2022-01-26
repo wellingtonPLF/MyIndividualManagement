@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -26,14 +27,23 @@ public class Classe {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="classe_sequence")
-	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 8)
+	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 9)
 	private Long idclasse;
 	private String nome;
 	private int ordem;
-	private String objetivo;
+	
+	@Column(columnDefinition="TEXT")
+	private String quando;
+	
+	@Column(columnDefinition="TEXT")
 	private String porque;
+	
+	@Column(columnDefinition="TEXT")
 	private String oque;
+	
+	@Column(columnDefinition="TEXT")
 	private String como;
+	
 	private String objectType;
 	
 	@ManyToOne
@@ -63,12 +73,12 @@ public class Classe {
 		this.nome = nome;
 	}
 
-	public String getObjetivo() {
-		return objetivo;
+	public String getQuando() {
+		return quando;
 	}
 
-	public void setObjetivo(String objetivo) {
-		this.objetivo = objetivo;
+	public void setQuando(String quando) {
+		this.quando = quando;
 	}
 
 	public String getPorque() {

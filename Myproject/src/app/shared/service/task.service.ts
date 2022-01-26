@@ -34,6 +34,18 @@ export class TaskService {
     return this.httpClient.get<Classe>(`${this.URL_TASK}/myTask/classe/${id}`);
   }
 
+  getRequestAll(): Observable<Task []>{
+    return this.httpClient.get<Task []>(`${this.URL_TASK}/requestAll`)
+  }
+
+  getRequestLate(): Observable<Task []>{
+    return this.httpClient.get<Task []>(`${this.URL_TASK}/requestLate`)
+  }
+
+  getRequestUndefined(): Observable<Task []>{
+    return this.httpClient.get<Task []>(`${this.URL_TASK}/requestUndefined`)
+  }
+
   atualizar(task: Task): Observable<Task> {
     return this.httpClient.put<Task>(`${this.URL_TASK}/${task.idtask}`, task);
   }

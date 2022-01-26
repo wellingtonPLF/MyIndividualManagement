@@ -5,6 +5,7 @@
   </button>
   <!--carousel body -->
   <div class="containerItens" [style]="containerItens" *ngIf="lista != undefined">
+    <!-- [Item] [Item] [Item] [Item] -->
     <div class="displayWrap" *ngFor="let paginas of counter(pages); let i = index">
       <div *ngFor="let range of counter(qntItens); let j = index"
            (click)="show((i * qntItens) + j)"
@@ -12,6 +13,7 @@
         {{lista[(i * qntItens) + j].nome}}
       </div>
     </div>
+    <!-- [Item] [Item] [ADD] [Null] -->
     <div class="displayWrap" *ngIf="(resto) != 0; else elseBlock">
       <div *ngFor="let paginas of counter(resto); let i = index;"
            (click)="show(multiplo() +i)"
@@ -19,16 +21,19 @@
         {{lista[multiplo() + i].nome}}
       </div>
       <div [ngClass]="{'counteiner-item':  escolhido == pages, 'displayNone': escolhido != pages}"
-           (click)="add()" style="font-size: 30px; font-weight: normal"> + </div>
-      <div *ngFor="let paginas of counter(qntItens - resto - 1);" style="border-style: dashed;"
+           (click)="add()" class="plusplus" *ngIf="dificuldade != 'any'"> + </div>
+      <div *ngFor="let paginas of counter(qntItens - resto - showAdd);" style="border-style: dashed;"
            [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
       </div>
     </div>
+    <!-- [ADD] [Null] [Null] [Null]-->
     <ng-template #elseBlock>
-      <div [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}"
-           (click)="add()" style="font-size: 30px; font-weight: normal"> + </div>
-      <div *ngFor="let paginas of counter(qntItens - resto - 1);" style="border-style: dashed;"
-           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+      <div class="displayWrap">
+        <div [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}"
+             (click)="add()" class="plusplus" *ngIf="dificuldade != 'any'"> + </div>
+        <div *ngFor="let paginas of counter(qntItens - resto - showAdd);" style="border-style: dashed;"
+             [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+        </div>
       </div>
     </ng-template>
   </div>

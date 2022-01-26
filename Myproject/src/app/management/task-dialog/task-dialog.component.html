@@ -1,18 +1,25 @@
-<div style="color: black">
-  <div *ngIf="task != undefined" id="taskName">
-    <b>-</b>&nbsp;&nbsp;&nbsp;
-    <input [(ngModel)]="task.nome"  maxlength="12" size="11"
-           (keyup)="saveEdit($event)" spellcheck="false">
-    <b>-</b>
-  </div>
-  <textarea *ngIf="task != undefined" [(ngModel)]="task.descricao" rows="4" cols="50"></textarea>
-  <div id="buttons">
-    <div style="flex-basis: 95%">
-      <button mat-button mat-raised-button mat-dialog-close (click)="updateTask()">Confirm</button>
-      <button mat-button mat-raised-button mat-dialog-close>Cancel</button>
+<div *ngIf="task != undefined" id="myTask">
+  <div id="taskName">
+    <div>
+      <input [(ngModel)]="task.nome"  maxlength="12" size="11" (focus)="inputDisable(gettingFocus)"
+             (keyup)="saveEdit($event)" spellcheck="false" #gettingFocus (click)="inputEnable(gettingFocus)">
+      <button mat-button  (click)="removerTask()" class="deleteTask">
+        <i  class="fas fa-trash"></i>
+      </button>
     </div>
-    <button mat-button mat-raised-button (click)="removerTask()" class="deleteTask">
-      <i  class="fas fa-trash"></i>
-    </button>
+  </div>
+  <div id="tempo">
+    <div>-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{task.dificuldade}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;-</div>
+    <div>
+      <input type="date" [(ngModel)]="tempo">
+      <input type="time" [(ngModel)]="task.tempo" step="2">
+    </div>
+  </div>
+  <div id="descricao">
+    <textarea [(ngModel)]="task.descricao" rows="7" cols="57"></textarea>
+  </div>
+  <div id="confirmCancel">
+    <button mat-button mat-dialog-close (click)="updateTask()">Confirm</button>
+    <button mat-button mat-dialog-close>Cancel</button>
   </div>
 </div>

@@ -1,31 +1,42 @@
 <div style="display: flex; justify-content: flex-end">
   <button mat-dialog-close class="closeButton" style="margin-top: 10px;
   margin-right: 10px; outline: none">
-  <i class="fas fa-times"></i>
+    <i class="fas fa-times"></i>
   </button>
 </div>
 <div cdkDropListGroup class="example-boundary" style="display: flex">
-  <div class="example-container">
-    <div style="display: flex">
-      <div style="display: flex; flex-direction: column;">
-        <div *ngFor="let janela of janelas" class="labelJanela">{{janela.nome}}</div>
+  <div class="example-container" id="locking">
+    <mat-card id="firstPart"  *ngFor="let janela of janelas_templates; let i = index"
+         [ngClass]="{'displayNone': calcItensByPage(i) }">
+      <div id="janelas">
+        <div class="labelJanela" *ngIf ="janelas[this.indexItens(i)] != undefined; else elseBlock">
+          {{janelas[this.indexItens(i)].nome}}
+        </div>
+        <ng-template #elseBlock>
+          <div id="undefinedBox">.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.</div>
+        </ng-template>
       </div>
-      <div class="locking">
-        <div *ngFor="let janela of janelas_templates; let i = index"
-             cdkDropList
-             [cdkDropListData]="janela"
-             class="example-list"
-             (cdkDropListDropped)="drop($event, i)"
-             [cdkDropListEnterPredicate]="evenPredicate">
-          <div *ngFor="let item of janela;" class="example-box"
-               cdkDrag cdkDragBoundary=".example-boundary" cdkDragBoundary=".locking">
+      <div cdkDropList *ngIf ="janelas[this.indexItens(i)] != undefined"
+           [cdkDropListData]="janela"
+           class="example-list"
+           (cdkDropListDropped)="drop($event, i)"
+           [cdkDropListEnterPredicate]="evenPredicate">
+        <div *ngFor="let item of janela;" class="example-box"
+             cdkDrag cdkDragBoundary=".example-boundary" cdkDragBoundary=".locking">
             {{item.nome}}
-            <button class="closeButton" (click)="removeBox(i)">
-              <i class="fas fa-times"></i>
-            </button>
-          </div>
+          <button class="closeButton" (click)="removeBox(i)">
+            <i class="fas fa-times"></i>
+          </button>
         </div>
       </div>
+    </mat-card>
+    <div id="templatePaginator">
+      <div id="contadorDePaginas">{{pageIndex}}&nbsp;&nbsp;&nbsp; of&nbsp;&nbsp;&nbsp;{{this.calcPages()}}</div>
+      <mat-paginator *ngIf="this.janelas != undefined"
+          [length]="this.janelas.length"
+          [pageSize]="eventlength"
+          (page)="onPageChange($event)">
+      </mat-paginator>
     </div>
   </div>
   <div class="example-container">
@@ -40,7 +51,11 @@
           {{item.nome}}
         </div>
       </ng-container>
+      <div class="example-box"
+           style="color: white; height: 56px; cursor: default;
+           background-color: black">（ʘ‿ʘ）</div>
     </div>
   </div>
 </div>
+
 

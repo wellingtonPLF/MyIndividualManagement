@@ -1,0 +1,88 @@
+
+#ocup{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #02AAC9;
+  color: white;
+  height: 30px;
+  width: fit-content;
+  padding-right: 20px;
+  padding-left: 25px;
+  clip-path: polygon(90% 0%, 100% 90%, 100% 100%, 0% 100%, 0% 90%, 10% 0%);
+}
+
+.ocupacao{
+  display: flex;
+  background-color: #e5e5e5;
+  width: 97%;
+  height: 42px;
+}
+
+.ocupacaoNome{
+  margin-top: 8px;
+  margin-left: 30px;
+  font-size: 15px;
+  display: flex;
+}
+
+.ocupacaoNome input{
+  text-align: center;
+  background-color: transparent;
+  border: none;
+  padding-right: 8px;
+  height: 25px;
+}
+
+input:focus, textarea:focus, select:focus{
+  outline: none;
+}
+
+.icon{
+  cursor: pointer;
+  margin-top: 12px;
+  margin-left: 20px;
+}
+
+.addOcupacao{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #e5e5e5;
+  width: 94.6%;
+  height: 40px;
+  margin-left: 20px;
+  margin-top: 15px;
+  cursor: pointer;
+}
+
+.addOcupacao:hover{
+  background-color: #d0d0d0;
+}
+
+.close{
+  width: inherit;
+  display:flex;
+  justify-content: flex-end;
+  margin-right: 15px;
+  margin-top: 13px;
+}
+
+.close i{
+  cursor: pointer;
+}
+
+.deleteOcupacao{
+  margin-left: 10px;
+  margin-top: 1.3px;
+  font-size: 15px;
+  margin-right: 2px;
+}
+
+.displayNone{
+  display: none;
+}
+
+.displayFlex{
+  display: flex;
+}

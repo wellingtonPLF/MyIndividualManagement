@@ -3,7 +3,7 @@
   height: 100vh;
   display: grid;
   grid-template-columns: 200px 1fr 1fr;
-  grid-template-rows: 70px 60px 50px 40px 1fr;
+  grid-template-rows: 70px 80px 50px 40px 1fr;
   grid-template-areas:
     "user menu menu"
     "user room room"
@@ -65,4 +65,12 @@
 
 .bottom-right button{
   margin: 10px 0px 0px 10px;
+}
+
+#exitButton{
+  transform: scale(1.1);
+  color: #d21969;
+  background-color: transparent;
+  border: none;
+  height: 29px;
 }

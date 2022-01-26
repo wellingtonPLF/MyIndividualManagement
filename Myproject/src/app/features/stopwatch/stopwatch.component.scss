@@ -1,41 +1,59 @@
-
-#playCronometro{
-  color: white;
-  background-color: lightseagreen;
+#stopwatch{
+  height: 60px;
+  border: 1px solid #ccc;
+  width: 160px;
+  margin-right: 8px;
+  margin-top: 5px;
 }
-
-#cancelCronometro{
-  color: black;
-  background-color: white;
+//-----------------------------------------//
+#timeButtons{
+  display: flex;
+  background-color: #02AAC9;
+  height: 50%;
+  justify-content: space-around;
 }
 
 #flexButtons{
   display: flex;
   justify-content: space-around;
-  margin-top: 10px;
-  margin-bottom: 10px;
 }
 
 #flexTemplates{
   display: flex;
-  width: 200px;
-  background-color: #0ed9c6;
-  justify-content: flex-end;
-  margin-bottom: 10px;
+  justify-content: space-around;
+  align-items: center;
+}
+
+#timeButtons button{
+  border: none;
+  color: white;
+  background-color: transparent;
 }
 
 #flexTemplates button{
   color: white;
-  border: none;
-  padding-right: 0px;
   background-color: transparent;
 }
 
-#flexTemplates button i:hover{
-  color: #015850;
+#timeButtons button:hover{
+  color: #03515f;
 }
 
-#flexTemplates button:nth-child(2){
-  margin-right: 10px;
-  margin-left: 5px;
+//-----------------------------------------//
+#timeInput{
+  display: flex;
+  justify-content: center;
+}
+
+#timeInput input{
+  border: none;
+  width: 38px;
+}
+
+input:focus, button:focus, select:focus{
+  outline: none;
+}
+
+.displayNone{
+  display: none !important;
 }

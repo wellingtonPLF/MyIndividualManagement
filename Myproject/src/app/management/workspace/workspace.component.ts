@@ -6,9 +6,6 @@ import {MatDialog} from "@angular/material/dialog";
 import {JanelaService} from "../../shared/service/janela.service";
 import {TemplateService} from "../../shared/service/template.service";
 import {Subarea} from "../../shared/model/subarea";
-import {SubareaService} from "../../shared/service/subarea.service";
-import {Ocupacao} from "../../shared/model/ocupacao";
-import {Classe} from "../../shared/model/classe";
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
@@ -123,12 +120,14 @@ export class WorkspaceComponent implements OnInit {
       data: this.activity
     });
 
-    dialogRef.componentInstance.newEmitter.subscribe(
+    dialogRef.componentInstance.changeEmitter.subscribe(
       result => {
         for (let i = 0; i < this.windows.length; i++){
           if (this.windows[i].idjanela == result.idjanela){
             this.windows.splice(i, 1, result)
-            this.janela = this.windows[i];
+            if(result.idjanela == this.janela.idjanela){
+              this.janela = this.windows[i];
+            }
           }
         }
       }

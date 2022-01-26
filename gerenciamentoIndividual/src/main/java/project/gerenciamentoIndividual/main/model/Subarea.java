@@ -29,6 +29,7 @@ public class Subarea {
 	@SequenceGenerator(name="subarea_sequence", sequenceName="subarea_seq",  allocationSize = 1, initialValue = 8)
 	private Long idsubarea;
 	private String nome;
+	private int tipo;
 	private int ordem;
 	private String objectType;
 	
@@ -81,6 +82,14 @@ public class Subarea {
 
 	public void setJanela(Janela janela) {
 		this.janela = janela;
+	}
+	
+	public int getTipo() {
+		return tipo;
+	}
+
+	public void setTipo(int tipo) {
+		this.tipo = tipo;
 	}
 
 	public String getObjectType() {

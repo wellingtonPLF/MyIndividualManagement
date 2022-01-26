@@ -6,11 +6,23 @@ export class TaskFactory{
     const task = new Task();
     task.nome = 'Task';
     task.ordem = ordem;
-    task.data = new Date();
-    task.tempo = Date.now();
+    task.tempo = this.definirTempo(dificuldade);
     task.dificuldade = dificuldade;
     task.classe = classe;
     task.objectType = 'Task';
     return task;
+  }
+
+  public static definirTempo(dificuldade: string): string{
+    if(dificuldade == 'medium'){
+      return '03:00:00'
+    }
+    else if(dificuldade == 'hard'){
+      return '06:00:00'
+    }
+    else if(dificuldade == 'extreme'){
+      return '12:00:00'
+    }
+    return '00:00:00'
   }
 }

@@ -15,9 +15,10 @@ import { UploadImageComponent } from './upload-image/upload-image.component';
     StopwatchComponent,
     UploadImageComponent
   ],
-  exports: [
-    UploadImageComponent
-  ],
+    exports: [
+        UploadImageComponent,
+        StopwatchComponent
+    ],
   imports: [
     CommonModule,
     BrowserModule,

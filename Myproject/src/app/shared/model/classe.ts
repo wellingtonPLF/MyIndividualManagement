@@ -5,7 +5,7 @@ export class Classe{
   idclasse!: number;
   nome!: string;
   ordem!: number;
-  objetivo!: string;
+  quando!: string;
   porque!: string;
   oque!: string;
   como!: string;

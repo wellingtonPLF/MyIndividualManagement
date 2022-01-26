@@ -34,6 +34,21 @@ public class TaskController {
        return this.taskService.getTaskPorId(id);
    }
    
+   @GetMapping("/task/requestAll")
+   public List<Task> getRequestAll() {
+       return this.taskService.getRequestAll();
+   }
+   
+   @GetMapping("/task/requestLate")
+   public List<Task> getRequestLate() {
+       return this.taskService.getRequestLate();
+   }
+   
+   @GetMapping("/task/requestUndefined")
+   public List<Task> getRequestUndefined() {
+       return this.taskService.getRequestUndefined();
+   }
+   
    @GetMapping("/task/myTask/classe/{id}")
    public Classe getClasseByIdTask(@PathVariable("id") Long id) {
        return this.taskService.getClasseByIdTask(id);

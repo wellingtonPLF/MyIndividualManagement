@@ -26,7 +26,7 @@ public class Ocupacao {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="ocupacao_sequence")
-	@SequenceGenerator(name="ocupacao_sequence", sequenceName="ocupacao_seq",  allocationSize = 1, initialValue = 8)
+	@SequenceGenerator(name="ocupacao_sequence", sequenceName="ocupacao_seq",  allocationSize = 1, initialValue = 9)
 	private Long idocupacao;
 	private String nome;
 	private int ordem;

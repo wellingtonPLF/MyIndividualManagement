@@ -39,13 +39,10 @@ public class Task{
 	@DateTimeFormat(pattern = "dd/MM/yyyy") 
 	private Date data;
 
-	private Long tempo;
+	private String tempo;
 
 	@Column(columnDefinition="TEXT")
 	private String descricao;
-	
-	@Column(columnDefinition="TEXT")
-	private String comentario;
 	
 	private String etiqueta;
 	private String objectType;
@@ -83,12 +80,12 @@ public class Task{
 	public void setData(Date data) {
 		this.data = data;
 	}
-
-	public Long getTempo() {
+	
+	public String getTempo() {
 		return tempo;
 	}
 
-	public void setTempo(Long tempo) {
+	public void setTempo(String tempo) {
 		this.tempo = tempo;
 	}
 
@@ -98,14 +95,6 @@ public class Task{
 
 	public void setDescricao(String descricao) {
 		this.descricao = descricao;
-	}
-
-	public String getComentario() {
-		return comentario;
-	}
-
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
 	}
 
 	public String getEtiqueta() {

@@ -29,6 +29,25 @@ snack-bar-container.success{
   padding: 0px;
 }
 
+.taskFile .mat-dialog-container{
+  padding: 0px;
+  background-color: transparent !important;
+  box-shadow: unset;
+}
+
+#locking .mat-paginator-range-label{
+  display: none;
+}
+
+#locking .mat-paginator-page-size{
+  display: none;
+}
+
+#templatePaginator .mat-paginator-icon{
+  //color: white;
+}
+
+
 @import "~bootstrap/dist/css/bootstrap-grid.min.css";
 
 /* Importing Bootstrap SCSS file. */

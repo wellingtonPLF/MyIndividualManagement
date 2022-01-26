@@ -41,6 +41,10 @@
   </div>
 
   <div style="overflow-y:scroll; height: 530px;">
-      <app-ocupacao-geral [subarea]="subarea"></app-ocupacao-geral>
+      <div *ngIf="subarea != undefined">
+        <app-ocupacao-list *ngIf="subarea.tipo == 3" [subarea]="subarea"></app-ocupacao-list>
+        <app-ocupacao-geral *ngIf="subarea.tipo == 1" [subarea]="subarea"></app-ocupacao-geral>
+        <app-ocupacao-nominal *ngIf="subarea.tipo == 2" [subarea]="subarea"></app-ocupacao-nominal>
+      </div>
   </div>
 </div>

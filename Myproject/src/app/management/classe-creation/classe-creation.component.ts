@@ -16,6 +16,7 @@ import {ClasseInfoComponent} from "../classe-info/classe-info.component";
 export class ClasseCreationComponent implements OnInit {
   classe!: Classe;
   timeout: any = null;
+  disable: number = 0
   @Output() updateClick = new EventEmitter<any>();
   @Output() removedClick = new EventEmitter<any>();
 
@@ -73,7 +74,21 @@ export class ClasseCreationComponent implements OnInit {
     this.dialog.open(ClasseInfoComponent, {
       width: '800px',
       height: '520px',
+      data: {
+        datakey: this.classe.idclasse
+      },
       panelClass: 'dialogPadding'
     });
+  }
+
+  inputDisable(elemento :HTMLElement): void{
+    if(this.disable == 0){
+      elemento.blur()
+      this.disable = 1;
+    }
+  }
+
+  inputEnable(elemento :HTMLElement): void{
+    elemento.focus()
   }
 }

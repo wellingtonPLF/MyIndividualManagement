@@ -1,47 +1,119 @@
-#buttons{
+#myTask{
+  width: 525px;
+  height: 350px;
+}
+
+#taskName{
   display: flex;
-  margin-top: 10px;
+  background-color: white;
+  clip-path: polygon(0% 0%, 37% 0%, 40% 50%, 100% 50%, 100% 101%, 0% 101%);
+  height: 15%;
 }
 
-#buttons button{
-  margin: 0px 5px;
-}
-
-#buttons div button:first-child{
-  margin-left: 0px;
-  background-color: #02AAC9;
-}
-
-#buttons div button:nth-child(2){
+#taskName input{
+  font-size: 20px;
+  padding-left: 15px;
+  text-align: center;
+  padding-right: 8px;
+  width: 75%;
+  border: none;
+  border-bottom: 1px solid #d0d0d0;
   color: black;
   background-color: white;
 }
 
-#taskName{
-  text-align: center;
-  margin-right: 12px;
+.deleteTask{
+  color: white;
+  background-color: #d21969;
+  display: flex;
+  width: 25%;
+  border-radius: unset;
+  justify-content: center;
+  align-items: center;
+  clip-path: polygon(0% 0%, 77% 0%, 100% 50%, 75% 100%, 0% 100%, 20% 50%);
 }
 
-#taskName input{
-  margin-bottom: 10px;
-  font-size: 20px;
+#taskName div:first-child{
+  width: 40%;
+  display: flex;
+}
+
+#tempo{
+  display: flex;
+  background-color: white;
+  width: 100%;
+  height: 15%;
+  align-items: center;
+  padding-right: 41px;
+}
+
+#tempo div:first-child{
+  color: black;
+  width: 223px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#tempo div:nth-child(2){
+  display: flex;
+  justify-content: flex-end;
+}
+
+#tempo input{
+  height: 30px;
+}
+
+#tempo input:first-child{
+  width: 150px;
   text-align: center;
-  background-color: transparent;
-  border: none;
-  padding-right: 8px;
-  height: 25px;
+}
+
+#tempo input:nth-child(2){
+  margin-left: 10px;
+}
+
+#descricao{
+  width: 100%;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 55%;
+}
+
+#descricao textarea{
+  resize: none;
+}
+
+#confirmCancel{
+  flex-basis: 95%;
+  display: flex;
+  height: 15%;
+  justify-content: flex-end;
+  align-items: flex-end;
+  background-color: white;
+}
+
+#confirmCancel button{
+  height: 38px;
+  border-radius: unset;
+  border-top: 1px solid #d0d0d0;
+}
+
+#confirmCancel button:first-child{
+  background-color: #02AAC9;
+  width: 125px;
+  clip-path: polygon(20% 0%, 100% 0%, 85% 101%, 0% 101%);
+}
+
+#confirmCancel button:nth-child(2){
+  color: black;
+  width: 80px;
+  background-color: white;
+  padding: 0px 12px 0px 5px;
 }
 
 input:focus, textarea:focus, select:focus{
   outline: none;
-}
-
-.deleteTask{
-  margin-top: 5px;
-  color: white;
-  background-color: #d21969;
-  width: 50px;
-  min-width: 50px;
-  display: flex;
-  justify-content: center;
 }

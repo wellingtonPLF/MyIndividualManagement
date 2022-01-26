@@ -11,7 +11,6 @@ import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {TaskFactory} from "../../shared/factoryDirectory/taskFactory";
 import {TaskService} from "../../shared/service/task.service";
-import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {ClasseCreationComponent} from "../classe-creation/classe-creation.component";
 
 @Component({
@@ -23,10 +22,13 @@ export class CarouselComponent implements OnInit {
   lista!: Array<any>;
   @Input() objeto!: any;
   @Input() dificuldade!: string;
+  @Input() qntItens: number = 5;
+  //Usado para saber qual pagina está sendo exibida na lista
   escolhido!: number;
   pages!: number;
-  @Input() qntItens: number = 5;
   resto!: number;
+  //Usado quando o button add for removido
+  showAdd: number = 1;
   carousel: string = 'max-width:'+ ((120 * this.qntItens) + 80 + (this.qntItens * 15)) +'px;'
   containerItens: string = 'min-width:'+ ((120 * this.qntItens) + (this.qntItens * 15)) +'px;';
 
@@ -34,6 +36,9 @@ export class CarouselComponent implements OnInit {
               public templateService: TemplateService, private taskService: TaskService) { }
 
   ngOnInit(): void {
+    if (this.dificuldade == 'any'){
+      this.showAdd = 0;
+    }
     this.escolhido = 0;
   }
 
@@ -45,6 +50,9 @@ export class CarouselComponent implements OnInit {
       }
       else if(this.objeto.objectType == "Classe"){
         this.lista = this.refatorarLista(OrdemDependency.ordenar(this.objeto.tasks));
+      }
+      else{
+        this.lista = this.objeto;
       }
       this.paginas()
       this.resto = this.lista.length - this.multiplo();
@@ -59,22 +67,30 @@ export class CarouselComponent implements OnInit {
 
   right(): void{
     if(this.lista != undefined){
-      if(this.escolhido != Math.floor(this.lista.length/this.qntItens)){
+      if(this.resto == 0 && this.dificuldade == 'any' && this.lista.length != 0){
+        if(this.escolhido != this.calc() - 1){
+          this.escolhido += 1;
+        }
+      }
+      else if(this.escolhido != this.calc()){
         this.escolhido += 1;
       }
     }
   }
 
+  calc(): number{
+    const result = (this.lista.length/this.qntItens);
+    return Math.floor(result);
+  }
+
   paginas(): void{
     if(this.lista != undefined){
-      const result = (this.lista.length/this.qntItens);
-      this.pages = Math.floor(result);
+      this.pages = this.calc();
     }
   }
 
   multiplo(): number{
-    const result = (this.lista.length/this.qntItens);
-    return Math.floor(result) * this.qntItens
+    return this.calc() * this.qntItens
   }
 
   counter(qnt: number) {
@@ -86,7 +102,10 @@ export class CarouselComponent implements OnInit {
       this.openClassDialog(index)
     }
     else if(this.objeto.objectType == 'Classe'){
-      this.openTaskDialog(index, this.dificuldade, this.lista[index])
+      this.openTaskDialog(index, this.lista[index])
+    }
+    else if(this.dificuldade == 'any'){
+      this.openTaskDialog(index, this.lista[index])
     }
   }
 
@@ -150,13 +169,13 @@ export class CarouselComponent implements OnInit {
     return novaLista;
   }
 
-  openTaskDialog(index: number, dificuldade: string, task: Task): void{
+  openTaskDialog(index: number, task: Task): void{
     let dialogRef = this.dialog.open(TaskDialogComponent, {
       data:{
-        type: (dificuldade),
         datakey: (task.idtask),
         key: this.objeto
-      }
+      },
+      panelClass: 'taskFile'
     });
     dialogRef.componentInstance.submitClicked.subscribe(
       result => {

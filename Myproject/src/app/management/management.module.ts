@@ -20,6 +20,11 @@ import { TemplatesComponent } from './templates/templates.component';
 import {DragDropModule} from '@angular/cdk/drag-drop';
 import { BrowserModule } from '@angular/platform-browser';
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import { OcupacaoNominalComponent } from './ocupacao-nominal/ocupacao-nominal.component';
+import { OcupacaoListComponent } from './ocupacao-list/ocupacao-list.component';
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {MatCardModule} from "@angular/material/card";
+import {MatPaginatorModule} from "@angular/material/paginator";
 
 
 @NgModule({
@@ -35,7 +40,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         IndisponivelComponent,
         RemovalScreenDialogComponent,
         ClasseInfoComponent,
-        TemplatesComponent
+        TemplatesComponent,
+        OcupacaoNominalComponent,
+        OcupacaoListComponent
     ],
   exports: [
     AtividadeComponent,
@@ -46,6 +53,9 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
         FormsModule,
         MatButtonModule,
         NgbModule,
+        MatCardModule,
+        MatFormFieldModule,
+        MatPaginatorModule,
         RouterModule,
         DragDropModule,
         MatDialogModule,

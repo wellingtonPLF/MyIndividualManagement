@@ -11,13 +11,16 @@
     <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
   </div>
   <div class="top-right">
-    <button (click)="search()" mat-raised-button style="background-color: #1976d2">Stopwatch</button>
-    <button mat-icon-button style="color:#1976d2"
-            [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
-      <mat-icon color="white">home</mat-icon>
-    </button>
-    <button mat-raised-button style="background-color: #d21969" (click)="signOut()" [routerLink]="['']">
-      Sign out</button>
+    <div style="display: flex; flex-direction: column">
+      <button mat-icon-button style="color:#1976d2"
+              [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
+        <mat-icon color="white">home</mat-icon>
+      </button>
+      <button id="exitButton" (click)="signOut()" [routerLink]="['']">
+        <i class="fas fa-door-open"></i>
+      </button>
+    </div>
+    <app-stopwatch></app-stopwatch>
   </div>
 
   <div class="bottom-right">

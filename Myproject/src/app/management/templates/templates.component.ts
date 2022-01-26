@@ -10,12 +10,14 @@ import {
 import {TemplateService} from "../../shared/service/template.service";
 import {JanelaService} from "../../shared/service/janela.service";
 import {AtividadeService} from "../../shared/service/atividade.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
+import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Atividade} from "../../shared/model/atividade";
 import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
 import {Janela} from "../../shared/model/janela";
 import {Router} from "@angular/router";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
+import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
+import {PageEvent} from "@angular/material/paginator";
 
 @Component({
   selector: 'app-templates',
@@ -26,20 +28,23 @@ export class TemplatesComponent implements OnInit {
 
   templates!: Array<any>;
   janelas!: Array<any>;
-  janelas_templates: Array<any> = [];
-  @Output() newEmitter = new EventEmitter<Janela>();
+  janelas_templates!: Array<any>;
+  @Output() changeEmitter = new EventEmitter<Janela>();
+  //----------------- Paginação -------------------------//
+  eventlength = 3;
+  pageIndex: number = 1;
+  //-----------------------------------------------------//
 
   transferringItem: any = undefined;
 
-  constructor(private templateService: TemplateService, @Inject(MAT_DIALOG_DATA) public data: Atividade,
+  constructor(private templateService: TemplateService, private dialog: MatDialog,
+              @Inject(MAT_DIALOG_DATA) public data: Atividade,
               private atividadeService: AtividadeService, private  janelaService: JanelaService) {
     this.atividadeService.pesquisarPorId(this.data.idatividade).subscribe(
       it => {
         this.janelas = OrdemDependency.ordenar(it.janelas);
 
-        for( let i = 0; i< it.janelas.length; i++){
-          this.janelas_templates.push([])
-        }
+        this.gettingFields();
       }
     )
 
@@ -52,49 +57,47 @@ export class TemplatesComponent implements OnInit {
   }
 
   drop(event: CdkDragDrop<string[]>, index: number) {
-    if (event.previousContainer === event.container) {
-      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    let idTemplate : number;
+    /*let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+
+    dialogRef.componentInstance.deleteClick.subscribe(
+      result =>{
+
+      })*/
+
+    if(event.previousContainer.data.length == 1){
+      transferArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
+
+      idTemplate = this.janelas_templates[index][0].idtemplate;
     }
-    else {
-      //const idtemplate = this.templates[event.previousIndex].idtemplate;
-      let idTemplate : number;
+    else{
+      copyArrayItem(event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex);
 
-      if(event.previousContainer.data.length == 1){
-        transferArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
+      idTemplate = this.janelas_templates[index][0].idtemplate;
 
-        idTemplate = this.janelas_templates[index][0].idtemplate;
-      }
-      else{
-        copyArrayItem(event.previousContainer.data,
-          event.container.data,
-          event.previousIndex,
-          event.currentIndex);
-
-        idTemplate = this.janelas_templates[index][0].idtemplate;
-
-      }
-
-      this.templateService.pesquisarPorId(idTemplate).subscribe(
-        result => {
-          let window!: Janela;
-          window = JanelaFactory.criarJanela(result, this.janelas[index].ordem);
-          window.atividade = this.data;
-          window.idjanela = this.janelas[index].idjanela;
-          this.janelaService.atualizar(window).subscribe(
-            it => {
-              this.janelas[index] = it;
-              this.newEmitter.emit(it);
-            }
-          )
-        }
-      )
-
-      this.transferringItem = undefined;
     }
+    this.templateService.pesquisarPorId(idTemplate).subscribe(
+      result => {
+        let window!: Janela;
+        window = JanelaFactory.criarJanela(result, this.janelas[this.indexItens(index)].ordem);
+        window.atividade = this.data;
+        window.idjanela = this.janelas[this.indexItens(index)].idjanela;
+        this.janelaService.atualizar(window).subscribe(
+          it => {
+            this.janelas[this.indexItens(index)] = it;
+            this.changeEmitter.emit(it);
+          }
+        )
+      }
+    )
 
+    this.transferringItem = undefined;
   }
 
   entered() {
@@ -112,4 +115,34 @@ export class TemplatesComponent implements OnInit {
   removeBox(index: number): void{
     this.janelas_templates[index].splice(0, 1);
   }
+
+  gettingFields(): void{
+    const fields = new Array<any>();
+    for( let i = 0; i< this.eventlength; i++){
+      fields.push([])
+    }
+    this.janelas_templates = fields;
+  }
+
+  //-----------------------------------------//
+  onPageChange(event: PageEvent): void{
+    this.pageIndex = event.pageIndex + 1;
+    this.gettingFields();
+  }
+
+  calcItensByPage(i: number): boolean{
+    return this.indexItens(i) > (2 + (3 * (this.pageIndex - 1)));
+  }
+
+  indexItens(index: number): number{
+    return (index + (3 * (this.pageIndex - 1)));
+  }
+
+  calcPages(): number{
+    if(this.janelas != undefined){
+      return Math.ceil(this.janelas.length/this.eventlength)
+    }
+    return - 1;
+  }
+  //-----------------------------------------//
 }

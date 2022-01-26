@@ -5,7 +5,7 @@ export class Task{
   nome!: string;
   ordem!: number;
   data!: Date;
-  tempo!: number;
+  tempo!: string;
   descricao!: string;
   comentario!: string;
   etiqueta!: string;

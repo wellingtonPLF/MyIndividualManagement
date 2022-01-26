@@ -1,4 +1,4 @@
-<div id="classeInfo">
+<div id="classeInfo" *ngIf="classe != undefined">
   <div style="display: flex; justify-content: flex-end">
     <div mat-dialog-close style="margin-top: 5px; margin-right: 15px">
       <i class="fas fa-times"></i>
@@ -8,21 +8,25 @@
     <div style="margin-right: 10px">
       <div>
         <div>Por que:</div>
-        <textarea rows="8" cols="45"></textarea>
+        <textarea rows="8" cols="45" [(ngModel)]="classe.porque"
+                  (keyup)="saveEdit($event, 'porque')"></textarea>
       </div>
       <div>
         <div>O que:</div>
-        <textarea rows="8" cols="45"></textarea>
+        <textarea rows="8" cols="45" [(ngModel)]="classe.oque"
+                  (keyup)="saveEdit($event, 'oque')"></textarea>
       </div>
     </div>
     <div>
       <div>
         <div>Quando:</div>
-        <textarea rows="8" cols="45"></textarea>
+        <textarea rows="8" cols="45" [(ngModel)]="classe.quando"
+                  (keyup)="saveEdit($event, 'quando')"></textarea>
       </div>
       <div>
         <div>Como:</div>
-        <textarea rows="8" cols="45"></textarea>
+        <textarea rows="8" cols="45" [(ngModel)]="classe.como"
+                  (keyup)="saveEdit($event, 'como')"></textarea>
       </div>
     </div>
   </div>

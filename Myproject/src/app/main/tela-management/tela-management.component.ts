@@ -45,10 +45,4 @@ export class TelaManagementComponent implements OnInit{
   enviarJanela(evento: Atividade): void{
     this.atividade = evento;
   }
-
-  search(): void{
-    this.dialog.open(StopwatchComponent, {
-      panelClass: 'dialogPadding'
-    })
-  }
 }

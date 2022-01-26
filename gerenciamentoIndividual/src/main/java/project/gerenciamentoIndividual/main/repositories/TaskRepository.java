@@ -18,4 +18,22 @@ public interface TaskRepository extends JpaRepository<Task, Long> {
 	
 	//@Query("SELECT coalesce(max(tsk.idtask), 0) FROM Task tsk")
 	//Long findMaxId();
+	
+	@Query ("SELECT t "
+			+ "from Task t "
+			+ "where age(t.data, current_date) < '7 days' and age(t.data, current_date) > '-1 days' "
+			+ "order by data, tempo")
+	List<Task> requestAll();
+	
+	@Query ("SELECT t "
+			+ "from Task t "
+			+ "where age(t.data, current_date) < '0 days' "
+			+ "order by data, tempo")
+	List<Task> requestLate();
+	
+	@Query ("SELECT t "
+			+ "from Task t "
+			+ "where t.data is Null "
+			+ "order by tempo")
+	List<Task> requestUndefined();
 }

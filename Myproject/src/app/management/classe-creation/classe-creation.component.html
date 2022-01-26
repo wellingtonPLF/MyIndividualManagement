@@ -6,6 +6,7 @@
           <div *ngIf="classe != undefined" id="classeNome">
             <b>-</b>&nbsp;&nbsp;&nbsp;
             <input [(ngModel)]="classe.nome"  maxlength="12" size="10"
+                   (focus)="inputDisable(gettingFocus)" #gettingFocus (click)="inputEnable(gettingFocus)"
                    (keyup)="saveEdit($event)" spellcheck="false">
             &nbsp;&nbsp;&nbsp;<b>-</b>
           </div>

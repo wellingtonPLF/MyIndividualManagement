@@ -108,7 +108,7 @@ CREATE TABLE TASK
   idTASK SERIAL NOT NULL,
   nome VARCHAR(45) NOT NULL,
   ordem INT NOT NULL,
-  data DATE NOT NULL,
+  data DATE NULL,
   tempo TIMESTAMP NOT NULL,
   descricao TEXT NULL,
   comentario TEXT NULL,
