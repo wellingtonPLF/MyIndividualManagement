@@ -25,6 +25,8 @@ import { OcupacaoListComponent } from './ocupacao-list/ocupacao-list.component';
 import {MatFormFieldModule} from "@angular/material/form-field";
 import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
+import { TaskProjectComponent } from './task-project/task-project.component';
+import { SubareaTemplateComponent } from './subarea-template/subarea-template.component';
 
 
 @NgModule({
@@ -42,7 +44,9 @@ import {MatPaginatorModule} from "@angular/material/paginator";
         ClasseInfoComponent,
         TemplatesComponent,
         OcupacaoNominalComponent,
-        OcupacaoListComponent
+        OcupacaoListComponent,
+        TaskProjectComponent,
+        SubareaTemplateComponent
     ],
   exports: [
     AtividadeComponent,

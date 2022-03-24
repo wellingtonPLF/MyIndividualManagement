@@ -3,6 +3,8 @@ import {TaskService} from "../../shared/service/task.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {Task} from "../../shared/model/task";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
+import {Casual} from "../../shared/model/casual";
+import {CasualService} from "../../shared/service/casual.service";
 
 @Component({
   selector: 'app-task-dialog',
@@ -11,13 +13,14 @@ import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-scr
 })
 export class TaskDialogComponent implements OnInit {
   timeout: any = null;
-  task!: Task;
+  task!: Casual;
   disable: number = 0
+  etiqueta!: string;
   tempo!: string;
   @Output() submitClicked = new EventEmitter<any>();
   @Output() removedClicked = new EventEmitter<any>();
 
-  constructor(private taskService: TaskService, private dialog: MatDialog,
+  constructor(private taskService: CasualService, private dialog: MatDialog,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
@@ -27,6 +30,7 @@ export class TaskDialogComponent implements OnInit {
         if(it.data != null){
           this.tempo = it.data.toString();
         }
+        this.etiqueta = this.checkEtiqueta(it.etiqueta);
       }
     )
   }
@@ -70,12 +74,22 @@ export class TaskDialogComponent implements OnInit {
     this.taskService.pesquisarClassePorIdTask(this.task.idtask).subscribe(
       it => {
         this.task.classe = it;
-        this.task.data = new Date(this.tempo)
-        this.compareTimeToDifficult();
-        this.task.data.setMinutes(this.task.data.getMinutes() + this.task.data.getTimezoneOffset());
-        this.taskService.atualizar(this.task).subscribe(
-          result => {
-            this.submitClicked.emit(result)
+        this.taskService.getIfDiarias().subscribe(
+          response => {
+            if(response.includes(this.task.idtask) && this.task.etiqueta == 'success'){
+              this.task.data = new Date('');
+              this.task.etiqueta = 'undone';
+            }
+            else{
+              this.task.data = new Date(this.tempo)
+            }
+            //this.compareTimeToDifficult();
+            this.task.data.setMinutes(this.task.data.getMinutes() + this.task.data.getTimezoneOffset());
+            this.taskService.atualizar(this.task).subscribe(
+              result => {
+                this.submitClicked.emit(result)
+              }
+            )
           }
         )
       }
@@ -93,8 +107,32 @@ export class TaskDialogComponent implements OnInit {
     elemento.focus()
   }
 
+  checkEtiqueta(eqt: string): string{
+    if(eqt == 'success'){
+      return '\u2714'
+    }
+    if(eqt == 'problem'){
+      return '\u274C'
+    }
+    return '\u2754'
+  }
+
+  changeEtiqueta(event: any): void{
+    const etiqueta = event.target.value;
+    if(etiqueta == '\u2714'){
+      this.task.etiqueta = 'success'
+    }
+    else if(etiqueta == '\u274C'){
+      this.task.etiqueta = 'problem'
+    }
+    else{
+      this.task.etiqueta = 'undone'
+    }
+  }
+
+  /*
   compareTimeToDifficult(): void{
-    const today = new Date();
+    /*const today = new Date();
     const dataAtual = today.getFullYear()+'-'+(today.getMonth()+1)+'-'+today.getDate();
     if(Date.parse(dataAtual +' '+ this.task.tempo) <= Date.parse(dataAtual +' '+'01:00:00')){
       this.task.dificuldade = 'easy'
@@ -108,5 +146,20 @@ export class TaskDialogComponent implements OnInit {
     else{
       this.task.dificuldade = 'extreme'
     }
-  }
+    if (this.task.dificuldade == "easy"){
+      this.task.tempo = "01:00:00";
+    }
+    else if(this.task.dificuldade == "medimum"){
+      this.task.tempo = "03:00:00";
+    }
+    else if(this.task.dificuldade == "hard"){
+      this.task.tempo = "06:00:00";
+    }
+    else if(this.task.dificuldade == "expert"){
+      this.task.tempo = "12:00:00";
+    }
+    else if(this.task.dificuldade == "master"){
+      this.task.tempo = "75:00:00";
+    }
+  }*/
 }

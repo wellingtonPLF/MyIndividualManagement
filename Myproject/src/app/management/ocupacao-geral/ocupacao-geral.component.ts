@@ -57,13 +57,16 @@ export class OcupacaoGeralComponent implements OnInit {
 
   private executeListing(value: string, index: number) {
     if(value != ''){
-      const ocupacao = this.ocupacoes[index];
-      ocupacao.nome = value;
-      this.ocupacaoService.pesquisarSubareaPorIdOcupacao(ocupacao.idocupacao).subscribe(
-        it => {
-          ocupacao.subarea = it;
-          this.ocupacaoService.atualizar(ocupacao).subscribe(
-            result => {}
+      this.ocupacaoService.pesquisarPorId(this.ocupacoes[index].idocupacao).subscribe(
+        response => {
+          response.nome = value;
+          this.ocupacaoService.pesquisarSubareaPorIdOcupacao(response.idocupacao).subscribe(
+            it => {
+              response.subarea = it;
+              this.ocupacaoService.atualizar(response).subscribe(
+                result => {}
+              )
+            }
           )
         }
       )

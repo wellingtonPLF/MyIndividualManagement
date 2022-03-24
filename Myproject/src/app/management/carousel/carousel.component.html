@@ -10,7 +10,7 @@
       <div *ngFor="let range of counter(qntItens); let j = index"
            (click)="show((i * qntItens) + j)"
            [ngClass]="{'counteiner-item': escolhido == i, 'displayNone': escolhido != i}">
-        {{lista[(i * qntItens) + j].nome}}
+        <div>{{lista[(i * qntItens) + j].nome}}</div>
       </div>
     </div>
     <!-- [Item] [Item] [ADD] [Null] -->
@@ -18,7 +18,7 @@
       <div *ngFor="let paginas of counter(resto); let i = index;"
            (click)="show(multiplo() +i)"
            [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
-        {{lista[multiplo() + i].nome}}
+        <div>{{lista[multiplo() + i].nome}}</div>
       </div>
       <div [ngClass]="{'counteiner-item':  escolhido == pages, 'displayNone': escolhido != pages}"
            (click)="add()" class="plusplus" *ngIf="dificuldade != 'any'"> + </div>

@@ -24,22 +24,6 @@ public class TaskService {
        return this.taskRepository.findById(id).orElse(null);
    }
    
-   public List<Task> getRequestAll(){
-	   return this.taskRepository.requestAll();
-   }
-   
-   public List<Task> getRequestLate(){
-	   return this.taskRepository.requestLate();
-   }
-   
-   public List<Task> getRequestUndefined(){
-	   return this.taskRepository.requestUndefined();
-   }
-   
-   public Classe getClasseByIdTask(Long id) {
-       return this.taskRepository.getClasseByIdTask(id);
-   }
-
    @Transactional
    public Task inserirOuAtualizar(Task task) {
 	   return this.taskRepository.save(task);

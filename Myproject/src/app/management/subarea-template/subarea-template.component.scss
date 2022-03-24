@@ -1,0 +1,49 @@
+select:focus{
+  outline: none;
+}
+
+#closeBtn{
+  color: black;
+  display: flex;
+  justify-content: flex-end
+}
+
+.undefinedSubarea{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px;
+  background-color: white;
+  width: 300px;
+  border: 2px dashed #d3d3d3;
+  height: 70px;
+}
+
+#listaDeSubarea span{
+  display: flex;
+}
+
+#listaDeSubarea span .subareaObject:nth-child(2){
+  margin-left: 10px;
+}
+
+.subareaName{
+  background-color: black;
+  width: 200px;
+  height: 70px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 18px
+}
+
+.chooseOption{
+  background-color: white;
+  border: 1px solid gray;
+  width: 100px;
+  height: 70px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center
+}

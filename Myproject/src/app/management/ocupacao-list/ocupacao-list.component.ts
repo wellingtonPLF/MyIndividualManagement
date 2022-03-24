@@ -9,6 +9,12 @@ import {SubareaService} from "../../shared/service/subarea.service";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {TaskService} from "../../shared/service/task.service";
+import {SessionStorageService} from "../../shared/service/session-storage.service";
+import {LocalStorageService} from "../../shared/service/local-storage.service";
+import {CasualService} from "../../shared/service/casual.service";
+import {ProjetoService} from "../../shared/service/projeto.service";
+import {forkJoin} from "rxjs";
+import {Casual} from "../../shared/model/casual";
 
 @Component({
   selector: 'app-ocupacao-list',
@@ -22,26 +28,83 @@ export class OcupacaoListComponent implements OnInit {
   lista: Array<any> = [];
   timeout: any = null;
 
-  constructor(private ocupacaoService: OcupacaoService, private taskService: TaskService,
+  constructor(private ocupacaoService: OcupacaoService, private casualService: CasualService,
+              private projetoService: ProjetoService,
               private dialog: MatDialog, private classService: ClasseService,
+              private accountService: SessionStorageService,
+              private accountServiceLocal: LocalStorageService,
               private templateService: TemplateService, private subareaService: SubareaService) {
 
   }
 
   ngOnInit(): void {
-    this.taskService.getRequestAll().subscribe(
+    let usuarioID = this.accountService.getToken();
+
+    if (usuarioID == null){
+      usuarioID = this.accountServiceLocal.getToken();
+
+      if(usuarioID == null){
+        usuarioID = "0";
+      }
+    }
+
+    this.casualService.getRequestCasualTask(usuarioID).subscribe(
       it => {
-        this.lista[0] = it;
+        this.projetoService.getRequestProjectTask(usuarioID).subscribe(
+          result => {
+            this.lista[0] = it.concat(result);
+          }
+        )
       }
     )
-    this.taskService.getRequestLate().subscribe(
-      it => {
-        this.lista[1] = it;
+    //===========================================================================
+
+    this.casualService.getIfDiariasPendente().subscribe(
+      response => {
+        this.casualService.getRequestLate(usuarioID).subscribe(
+          it => {
+            for (let i of it){
+              for(let j of response){
+                if (i.idtask == j.idtask){
+                  it.splice(it.indexOf(i), 1)
+                }
+              }
+            }
+            this.projetoService.getRequestLate(usuarioID).subscribe(
+              result => {
+                this.lista[1] = it.concat(result);
+              }
+            )
+          }
+        )
+
+        for (let i of response){
+          this.casualService.pesquisarClassePorIdTask(i.idtask).subscribe(
+            classe => {
+              this.casualService.pesquisarPorId(i.idtask).subscribe(
+                casualTask => {
+                  casualTask.classe = classe;
+                  casualTask.data = new Date('');
+                  casualTask.etiqueta = 'undone';
+                  this.casualService.atualizar(casualTask).subscribe(
+                    atualizado => {}
+                  )
+                }
+              )
+            }
+          )
+        }
       }
     )
-    this.taskService.getRequestUndefined().subscribe(
+    //===========================================================================
+
+    this.casualService.getRequestUndefined(usuarioID).subscribe(
       it => {
-        this.lista[2] = it;
+        this.projetoService.getRequestUndefined(usuarioID).subscribe(
+          result => {
+            this.lista[2] = it.concat(result);
+          }
+        )
       }
     )
   }
@@ -62,42 +125,6 @@ export class OcupacaoListComponent implements OnInit {
     }
     else{
       this.show = index;
-    }
-  }
-
-  saveEdit(event: any, i: number) {
-    clearTimeout(this.timeout);
-    var $this = this;
-    this.timeout = setTimeout(function () {
-      if (event.keyCode != 13) {
-        $this.execListing(event.target.value, i);
-      }
-    }, 2000);
-  }
-
-  private execListing(value: string, index: number) {
-    if(value != ''){
-      this.classService.pesquisarPorId(this.ocupacoes[index].classes[0].idclasse).subscribe(
-        it => {
-          it.ocupacao = this.ocupacoes[index];
-          it.nome = value;
-          this.classService.atualizar(it).subscribe(
-            result => {}
-          )
-        }
-      )
-    }
-  }
-
-  removerOccupation(index: number): void{
-    if(index != 0){
-      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
-      dialogRef.componentInstance.deleteClick.subscribe(
-        result =>{
-          this.ocupacaoService.remover((this.ocupacoes[index].idocupacao).toString()).subscribe(
-            it => this.ocupacoes.splice(index, 1)
-          )
-        })
     }
   }
 }

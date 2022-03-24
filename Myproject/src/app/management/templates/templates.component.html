@@ -22,7 +22,7 @@
            (cdkDropListDropped)="drop($event, i)"
            [cdkDropListEnterPredicate]="evenPredicate">
         <div *ngFor="let item of janela;" class="example-box"
-             cdkDrag cdkDragBoundary=".example-boundary" cdkDragBoundary=".locking">
+             cdkDrag cdkDragBoundary=".example-boundary" cdkDragLockAxis="y" cdkDragBoundary="#locking">
             {{item.nome}}
           <button class="closeButton" (click)="removeBox(i)">
             <i class="fas fa-times"></i>

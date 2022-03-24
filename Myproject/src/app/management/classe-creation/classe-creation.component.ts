@@ -43,13 +43,16 @@ export class ClasseCreationComponent implements OnInit {
 
   private executeListing(value: string) {
     if(value != ''){
-      const classe = this.classe;
-      classe.nome = value;
-      this.classeService.pesquisarOcupacaoPorIdClasse(classe.idclasse).subscribe(
-        it => {
-          classe.ocupacao = it;
-          this.classeService.atualizar(classe).subscribe(
-            result => this.updateClick.emit(result)
+      this.classeService.pesquisarPorId(this.classe.idclasse).subscribe(
+        response => {
+          this.classeService.pesquisarOcupacaoPorIdClasse(response.idclasse).subscribe(
+            it => {
+              response.nome = value;
+              response.ocupacao = it;
+              this.classeService.atualizar(response).subscribe(
+                result => this.updateClick.emit(result)
+              )
+            }
           )
         }
       )

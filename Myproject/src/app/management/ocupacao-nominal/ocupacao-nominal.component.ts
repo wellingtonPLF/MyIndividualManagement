@@ -9,6 +9,8 @@ import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
 import {ClasseService} from "../../shared/service/classe.service";
+import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
+import {DialogComponent} from "../../dialogs/dialog/dialog.component";
 
 @Component({
   selector: 'app-ocupacao-nominal',
@@ -32,10 +34,10 @@ export class OcupacaoNominalComponent implements OnInit {
 
   ngOnChanges(): void{
     if(this.subarea != undefined){
-      if (this.subarea.nome == "Lengthy"){
+      if (this.subarea.tipo == "projeto"){
         this.difficult = 'extreme';
       }
-      else{
+      else if (this.subarea.tipo == "casual"){
         this.difficult = 'easy';
       }
       this.subareaService.pesquisarPorId(this.subarea.idsubarea).subscribe(
@@ -110,5 +112,12 @@ export class OcupacaoNominalComponent implements OnInit {
         }
       )
     }
+  }
+
+  getInfo(index: number): void{
+    this.dialog.open(DialogComponent, {
+      data: this.ocupacoes[index].classes[0],
+      panelClass: 'dialogPadding'
+    });
   }
 }

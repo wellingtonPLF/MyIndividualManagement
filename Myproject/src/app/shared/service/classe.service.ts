@@ -34,6 +34,10 @@ export class ClasseService {
     return this.httpClient.get<Ocupacao>(`${this.URL_CLASSE}/myClasse/${id}`);
   }
 
+  pesquisarTipoPorIdClasse(id: number): Observable<string> {
+    return this.httpClient.get<string>(`${this.URL_CLASSE}/myTipo/${id}`);
+  }
+
   atualizar(classe: Classe): Observable<Classe> {
     return this.httpClient.put<Classe>(`${this.URL_CLASSE}/${classe.idclasse}`, classe);
   }

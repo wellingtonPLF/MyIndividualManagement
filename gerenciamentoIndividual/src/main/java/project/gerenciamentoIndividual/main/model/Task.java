@@ -11,6 +11,8 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
@@ -26,24 +28,21 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "task")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Task{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long idtask;
 	private String nome;
-	private int ordem;
+	private Integer ordem;
 	private String dificuldade;
 	
 	@Temporal(TemporalType.DATE) 
 	@DateTimeFormat(pattern = "dd/MM/yyyy") 
 	private Date data;
 
-	private String tempo;
-
-	@Column(columnDefinition="TEXT")
-	private String descricao;
-	
+	private String tempo;	
 	private String etiqueta;
 	private String objectType;
 	
@@ -51,9 +50,10 @@ public class Task{
 	@JoinColumn(name="idencadeamento")
 	private Task encadeamento;
 	
-	@ManyToOne
+	/*@ManyToOne
+	@JoinColumn(name="idclasse")
 	@JsonBackReference(value="classe_Task")
-	private Classe classe;
+	private Classe classe;*/
 	
 	public Task() {}
 
@@ -89,14 +89,6 @@ public class Task{
 		this.tempo = tempo;
 	}
 
-	public String getDescricao() {
-		return descricao;
-	}
-
-	public void setDescricao(String descricao) {
-		this.descricao = descricao;
-	}
-
 	public String getEtiqueta() {
 		return etiqueta;
 	}
@@ -113,19 +105,19 @@ public class Task{
 		this.encadeamento = encadeamento;
 	}
 
-	public Classe getClasse() {
+	/*public Classe getClasse() {
 		return classe;
 	}
 
 	public void setClasse(Classe classe) {
 		this.classe = classe;
-	}
+	}*/
 
-	public int getOrdem() {
+	public Integer getOrdem() {
 		return ordem;
 	}
 
-	public void setOrdem(int ordem) {
+	public void setOrdem(Integer ordem) {
 		this.ordem = ordem;
 	}
 

@@ -5,20 +5,8 @@ import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {SignupvalidationService} from "../../shared/service/signupvalidation.service";
 import {MensagemService} from "../../shared/service/mensagem.service";
-import {Atividade} from "../../shared/model/atividade";
-import {Janela} from "../../shared/model/janela";
 import {TemplateService} from "../../shared/service/template.service";
-import {Subarea} from "../../shared/model/subarea";
 import {SubareaService} from "../../shared/service/subarea.service";
-import {Ocupacao} from "../../shared/model/ocupacao";
-import {Classe} from "../../shared/model/classe";
-import {Template} from "../../shared/model/template";
-import {UsuarioTemplate} from "../../shared/model/usuarioTemplate";
-import {ClasseFactory} from "../../shared/factoryDirectory/classeFactory";
-import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
-import {SubareaFactory} from "../../shared/factoryDirectory/subareaFactory";
-import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
-import {AtividadeFactory} from "../../shared/factoryDirectory/atividadeFactory";
 import {UsuarioFactory} from "../../shared/factoryDirectory/usuarioFactory";
 
 @Component({

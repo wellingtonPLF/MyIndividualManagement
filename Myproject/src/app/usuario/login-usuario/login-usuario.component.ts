@@ -60,10 +60,10 @@ export class LoginUsuarioComponent implements OnInit {
                   this.senhaInv = false
                   this.count = 0;
                   if (this.check){
-                    this.accountServiceLocal.setToken('my-token');
+                    this.accountServiceLocal.setToken(`${it.idusuario}`);
                   }
                   else {
-                    this.accountService.setToken('my-token');
+                    this.accountService.setToken(`${it.idusuario}`);
                   }
                   this.router.navigate(['/management', it.idusuario])
                 }

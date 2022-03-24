@@ -1,0 +1,45 @@
+<div class="main" *ngIf="task != undefined">
+  <div class="menuDiv">
+    <div id="classeNome">
+      <input [(ngModel)]="task.nome" maxlength="12" size="10" spellcheck="false"
+             #gettingFocus (focus)="inputDisable(gettingFocus)"
+             (click)="inputEnable(gettingFocus)"
+             (keyup)="saveEdit($event, 'nothing')">
+      <button mat-button  (click)="removerTask()" id="removeBtn">
+        <i  class="fas fa-trash"></i>
+      </button>
+    </div>
+    <div style="display: flex">
+      <div id="miniMenu">
+        <div id="time">{{task.tempo}}</div>
+        <input type="date" style="width: 150px" [(ngModel)]="tempo">
+        <div class="choice">{{task.dificuldade}}</div>
+        <select (change)="changeEtiqueta($event)">
+          <option>{{etiqueta}}</option>
+          <option *ngIf="etiqueta != '\u2754'">&#x2754;</option>
+          <option *ngIf="etiqueta != '\u2714'">&#x2714;</option>
+          <option *ngIf="etiqueta != '\u274C'">&#x274C;</option>
+        </select>
+      </div>
+      <div id="confirmCancel">
+        <button mat-button mat-dialog-close (click)="updateTask()">Confirm</button>
+        <button mat-button mat-dialog-close>Cancel</button>
+      </div>
+    </div>
+  </div>
+  <div class="body">
+    <div class="centralizar">
+      <div *ngFor="let dupla of counter(2); index as i; trackBy:trackByIndex;">
+        <span>
+          <div *ngFor="let quadrupla of counter(4); index as j">
+            <div class="blockSize">
+              <div>{{titulos[(j + (4 * i))]}}</div>
+              <textarea rows="10" cols="28" style="resize: none;"
+                        [(ngModel)]="atributos[(j + (4 * i))]" spellcheck="false"></textarea>
+            </div>
+          </div>
+        </span>
+      </div>
+    </div>
+  </div>
+</div>

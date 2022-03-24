@@ -11,10 +11,13 @@ import {HttpClientModule} from "@angular/common/http";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
+import { DialogComponent } from './dialogs/dialog/dialog.component';
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    DialogComponent
   ],
     imports: [
         BrowserModule,
@@ -26,6 +29,7 @@ import {MatButtonModule} from "@angular/material/button";
         MatButtonModule,
         UsuarioModule,
         RouterModule,
+        FormsModule,
         NgbModule
     ],
   providers: [],

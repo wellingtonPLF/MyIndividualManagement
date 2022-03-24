@@ -1,4 +1,4 @@
-<div style="margin-top: 20px; margin-left: 20px"
+<div style="margin-top: 22px; margin-left: 20px"
      *ngFor="let ocupacao of ocupacoes; let i = index">
   <div id="ocup">{{ocupacao.nome}}</div>
   <div class="ocupacao">
@@ -11,11 +11,16 @@
         <b>-</b>&nbsp;&nbsp;&nbsp;</div>
     </div>
     <div class="close">
+      <div>{{ocupacao.classes[0].padrao}}</div>
+      <div (click)="getInfo(i)">
+        <!--<i class="fas fa-question"></i>-->
+        <i class="fas fa-info-circle"></i>
+      </div>
       <i class="fas fa-times deleteOcupacao" (click)="removerOccupation(i)"></i>
     </div>
   </div>
   <div [hidden]="show != i" style="width: 97%; background-color: #efefef">
-    <app-carousel [qntItens]="5" [dificuldade]="difficult" [objeto]="ocupacao.classes[0]"></app-carousel>
+    <app-carousel [qntItens]="5" [dificuldade]="difficult" [objeto]="ocupacao.classes[0]" [subareaTipo]="subarea.tipo"></app-carousel>
   </div>
 </div>
 <div class="addOcupacao" (click)="addOccupation()"><b>+</b></div>

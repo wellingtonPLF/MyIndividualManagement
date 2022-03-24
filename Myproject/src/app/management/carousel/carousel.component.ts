@@ -8,10 +8,15 @@ import {TemplateService} from "../../shared/service/template.service";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {ClasseFactory} from "../../shared/factoryDirectory/classeFactory";
 import {TaskDialogComponent} from "../task-dialog/task-dialog.component";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {TaskFactory} from "../../shared/factoryDirectory/taskFactory";
 import {TaskService} from "../../shared/service/task.service";
 import {ClasseCreationComponent} from "../classe-creation/classe-creation.component";
+import {CasualService} from "../../shared/service/casual.service";
+import {ProjetoService} from "../../shared/service/projeto.service";
+import {Projeto} from "../../shared/model/projeto";
+import {Casual} from "../../shared/model/casual";
+import {TaskProjectComponent} from "../task-project/task-project.component";
 
 @Component({
   selector: 'app-carousel',
@@ -20,6 +25,7 @@ import {ClasseCreationComponent} from "../classe-creation/classe-creation.compon
 })
 export class CarouselComponent implements OnInit {
   lista!: Array<any>;
+  @Input() subareaTipo!: string;
   @Input() objeto!: any;
   @Input() dificuldade!: string;
   @Input() qntItens: number = 5;
@@ -32,8 +38,9 @@ export class CarouselComponent implements OnInit {
   carousel: string = 'max-width:'+ ((120 * this.qntItens) + 80 + (this.qntItens * 15)) +'px;'
   containerItens: string = 'min-width:'+ ((120 * this.qntItens) + (this.qntItens * 15)) +'px;';
 
-  constructor(public classeService: ClasseService, private router: Router, private dialog: MatDialog,
-              public templateService: TemplateService, private taskService: TaskService) { }
+  constructor(public classeService: ClasseService, private router: Router, private taskService: TaskService,
+              private dialog: MatDialog, public templateService: TemplateService,
+              private casualService: CasualService, private projetoService: ProjetoService) { }
 
   ngOnInit(): void {
     if (this.dificuldade == 'any'){
@@ -49,7 +56,15 @@ export class CarouselComponent implements OnInit {
         this.lista = OrdemDependency.ordenar(this.objeto.classes);
       }
       else if(this.objeto.objectType == "Classe"){
-        this.lista = this.refatorarLista(OrdemDependency.ordenar(this.objeto.tasks));
+        if(this.subareaTipo == 'casual'){
+
+          const listaRef = this.refatorarLista(this.objeto.casual);
+          this.lista = OrdemDependency.ordenar(listaRef)
+        }
+        else if (this.subareaTipo == 'projeto'){
+          const listaRef = this.refatorarLista(this.objeto.projeto);
+          this.lista = OrdemDependency.ordenar(listaRef);
+        }
       }
       else{
         this.lista = this.objeto;
@@ -101,10 +116,7 @@ export class CarouselComponent implements OnInit {
     if(this.objeto.objectType == 'Ocupacao'){
       this.openClassDialog(index)
     }
-    else if(this.objeto.objectType == 'Classe'){
-      this.openTaskDialog(index, this.lista[index])
-    }
-    else if(this.dificuldade == 'any'){
+    else{
       this.openTaskDialog(index, this.lista[index])
     }
   }
@@ -116,7 +128,8 @@ export class CarouselComponent implements OnInit {
 
       this.templateService.pesquisarPorId(1).subscribe(
         result => {
-          classe = ClasseFactory.criarClasse(result.janela_c.subareas[0].ocupacoes[0], ordem);
+          const subarea = result.janela_c.subareas[0]
+          classe = ClasseFactory.criarClasse(subarea.ocupacoes[0], ordem, subarea.tipo);
           classe.nome = "New";
           classe.ocupacao = this.objeto;
           this.classeService.inserir(classe).subscribe(
@@ -133,27 +146,46 @@ export class CarouselComponent implements OnInit {
       )
     }
     else if (this.objeto.objectType == 'Classe'){
-      let task!: Task;
       let listTask!: Array<Task>;
       let ordem = 0;
       this.classeService.pesquisarPorId(this.objeto.idclasse).subscribe(
         result => {
-          if (result.tasks.length != 0){
-            listTask = OrdemDependency.ordenar(result.tasks);
-            ordem = listTask[result.tasks.length - 1].ordem + 1;
-          }
-          task = TaskFactory.criarTask(this.dificuldade, ordem, result);
-
-          this.taskService.inserir(task).subscribe(
-            it => {
-              this.lista.push(it)
-              this.resto = this.lista.length - this.multiplo();
-              this.paginas()
-              if(this.resto == 0){
-                this.right()
-              }
+          if(this.subareaTipo == 'projeto'){
+            if (result.projeto.length != 0){
+              listTask = OrdemDependency.ordenar(result.projeto);
+              ordem = listTask[result.projeto.length - 1].ordem + 1;
             }
-          )
+            let task!: Projeto;
+            task = TaskFactory.criarProjetoTask(this.dificuldade, ordem, result);
+            this.projetoService.inserir(task).subscribe(
+              it => {
+                this.lista.push(it)
+                this.resto = this.lista.length - this.multiplo();
+                this.paginas()
+                if(this.resto == 0){
+                  this.right()
+                }
+              }
+            )
+          }
+          else if(this.subareaTipo == 'casual'){
+            if (result.casual.length != 0){
+              listTask = OrdemDependency.ordenar(result.casual);
+              ordem = listTask[result.casual.length - 1].ordem + 1;
+            }
+            let task!: Casual;
+            task = TaskFactory.criarCasualTask(this.dificuldade, ordem, result);
+            this.casualService.inserir(task).subscribe(
+              it => {
+                this.lista.push(it)
+                this.resto = this.lista.length - this.multiplo();
+                this.paginas()
+                if(this.resto == 0){
+                  this.right()
+                }
+              }
+            )
+          }
         }
       )
     }
@@ -162,7 +194,7 @@ export class CarouselComponent implements OnInit {
   refatorarLista(list: Array<Task>): Array<Task>{
     let novaLista = new Array<Task>();
     for(let i of list){
-      if(i.dificuldade == this.dificuldade){
+      if(i.dificuldade == this.dificuldade && i.etiqueta != 'success'){
         novaLista.push(i)
       }
     }
@@ -170,27 +202,69 @@ export class CarouselComponent implements OnInit {
   }
 
   openTaskDialog(index: number, task: Task): void{
-    let dialogRef = this.dialog.open(TaskDialogComponent, {
-      data:{
-        datakey: (task.idtask),
-        key: this.objeto
-      },
-      panelClass: 'taskFile'
-    });
-    dialogRef.componentInstance.submitClicked.subscribe(
-      result => {
-        this.lista.splice(index, 1, result)
-      }
-    );
+    if (this.subareaTipo == 'projeto' || task.dificuldade == 'extreme'){
+      let dialogRef = this.dialog.open(TaskProjectComponent, {
+        data:{
+          datakey: (task.idtask),
+          key: this.objeto
+        },
+        panelClass: ['dialogPadding', 'full-screen-modal']
+      });
 
-    dialogRef.componentInstance.removedClicked.subscribe(
-      it => {
-        dialogRef.close()
-        this.lista.splice(index, 1)
-        this.resto = this.lista.length - this.multiplo();
-        this.paginas()
-      }
-    )
+      dialogRef.componentInstance.submitClicked.subscribe(
+        result => {
+          if(result.etiqueta == 'success' || (result.data == null && this.dificuldade == 'any')){
+            this.lista.splice(index, 1)
+            this.resto = this.lista.length - this.multiplo();
+            this.paginas()
+          }
+          else{
+            this.lista.splice(index, 1, result)
+          }
+        }
+      );
+
+      dialogRef.componentInstance.removedClicked.subscribe(
+        it => {
+          dialogRef.close()
+          this.lista.splice(index, 1)
+          this.resto = this.lista.length - this.multiplo();
+          this.paginas()
+        }
+      )
+    }
+    else if(this.subareaTipo == 'casual' ||
+      (task.dificuldade == 'easy' || task.dificuldade == 'medium' || task.dificuldade == 'hard')){
+      let dialogRef = this.dialog.open(TaskDialogComponent, {
+        data:{
+          datakey: (task.idtask),
+          key: this.objeto
+        },
+        panelClass: 'taskFile'
+      });
+
+      dialogRef.componentInstance.submitClicked.subscribe(
+        result => {
+          if(result.etiqueta == 'success' || (result.data == null && this.dificuldade == 'any')){
+            this.lista.splice(index, 1)
+            this.resto = this.lista.length - this.multiplo();
+            this.paginas()
+          }
+          else{
+            this.lista.splice(index, 1, result)
+          }
+        }
+      );
+
+      dialogRef.componentInstance.removedClicked.subscribe(
+        it => {
+          dialogRef.close()
+          this.lista.splice(index, 1)
+          this.resto = this.lista.length - this.multiplo();
+          this.paginas()
+        }
+      )
+    }
   }
 
   openClassDialog(index: number): void{

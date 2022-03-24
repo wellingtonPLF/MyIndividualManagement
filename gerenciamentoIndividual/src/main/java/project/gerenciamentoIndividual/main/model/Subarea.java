@@ -29,8 +29,9 @@ public class Subarea {
 	@SequenceGenerator(name="subarea_sequence", sequenceName="subarea_seq",  allocationSize = 1, initialValue = 8)
 	private Long idsubarea;
 	private String nome;
-	private int tipo;
-	private int ordem;
+	private String tipo; //CASUAL OU PROJETO
+	private Integer estilo; //1, 2 OU 3
+	private Integer ordem;
 	private String objectType;
 	
 	@ManyToOne
@@ -68,11 +69,11 @@ public class Subarea {
 		this.ocupacoes = ocupacoes;
 	}
 
-	public int getOrdem() {
+	public Integer getOrdem() {
 		return ordem;
 	}
 
-	public void setOrdem(int ordem) {
+	public void setOrdem(Integer ordem) {
 		this.ordem = ordem;
 	}
 
@@ -84,11 +85,11 @@ public class Subarea {
 		this.janela = janela;
 	}
 	
-	public int getTipo() {
+	public String getTipo() {
 		return tipo;
 	}
 
-	public void setTipo(int tipo) {
+	public void setTipo(String tipo) {
 		this.tipo = tipo;
 	}
 
@@ -98,5 +99,13 @@ public class Subarea {
 
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
+	}
+
+	public Integer getEstilo() {
+		return estilo;
+	}
+
+	public void setEstilo(Integer estilo) {
+		this.estilo = estilo;
 	}
 }

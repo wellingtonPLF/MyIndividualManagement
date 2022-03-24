@@ -30,10 +30,14 @@ public class Classe {
 	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 9)
 	private Long idclasse;
 	private String nome;
-	private int ordem;
+	private Integer ordem;
+	private String padrao;
 	
 	@Column(columnDefinition="TEXT")
 	private String quando;
+	
+	@Column(columnDefinition="TEXT")
+	private String info;
 	
 	@Column(columnDefinition="TEXT")
 	private String porque;
@@ -43,7 +47,6 @@ public class Classe {
 	
 	@Column(columnDefinition="TEXT")
 	private String como;
-	
 	private String objectType;
 	
 	@ManyToOne
@@ -52,8 +55,13 @@ public class Classe {
 	private Ocupacao ocupacao;
 	
 	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
-	@JsonManagedReference(value="classe_Task")
-	private List<Task> tasks = new ArrayList<Task>();
+	@JsonManagedReference(value="classe_Casual")
+	private List<Casual> casual = new ArrayList<Casual>();
+	
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@JsonManagedReference(value="classe_Projeto")
+	private List<Projeto> projeto = new ArrayList<Projeto>();
+	
 	
 	public Classe() {}
 
@@ -113,19 +121,11 @@ public class Classe {
 		this.ocupacao = ocupacao;
 	}
 
-	public List<Task> getTasks() {
-		return tasks;
-	}
-
-	public void setTasks(List<Task> tasks) {
-		this.tasks = tasks;
-	}
-
-	public int getOrdem() {
+	public Integer getOrdem() {
 		return ordem;
 	}
 
-	public void setOrdem(int ordem) {
+	public void setOrdem(Integer ordem) {
 		this.ordem = ordem;
 	}
 
@@ -135,5 +135,37 @@ public class Classe {
 
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
+	}
+
+	public String getPadrao() {
+		return padrao;
+	}
+
+	public void setPadrao(String padrao) {
+		this.padrao = padrao;
+	}
+
+	public List<Casual> getCasual() {
+		return casual;
+	}
+
+	public void setCasual(List<Casual> casual) {
+		this.casual = casual;
+	}
+
+	public List<Projeto> getProjeto() {
+		return projeto;
+	}
+
+	public void setProjeto(List<Projeto> projeto) {
+		this.projeto = projeto;
 	}
 }

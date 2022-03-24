@@ -12,6 +12,10 @@ import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {TemplatesComponent} from "../templates/templates.component";
+import {TaskProjectComponent} from "../task-project/task-project.component";
+import {SubareaTemplateComponent} from "../subarea-template/subarea-template.component";
+import {DialogComponent} from "../../dialogs/dialog/dialog.component";
+import {CasualService} from "../../shared/service/casual.service";
 
 @Component({
   selector: 'app-workspace',
@@ -108,10 +112,11 @@ export class WorkspaceComponent implements OnInit {
     this.subarea = subarea;
   }
 
-  openTerminal(): void{
-    //var child_process = require('child_process');
-    //child_process.exec("start cmd.exe /K cd..");
-    this.dialog.open(IndisponivelComponent)
+  openChangeSubarea(): void{
+    this.dialog.open(SubareaTemplateComponent, {
+      panelClass: 'dialogPadding',
+      data: this.janela
+    })
   }
 
   openTemplates(): void{
@@ -135,6 +140,15 @@ export class WorkspaceComponent implements OnInit {
   }
 
   openInfo(): void{
+    this.dialog.open(DialogComponent, {
+      data: this.janela,
+      panelClass: 'dialogPadding'
+    });
+  }
+
+  openVisualStudio(): void{
+    //var child_process = require('child_process');
+    //child_process.exec("start cmd.exe /K cd..");
     this.dialog.open(IndisponivelComponent)
   }
 }

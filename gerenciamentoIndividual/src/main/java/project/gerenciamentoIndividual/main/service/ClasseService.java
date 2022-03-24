@@ -27,6 +27,10 @@ public class ClasseService {
    public Ocupacao getOcupacaoByIdclasse(Long id) {
        return this.classeRepository.getOcupacaoByIdclasse(id);
    }
+   
+   public String getSubareaTipoByIdclasse(Long id) {
+       return this.classeRepository.getSubareaTipoByIdclasse(id);
+   }
 
    @Transactional
    public Classe inserirOuAtualizar(Classe classe) {

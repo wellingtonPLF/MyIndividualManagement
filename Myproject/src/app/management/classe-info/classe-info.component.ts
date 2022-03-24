@@ -33,7 +33,6 @@ export class ClasseInfoComponent implements OnInit {
   }
 
   private executeListing(value: string, tipo: string) {
-    console.log('atualizando')
     this.classeService.pesquisarOcupacaoPorIdClasse(this.data.datakey).subscribe(
       it => {
         this.classe.ocupacao = it;
@@ -48,6 +47,9 @@ export class ClasseInfoComponent implements OnInit {
         }
         if(tipo == 'quando'){
           this.classe.quando = value;
+        }
+        if(tipo == 'info'){
+          this.classe.info = value;
         }
         this.classeService.atualizar(this.classe).subscribe(
           result => {}

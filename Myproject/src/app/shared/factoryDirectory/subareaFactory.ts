@@ -15,6 +15,7 @@ export class SubareaFactory{
     subarea.objectType = 'Subarea';
     subarea.nome = subareaTemplate.nome;
     subarea.tipo = subareaTemplate.tipo;
+    subarea.estilo = subareaTemplate.estilo;
 
     for (let i = 0; i< template.janela_c.subareas[ordem].ocupacoes.length; i++){
       subarea.ocupacoes.push(OcupacaoFactory.criarOcupacao(subareaTemplate, i));

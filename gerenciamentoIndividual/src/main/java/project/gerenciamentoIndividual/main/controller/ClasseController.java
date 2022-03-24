@@ -38,6 +38,11 @@ public class ClasseController {
    public Ocupacao getOcupacaoByIdclasse(@PathVariable("id") Long id) {
        return this.classeService.getOcupacaoByIdclasse(id);
    }
+   
+   @GetMapping("/classe/myTipo/{id}")
+   public String getSubareaTipoByIdclasse(@PathVariable("id") Long id) {
+       return this.classeService.getSubareaTipoByIdclasse(id);
+   }
 
    @PostMapping("/classe")
    public Classe inserirClasse(@RequestBody Classe classe){

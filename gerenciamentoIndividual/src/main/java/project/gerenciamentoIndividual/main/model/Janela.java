@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -31,8 +32,11 @@ public class Janela{
 	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 4)
 	private Long idjanela;
 	private String nome;
-	private int ordem;
+	private Integer ordem;
 	private String objectType;
+	
+	@Column(columnDefinition="TEXT")
+	private String info;
 	
 	@ManyToOne
 	@JoinColumn(name="idatividade")
@@ -70,11 +74,11 @@ public class Janela{
 		this.nome = nome;
 	}
 
-	public int getOrdem() {
+	public Integer getOrdem() {
 		return ordem;
 	}
 
-	public void setOrdem(int ordem) {
+	public void setOrdem(Integer ordem) {
 		this.ordem = ordem;
 	}
 
@@ -116,5 +120,13 @@ public class Janela{
 
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
+	}
+
+	public String getInfo() {
+		return info;
+	}
+
+	public void setInfo(String info) {
+		this.info = info;
 	}
 }

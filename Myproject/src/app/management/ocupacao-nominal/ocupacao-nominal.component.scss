@@ -63,13 +63,42 @@ input:focus, textarea:focus, select:focus{
 .close{
   width: inherit;
   display:flex;
+  align-items: center;
   justify-content: flex-end;
   margin-right: 15px;
-  margin-top: 13px;
+}
+
+.close div:first-child{
+  margin-right: 15px;
+  color: white;
+  padding-inline: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: black;
+  height: 22px;
+  cursor: pointer;
+  padding-bottom: 4px;
+  border-radius: 12px;
+}
+
+.close div:nth-child(2){
+  display: flex;
+  margin-right: 10px;
+  transform: scale(1.4);
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border-radius: 100%;
+  background-color: white;
+  //width: 82px;
+  //clip-path: polygon(0% 0%, 100% 0%, 50% 100%);
 }
 
 .close i{
   cursor: pointer;
+  display: flex;
+  align-items: center;
 }
 
 .deleteOcupacao{

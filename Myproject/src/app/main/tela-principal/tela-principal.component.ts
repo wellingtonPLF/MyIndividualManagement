@@ -25,13 +25,20 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    if (this.navUsuario.snapshot.queryParamMap.has('id')) {
-      const id = Number(this.navUsuario.snapshot.queryParamMap.get('id'));
-      this.usuarioService.pesquisarPorId(id).subscribe(
+    if(this.accountService.getToken() || this.accountServiceLocal.getToken()){
+      let usuarioID = this.accountService.getToken();
+
+      if (usuarioID == null){
+        usuarioID = this.accountServiceLocal.getToken();
+
+        if(usuarioID == null){
+          usuarioID = "0";
+        }
+      }
+
+      this.usuarioService.pesquisarPorId(parseInt(usuarioID)).subscribe(
         it => this.usuario = it
       );
-    }
-    if(this.accountService.getToken() || this.accountServiceLocal.getToken()){
       this.conta = true;
     }
     else {
