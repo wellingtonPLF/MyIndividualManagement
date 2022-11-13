@@ -74,6 +74,22 @@ export class CarouselComponent implements OnInit {
     }
   }
 
+  borderDate(lista: any): boolean{
+    const today = new Date()
+    const year = today.getFullYear()
+    let month: String | Number = today.getMonth()+1
+    let day: String | Number = today.getDate()
+    if(month < 10){
+      month = `0${month}`
+    }
+    if(day < 10){
+      day = `0${day}`
+    }
+    const date = `${year}-${month}-${day}`
+    const myDate = lista.data
+    return date == myDate
+  }
+
   left(): void{
     if(this.escolhido != 0){
       this.escolhido -= 1;

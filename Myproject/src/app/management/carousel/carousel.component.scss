@@ -20,8 +20,16 @@
   width: 120px;
   margin-left: 7.5px;
   margin-right: 7.5px;
-  border: 2px solid #e5e5e5;
   height: 70px;
+}
+
+.containerItem-border{
+  border: 2px solid #e5e5e5;
+}
+
+.todayItem-border{
+  border: 2px solid #D21969;
+  font-weight: 620;
 }
 
 .plusplus{

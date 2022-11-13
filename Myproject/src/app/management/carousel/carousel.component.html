@@ -9,30 +9,37 @@
     <div class="displayWrap" *ngFor="let paginas of counter(pages); let i = index">
       <div *ngFor="let range of counter(qntItens); let j = index"
            (click)="show((i * qntItens) + j)"
-           [ngClass]="{'counteiner-item': escolhido == i, 'displayNone': escolhido != i}">
-        <div>{{lista[(i * qntItens) + j].nome}}</div>
-      </div>
+           [ngClass]="{'todayItem-border': borderDate(lista[(i * qntItens) + j]), 
+            'containerItem-border': !borderDate(lista[(i * qntItens) + j]),
+            'counteiner-item': escolhido == i, 'displayNone': escolhido != i}">
+        <div>{{lista[(i * qntItens) + j].nome}}</div></div>
     </div>
     <!-- [Item] [Item] [ADD] [Null] -->
     <div class="displayWrap" *ngIf="(resto) != 0; else elseBlock">
       <div *ngFor="let paginas of counter(resto); let i = index;"
            (click)="show(multiplo() +i)"
-           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+           [ngClass]="{'todayItem-border': borderDate(lista[multiplo() + i]), 
+            'containerItem-border': !borderDate(lista[multiplo() + i]),
+            'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
         <div>{{lista[multiplo() + i].nome}}</div>
       </div>
-      <div [ngClass]="{'counteiner-item':  escolhido == pages, 'displayNone': escolhido != pages}"
+      <div [ngClass]="{'containerItem-border': true, 'counteiner-item':  escolhido == pages, 
+          'displayNone': escolhido != pages}"
            (click)="add()" class="plusplus" *ngIf="dificuldade != 'any'"> + </div>
       <div *ngFor="let paginas of counter(qntItens - resto - showAdd);" style="border-style: dashed;"
-           [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+           [ngClass]="{'containerItem-border': true, 'counteiner-item': escolhido == pages, 
+           'displayNone': escolhido != pages}">
       </div>
     </div>
     <!-- [ADD] [Null] [Null] [Null]-->
     <ng-template #elseBlock>
       <div class="displayWrap">
-        <div [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}"
+        <div [ngClass]="{'containerItem-border': true, 'counteiner-item': escolhido == pages, 
+            'displayNone': escolhido != pages}"
              (click)="add()" class="plusplus" *ngIf="dificuldade != 'any'"> + </div>
         <div *ngFor="let paginas of counter(qntItens - resto - showAdd);" style="border-style: dashed;"
-             [ngClass]="{'counteiner-item': escolhido == pages, 'displayNone': escolhido != pages}">
+             [ngClass]="{'containerItem-border': true, 'counteiner-item': escolhido == pages, 
+             'displayNone': escolhido != pages}">
         </div>
       </div>
     </ng-template>
