@@ -1,0 +1,107 @@
+.toolbar {
+  display: flex;
+  height: 100px;
+  align-items: center;
+  min-width: 100vw;
+  width: 600px;
+  background-image: linear-gradient(#1976d2, white);
+}
+
+.toolbar :first-child{
+  color: white;
+  cursor: default;
+}
+
+.nav-left{
+  padding-left: 50px;
+}
+
+.nav-left button mat-label{
+  font-size: 20px;
+  font-family: 'ZCOOL KuaiLe', cursive;
+}
+
+.nav-left button mat-label:hover{
+  cursor: pointer;
+}
+
+.nav-fill{
+  display: flex;
+  flex-grow: 1;
+  justify-content: flex-end;
+}
+
+.nav-fill button:hover{
+  cursor: pointer;
+}
+
+.nav-fill button mat-icon:hover{
+  cursor: pointer;
+}
+
+.nav-right{
+  display: flex;
+  justify-content: flex-end;
+  width: 200px;
+  margin-right: 25px;
+}
+
+.nav-fill button{
+  width: 70px;
+  height: 70px;
+}
+
+.nav-right button mat-icon:hover{
+  cursor: pointer;
+}
+
+.icon{
+  transform: scale(1.5);
+  margin-right: 30px;
+}
+
+.displayNone{
+  display: none;
+}
+
+.sign :first-child{
+  width: 55px;
+  height: 55px;
+}
+
+.sign :first-child:hover{
+  cursor: pointer;
+}
+
+.sign button:nth-child(2){
+  width: 58px;
+  height: 58px;
+  color: #30618a;
+  background-color: white;
+}
+
+.screen{
+  display: flex;
+}
+
+.screen h1{
+  font-family: sans-serif;
+  color: white;
+  font-size: 50px;
+  text-shadow:
+    2px 0 0 #1976d2,
+    -2px 0 0 #1976d2,
+    0 2px 0 #1976d2,
+    0 -2px 0 #1976d2,
+    1px 1px #1976d2,
+    -1px -1px 0 #1976d2,
+    1px -1px 0 #1976d2,
+    -1px 1px 0 #1976d2;
+}
+
+.screen div{
+  display: flex;
+  width: 100%;
+  align-items: center;
+  padding-right: 30px;
+}

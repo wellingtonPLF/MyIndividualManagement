@@ -1,0 +1,113 @@
+.authentication{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+  background-color: #378ce3;
+  color: #17ABD1;
+}
+
+.containerAuth{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  width: 400px;
+  height: 350px;
+  background-color: white;
+  border-radius: 10px;
+}
+
+.containerAuth h3{
+  padding-top: 40px;
+}
+
+.inputAuth{
+  display: flex;
+  width: 300px;
+  flex-direction: column;
+}
+
+.password{
+  display: flex;
+}
+
+.password input{
+  width: 258px;
+}
+
+.password :nth-child(2){
+  border: 1px solid #6e6b6b;
+  text-align: center;
+  padding-top: 2px;
+  margin-left: 2px;
+  border-radius: 3px;
+  width: 40px;
+  height: 30px;
+}
+
+.optionalAuth{
+  display: flex;
+  width: 100%;
+  margin-top: 5px;
+}
+
+.buttonAuth{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100px;
+  width: 100%;
+  color: white;
+}
+
+.buttonAuth button:focus{
+  outline: none;
+}
+
+.buttonAuth :first-child{
+  background-color: #1372d6;
+  margin-right: 10px;
+}
+
+.buttonAuth :nth-child(2){
+  color: #1976d2;
+  background-color: #ffffff;
+}
+
+.text-info{
+  font-weight: bold;
+}
+
+.invalide{
+  display: flex;
+  color: red;
+}
+
+.invalide :nth-child(2){
+  color: white;
+  padding: 0.2px 7.5px;
+  margin-top: 1px;
+  transform: scale(0.7);
+  border-radius: 100%;
+  background-color: red;
+}
+
+.alreadyOn{
+  color: #01ac01;
+}
+
+.alreadyOn :nth-child(2){
+  display: none;
+}
+
+.incorrectPassw{
+  display: none;
+}
+
+.registerHere{
+  margin-left: 75px;
+  text-decoration: none;
+  color: #17ABD1;
+  width: 100px
+}
