@@ -1,5 +1,5 @@
 <h1 align="center">
-  <img alt="my-individual-management-logo" src="_Apresentation/logo.png" />
+  <img alt="my-individual-management-logo" src="_Apresentation/logo.png"  />
 </h1>
 
 <p align="center">
@@ -11,9 +11,9 @@
 </p>
 
 <p align="center">
-  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=8257E5&labelColor=000000">
+  <img alt="License" src="https://img.shields.io/static/v1?label=license&message=MIT&color=1976d2&labelColor=000000">
 
- <img src="https://img.shields.io/static/v1?label=Project&message=01&color=8257E5&labelColor=000000" alt="Project 01" />
+ <img src="https://img.shields.io/static/v1?label=Project&message=01&color=1976d2&labelColor=000000" alt="Project 01" />
 </p>
 
 <br>
