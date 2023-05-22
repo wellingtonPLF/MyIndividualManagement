@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    username: postgres
+    password: w10ell10
+    #url: jdbc:postgresql://localhost:5432/individualmanagement
+    url: jdbc:postgresql://localhost:5432/testindividualmanagement
+    driver-class-name: org.postgresql.Driver 
+  sql:
+    init:
+      data-locations: classpath:data.sql
+      mode: always
+      platform: postgres
+  jpa:
+    database: POSTGRESQL
+    show-sql: true
+    hibernate:
+      ddl-auto: update
+    defer-datasource-initialization: true
+   
+# server
+server:
+  port: 8080

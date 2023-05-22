@@ -1,0 +1,8 @@
+#Intercalation
+spring:
+  profiles:
+    active: ${APP_PROFILE:test}
+  jpa:
+    open-in-view: true #In development or debugging
+    #open-in-view: false #In production
+    
