@@ -41,9 +41,10 @@ Você pode visualizar o layout do projeto através da pasta prototipagem do pró
 ## 🚀 Como executar
 
 - Clone o repositório
-- Verifique se a versão do node seja igual a 14.17.3 com: `nvm ls`
+- Verifique se a versão do node é igual a 14.17.3 com: `nvm ls`
 - Instale as dependências com `yarn install`
-- Inicie o servidor com `yarn start`
+- Inicie o backend com o eclipse 
+- Inicie o frontend com `yarn start`
 
 Agora você pode acessar [`localhost:4200`](http://localhost:4200) do seu navegador.
 
