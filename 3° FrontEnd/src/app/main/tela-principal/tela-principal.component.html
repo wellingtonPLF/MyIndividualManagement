@@ -1,17 +1,26 @@
 <div class="toolbar">
-  <div class="nav-left">
+  <div class="nav-left" [ngStyle]="{'display': searchUser.status  ? 'none' : ''}">
     <button style="border: none; background-color: transparent" [routerLink]="['']">
       <mat-label>MyM</mat-label>
     </button>
   </div>
 
-  <div class="nav-fill">
-    <button mat-icon-button (click)="search()">
+  <div class="nav-fill" style="z-index: 10000;">
+    <input id="searchButton" [ngClass]="{'search_animation': searchUser.status}" [(ngModel)]="searchUser.value"
+    [ngStyle]="{ 'width': searchUser.status ? '100%' : '0', 'margin-left': searchUser.status ? '5.4vw' : '0', 
+    'padding': searchUser.status ? '0 10px' : '0', 'border': searchUser.status ? '2px solid #69A6E2': '' }"
+    />
+    <button mat-icon-button (click)="search()" 
+    [ngStyle]="{'margin-right': searchUser.status && !widthScreen  ? '30px' : ''}">
       <mat-icon>search</mat-icon>
     </button>
   </div>
 
-  <div class="nav-right">
+  <app-user-list *ngIf="searchUser.status"></app-user-list>
+  <!-- <app-user-list></app-user-list> -->
+
+  <div class="nav-right" [ngClass]="{'nav-right-change': !searchUser.status && !widthScreen && !conta}"
+  [ngStyle]="{'display': searchUser.status && !widthScreen  ? 'none' : '', 'width': !conta ? '190px': '125px'}">
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
       <button mat-icon-button [routerLink]="['/management', usuario.idusuario]">
         <mat-icon>account_circle</mat-icon></button>

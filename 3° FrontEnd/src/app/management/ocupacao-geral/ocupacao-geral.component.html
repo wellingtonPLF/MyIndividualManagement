@@ -1,5 +1,4 @@
-<div style="margin-top: 20px; margin-left: 20px"
-     *ngFor="let ocupacao of ocupacoes; let i = index">
+<div *ngFor="let ocupacao of ocupacoes; let i = index">
   <div class="ocupacao">
     <div style="display:flex;">
       <div class="icon" (click)="showClasse(i)"><i class="fas fa-angle-down"></i></div>
@@ -14,8 +13,10 @@
       <i class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
     </div>
   </div>
-  <div [hidden]="show != i" style="width: 97%; background-color: #efefef">
+  <div [hidden]="show != i" style="background-color: #efefef">
     <app-carousel [objeto]="ocupacao"></app-carousel>
   </div>
 </div>
-<div class="addOcupacao" (click)="addOcupacao()"><b>+</b></div>
+<div class="addOcupacao" (click)="addOcupacao()">
+  <b>+</b>
+</div>

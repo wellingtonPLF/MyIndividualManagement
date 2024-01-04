@@ -68,7 +68,7 @@
 
 .dropdown-item:nth-child(2){
   background-color: white;
-  color: red;
+  color: #b62e35;
   position: relative;
   left: 17px;
   top: 5px;
@@ -109,38 +109,44 @@
   justify-content: space-between;
   align-items: center;
   border-bottom: 3px solid #1372d6;
+
+  $width: 40px;
+
+  @mixin defaultButton($width: 40px) {
+    cursor: pointer;
+    text-align: center;
+    width: $width;
+  }
+
+  #terminal{
+    @include defaultButton;
+    transform: scale(1.3, 1.3);
+  }
+
+  #template{
+    @include defaultButton;
+    transform: scale(1.5, 1.5);
+  }
+
+  #regras{
+    @include defaultButton;
+    transform: scale(1.3, 1.3);
+  }
+
+  #code {
+    @include defaultButton;
+    transform: scale(1.2)
+  }
 }
 
-#terminal{
-  cursor: pointer;
-  margin: 1.75px 8px 0px 0px;
-  transform: scale(1.3, 1.3);
+#ocupation {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  overflow-y: auto;
+  height: 530px;
 }
 
-/*
-#terminal{
-  width: 55px;
-  height: 40px;
-  position: relative;
-  left: 10px;
-  background-color: black;
-}
-
-#terminal:first-child{
-  color: white;
-  padding-left: 5px;
-  cursor: pointer;
-  transform: scale(0.5, 0.5);
-}*/
-
-#template{
-  cursor: pointer;
-  margin: 0px 10px;
-  margin-right: 15px;
-  transform: scale(1.5, 1.5);
-}
-
-#regras{
-  cursor: pointer;
-  transform: scale(1.3, 1.3);
+#ocupation > :first-child {
+  width: 97%;
 }

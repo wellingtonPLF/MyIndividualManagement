@@ -1,8 +1,11 @@
+$marginTop: 1.8%;
+
 .ocupacao{
   display: flex;
   background-color: #e5e5e5;
-  width: 97%;
+  width: 100%;
   height: 42px;
+  margin-top: $marginTop;
 }
 
 .ocupacaoNome{
@@ -35,11 +38,9 @@ input:focus, textarea:focus, select:focus{
   justify-content: center;
   align-items: center;
   background-color: #e5e5e5;
-  width: 94.6%;
   height: 40px;
-  margin-left: 20px;
-  margin-top: 15px;
   cursor: pointer;
+  margin-top: $marginTop/2;
 }
 
 .addOcupacao:hover{
@@ -59,10 +60,8 @@ input:focus, textarea:focus, select:focus{
 }
 
 .deleteOcupacao{
-  margin-left: 10px;
-  margin-top: 1.3px;
+  margin: 1.3px 2px 0 10px;
   font-size: 15px;
-  margin-right: 2px;
 }
 
 .displayNone{

@@ -1,5 +1,4 @@
-<div style="margin-top: 20px; margin-left: 20px"
-     *ngFor="let ocupacao of ocupacoes; let i = index">
+<div *ngFor="let ocupacao of ocupacoes; let i = index">
   <div class="ocupacao"
        [ngClass]="{'pendente': ocupacao.classes[0].nome == 'Pendentes',
        'indefinido': ocupacao.classes[0].nome == 'Indefinidos'}">
@@ -11,7 +10,7 @@
         <b>-</b>&nbsp;&nbsp;&nbsp;</div>
     </div>
   </div>
-  <div [hidden]="show != i" style="width: 97%; background-color: #efefef">
+  <div [hidden]="show != i" style="background-color: #efefef">
     <app-carousel [qntItens]="5" [dificuldade]="'any'" [objeto]="lista[i]"></app-carousel>
   </div>
 </div>

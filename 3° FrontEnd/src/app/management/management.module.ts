@@ -27,6 +27,8 @@ import {MatCardModule} from "@angular/material/card";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import { TaskProjectComponent } from './task-project/task-project.component';
 import { SubareaTemplateComponent } from './subarea-template/subarea-template.component';
+import { UserListComponent } from './user-list/user-list.component';
+import { MatIconModule } from '@angular/material/icon';
 
 
 @NgModule({
@@ -46,16 +48,19 @@ import { SubareaTemplateComponent } from './subarea-template/subarea-template.co
         OcupacaoNominalComponent,
         OcupacaoListComponent,
         TaskProjectComponent,
-        SubareaTemplateComponent
+        SubareaTemplateComponent,
+        UserListComponent
     ],
   exports: [
     AtividadeComponent,
+    UserListComponent,
     WorkspaceComponent
   ],
     imports: [
         CommonModule,
         FormsModule,
         MatButtonModule,
+        MatIconModule,
         NgbModule,
         MatCardModule,
         MatFormFieldModule,

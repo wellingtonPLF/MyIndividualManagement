@@ -12,6 +12,7 @@ import {MatTreeModule} from "@angular/material/tree";
 import {MatTabsModule} from "@angular/material/tabs";
 import {ManagementModule} from "../management/management.module";
 import {FeaturesModule} from "../features/features.module";
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
     declarations: [
@@ -23,6 +24,7 @@ import {FeaturesModule} from "../features/features.module";
     ],
     imports: [
         CommonModule,
+        FormsModule,
         MatIconModule,
         BrowserAnimationsModule,
         MatFormFieldModule,

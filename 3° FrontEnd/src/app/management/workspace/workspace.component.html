@@ -28,22 +28,22 @@
     <app-those-subareas [janela]="janela" (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
 
     <div style="display: flex; margin-right: 20px; align-items: center">
-      <div (click)="openVisualStudio()" style="margin-right: 15px; transform: scale(1.2); cursor: pointer">
-        <i class="fas fa-code"></i>
-      </div>
-      <div id="terminal" (click)="openChangeSubarea()">
-        <i class="fas fa-th-large"></i>
-      </div>
       <div id="template" (click)="openTemplates()">
         <i class="fas fa-cubes"></i>
       </div>
       <div id="regras" (click)="openInfo()">
         <i class="fas fa-info-circle"></i>
       </div>
+      <div id="terminal" (click)="openChangeSubarea()">
+        <i class="fas fa-th-large"></i>
+      </div>
+      <div id="code" (click)="openVisualStudio()">
+        <i class="fas fa-code"></i>
+      </div>
     </div>
   </div>
 
-  <div style="overflow-y:scroll; height: 530px;">
+  <div id="ocupation">
       <div *ngIf="subarea != undefined">
         <app-ocupacao-list *ngIf="subarea.estilo == 3" [subarea]="subarea"></app-ocupacao-list>
         <app-ocupacao-geral *ngIf="subarea.estilo == 1" [subarea]="subarea"></app-ocupacao-geral>

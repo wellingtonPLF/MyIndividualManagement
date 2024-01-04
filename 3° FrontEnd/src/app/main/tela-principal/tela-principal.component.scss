@@ -2,8 +2,8 @@
   display: flex;
   height: 100px;
   align-items: center;
-  min-width: 100vw;
-  width: 600px;
+  width: 100vw;
+  min-width: 320px;
   background-image: linear-gradient(#1976d2, white);
 }
 
@@ -13,7 +13,8 @@
 }
 
 .nav-left{
-  padding-left: 50px;
+  left: 30px;
+  position: absolute;
 }
 
 .nav-left button mat-label{
@@ -27,7 +28,9 @@
 
 .nav-fill{
   display: flex;
+  align-items: center;
   flex-grow: 1;
+  margin-right: 30px;
   justify-content: flex-end;
 }
 
@@ -35,24 +38,57 @@
   cursor: pointer;
 }
 
+.nav-fill button mat-icon {
+  width: 70px;
+}
+
 .nav-fill button mat-icon:hover{
   cursor: pointer;
 }
 
+#searchButton {
+  color: black;
+  height: 40px;
+  border: unset;
+  cursor: text;
+  margin-right: 10px;
+  border-radius: 8px;
+}
+
+#searchButton:focus {
+  outline: unset;
+}
+
+.search_animation {
+  animation: example 0.3s linear;
+}
+
+@keyframes example {
+  from { 
+    width: 0 
+  }
+  to { 
+    width: 89.27%;
+  }
+}
+
 .nav-right{
   display: flex;
-  justify-content: flex-end;
-  width: 200px;
-  margin-right: 25px;
+  justify-content: flex-start;
 }
 
 .nav-fill button{
-  width: 70px;
+  width: auto;
   height: 70px;
 }
 
 .nav-right button mat-icon:hover{
   cursor: pointer;
+}
+
+.nav-right-change {
+  width: 130px !important;
+  justify-content: flex-start !important;
 }
 
 .icon{
@@ -82,26 +118,109 @@
 
 .screen{
   display: flex;
+  min-width: 320px;
+  margin-top: 9%;
+  justify-content: center;
+
+  $imgWidth: 50vh;
+
+  img {
+    width: calc($imgWidth + 150px);
+    height: $imgWidth;
+    margin-right: 10vh;
+  }
 }
 
 .screen h1{
   font-family: sans-serif;
   color: white;
-  font-size: 50px;
+  font-size: 8vh;
+  margin-right: 7vh;
   text-shadow:
-    2px 0 0 #1976d2,
-    -2px 0 0 #1976d2,
-    0 2px 0 #1976d2,
-    0 -2px 0 #1976d2,
-    1px 1px #1976d2,
-    -1px -1px 0 #1976d2,
-    1px -1px 0 #1976d2,
-    -1px 1px 0 #1976d2;
+    0.2vh 0 0 #1976d2,
+    -0.2vh 0 0 #1976d2,
+    0 0.2vh 0 #1976d2,
+    0 -0.2vh 0 #1976d2,
+    0.1vh 0.1vh #1976d2,
+    -0.1vh -0.1vh 0 #1976d2,
+    0.1vh -0.1vh 0 #1976d2,
+    -0.1vh 0.1vh 0 #1976d2;
 }
 
 .screen div{
   display: flex;
-  width: 100%;
+  width: fit-content;
   align-items: center;
-  padding-right: 30px;
+}
+
+@media screen and (max-width: 1400px) {
+  .screen{
+    margin-top: 18vh;
+    align-items: center;
+
+    $imgWidth: 30vw;
+
+    img {
+      width: calc($imgWidth + 150px);
+      height: $imgWidth;
+    }
+  }
+
+  .screen h1{ 
+    margin-top: 7vh;
+    font-size: 7vh;
+  }
+}
+
+@media screen and (max-width: 1125px) {
+  .screen{
+    flex-direction: column;
+
+    $imgWidth: 30vh;
+
+    img {
+      width: calc($imgWidth + 150px);
+      height: $imgWidth;
+      margin-right: 0;
+    }
+  }
+
+  .screen h1{ 
+    margin-top: 7vh;
+    font-size: 7vh;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  .nav-fill {
+    margin-right: 0;
+  }
+
+  .nav-right {
+    justify-content: center;
+  }
+}
+
+@media screen and (max-width: 435px) {
+  .screen{
+    $imgWidth: 20vh;
+
+    img {
+      width: calc($imgWidth + 150px);
+      height: $imgWidth;
+    }
+  }
+
+  .screen h1{ 
+    margin-top: 7vh;
+    font-size: 5vh;
+    margin-right: 0;
+  }
+}
+
+@media screen and (max-width: 320px) {
+  .nav-fill input {
+    margin-left: 18px !important;
+  }
 }

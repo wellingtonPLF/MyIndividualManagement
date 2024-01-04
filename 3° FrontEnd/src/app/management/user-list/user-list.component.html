@@ -1,0 +1,30 @@
+<div id="userList">
+    <div>
+        <div *ngFor="let x of user; let i = index" class="user">
+            <div style="background-image: url('https://img.freepik.com/fotos-gratis/respingo-colorido-abstrato-3d-background-generativo-ai-background_60438-2509.jpg');" >
+                <div>Online</div>
+                <mat-icon (click)="setStar()"  [ngStyle]="{'color': star? '#ffeb13' : 'white'}">star_border</mat-icon>
+            </div>
+            <div>
+                <div class="name">{{x.nome}}</div>
+                <div class="others">Email: {{x.email}}</div>
+                <div class="others">DateTime: 20/10/2029</div>
+                <!-- <div class="others">Password: {{x.senha}}</div> -->
+                <div>
+                    <div>
+                        <mat-icon>equalizer</mat-icon>
+                        <div>25</div>
+                    </div>
+                    <div>
+                        <mat-icon>done_all</mat-icon>
+                        <div>75</div>
+                    </div>
+                    <div>
+                        <mat-icon>people_outline</mat-icon>
+                        <div>300</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

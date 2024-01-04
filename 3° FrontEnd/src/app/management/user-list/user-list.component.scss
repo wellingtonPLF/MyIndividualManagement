@@ -1,0 +1,147 @@
+#userList {
+    display: flex;
+    justify-content: center;
+    background-color: rgba(31, 29, 29, 0.815);
+    backdrop-filter: blur(5px);
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 320px;
+    width: 100vw;
+    height: 100vh;
+}
+
+#userList > div {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(40vh, 1fr));
+    grid-gap: 30px;
+    height: fit-content;    
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: 0 20px 15px 0;
+    width: 89%;
+    margin-top: 10vh;
+}
+
+.user {
+    display: flex;
+    width: 100%;
+    min-width: 320px;
+    height: 125px;
+    color: black;
+    border-bottom-right-radius: 10px;
+    box-shadow: 5px 5px 10px #69A6E2;
+
+    $widthImg: 38%;
+
+    > :first-child {
+        display: flex;
+        align-items: flex-end;
+        background-position: center;
+        background-size: cover;
+        background-repeat: no-repeat;
+        height: 100%;
+        border-top-left-radius: 10px;
+        width: $widthImg;
+        position: relative;
+
+        > :first-child {
+            display: flex;
+            align-items: center;
+            width: 100%;
+            height: 23%;;
+            font-size: 12px;
+            padding-left: 10px;
+            background-color: rgba(0, 0, 0, 0.61);
+            font-weight: 500;
+            color: rgb(8, 226, 215);
+            border-bottom: 2px solid rgb(47, 255, 238);
+        }
+
+        > :last-child {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+        }
+    }
+
+    > :last-child {
+        height: 100%;
+        background-color: rgb(255, 255, 255);
+        width: 101% - $widthImg;
+        border-bottom-right-radius: 10px;
+
+        > div {
+            padding-left: 10px;
+            cursor: default;
+        }
+
+        .name {
+            padding-top: 3px;
+            font-size: 15px;
+            font-weight: 600;
+        }
+
+        .others {
+            font-size: 12px;
+        }
+
+        > :last-child {
+            display: flex; 
+            font-size: 17px;
+            margin-top: 17px;
+
+            > div {
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                width: 60px;
+                height: 40px;
+                padding-bottom: 12px;
+                margin-left: 5px;
+                margin-right: 10px;
+                border-bottom: 2px solid green;
+
+                > :first-child {
+                    color: green;
+                }
+            }
+
+            > div:first-child {
+                border-bottom-color: rgb(44, 70, 185);
+                
+                > :first-child {
+                    color: rgb(44, 70, 185);;
+                }
+            }
+
+            > div:last-child {
+                border-bottom-color: purple;
+
+                > :first-child {
+                    color: purple;
+                }
+            }
+        }
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+
+    #userList > div {
+        grid-template-columns: repeat(auto-fill, minmax(82vw, 1fr));
+    }
+}
+
+@media screen and (max-width: 420px) {
+    #userList > div {
+        padding-right: 10px;
+    }
+
+    .user {
+        min-width: 265px;
+    }
+}
