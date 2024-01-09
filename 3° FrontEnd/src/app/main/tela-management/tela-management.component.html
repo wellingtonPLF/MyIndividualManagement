@@ -1,16 +1,24 @@
-<div class="telagrid">
-  <div class="top-left">
+<div class="telagrid" [ngClass]="{'hide': hide }">
+
+  <!-- ---------------------------------Left------------------------------------------ -->
+  <div class="top-left" *ngIf="!hide">
     <app-upload-image [usuario]="usuario"></app-upload-image>
   </div>
 
-  <div class="middle-left">
+  <div class="middle-left" *ngIf="!hide">
     <div>{{usuario.nome}}</div>
   </div>
 
-  <div class="bottom-left">
+  <div class="bottom-left" *ngIf="!hide">
     <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
   </div>
-  <div class="top-right">
+
+  <!-- ---------------------------------Right------------------------------------------- -->
+  
+  <div class="top-right" style="position: relative;">
+    <div id="hideLeft" (click)="hideLeft()">
+      <mat-icon>compare_arrows</mat-icon>
+    </div>
     <div style="display: flex; flex-direction: column">
       <button mat-icon-button style="color:#1976d2"
               [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">

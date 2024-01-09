@@ -142,11 +142,11 @@
 #ocupation {
   display: flex;
   width: 100%;
-  justify-content: center;
   overflow-y: auto;
   height: 530px;
 }
 
 #ocupation > :first-child {
-  width: 97%;
+  width: 100%;
+  padding: 20px;
 }

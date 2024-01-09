@@ -13,6 +13,8 @@ import {MatDialogModule} from "@angular/material/dialog";
 import {MatButtonModule} from "@angular/material/button";
 import { DialogComponent } from './dialogs/dialog/dialog.component';
 import {FormsModule} from "@angular/forms";
+import { StoreModule } from '@ngrx/store';
+import { reducers } from './shared/ngRx/store';
 
 @NgModule({
   declarations: [
@@ -30,7 +32,9 @@ import {FormsModule} from "@angular/forms";
         UsuarioModule,
         RouterModule,
         FormsModule,
-        NgbModule
+        NgbModule,
+        // StoreModule.forRoot({}, {})
+        StoreModule.forRoot(reducers)
     ],
   providers: [],
   bootstrap: [AppComponent]

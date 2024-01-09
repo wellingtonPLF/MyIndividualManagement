@@ -1,4 +1,4 @@
-import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import {Janela} from "../../shared/model/janela";
 import {Atividade} from "../../shared/model/atividade";
 import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
@@ -16,24 +16,26 @@ import {TaskProjectComponent} from "../task-project/task-project.component";
 import {SubareaTemplateComponent} from "../subarea-template/subarea-template.component";
 import {DialogComponent} from "../../dialogs/dialog/dialog.component";
 import {CasualService} from "../../shared/service/casual.service";
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
   templateUrl: './workspace.component.html',
   styleUrls: ['./workspace.component.scss']
 })
-export class WorkspaceComponent implements OnInit {
+export class WorkspaceComponent implements OnInit  {
   windows!: Array<Janela>;
   janela!: Janela;
   subarea!: Subarea;
   index!: number;
   @Input() activity!: Atividade;
+  
 
   constructor(private dialog: MatDialog, private janelaService: JanelaService,
-              private templateService: TemplateService, private atividadeService: AtividadeService) { }
+              private templateService: TemplateService, private atividadeService: AtividadeService) {}
 
   ngOnInit(): void {
-    this.index = 0;
+    this.index = 0;    
   }
 
   ngOnChanges() {

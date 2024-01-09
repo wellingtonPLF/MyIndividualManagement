@@ -1,22 +1,24 @@
-<div *ngFor="let ocupacao of ocupacoes; let i = index">
-  <div class="ocupacao">
-    <div style="display:flex;">
-      <div class="icon" (click)="showClasse(i)"><i class="fas fa-angle-down"></i></div>
-      <div class="ocupacaoNome">
-        <b>-</b>&nbsp;&nbsp;&nbsp;
-        <input [(ngModel)]="ocupacao.nome"  maxlength="12" size="11"
-               (keyup)="saveEdit($event, i)" spellcheck="false">
-        <b>-</b>&nbsp;&nbsp;&nbsp;
+<div style="min-width: 350px;">
+  <div *ngFor="let ocupacao of ocupacoes; let i = index" #myDiv>
+    <div class="ocupacao">
+      <div style="display:flex;">
+        <div class="icon" (click)="showClasse(i)"><i class="fas fa-angle-down"></i></div>
+        <div class="ocupacaoNome">
+          <b>-</b>&nbsp;&nbsp;&nbsp;
+          <input [(ngModel)]="ocupacao.nome"  maxlength="12" size="11"
+                 (keyup)="saveEdit($event, i)" spellcheck="false">
+          <b>-</b>&nbsp;&nbsp;&nbsp;
+        </div>
+      </div>
+      <div class="close">
+        <i class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
       </div>
     </div>
-    <div class="close">
-      <i class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
+    <div [hidden]="show != i" style="background-color: #efefef">
+      <app-carousel [objeto]="ocupacao" [qntItens]=qntItens></app-carousel>
     </div>
   </div>
-  <div [hidden]="show != i" style="background-color: #efefef">
-    <app-carousel [objeto]="ocupacao"></app-carousel>
+  <div class="addOcupacao" (click)="addOcupacao()">
+    <b>+</b>
   </div>
-</div>
-<div class="addOcupacao" (click)="addOcupacao()">
-  <b>+</b>
 </div>

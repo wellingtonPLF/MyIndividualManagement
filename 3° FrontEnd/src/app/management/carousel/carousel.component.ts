@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {Classe} from "../../shared/model/classe";
 import {Task} from "../../shared/model/task";
 import {Ocupacao} from "../../shared/model/ocupacao";
@@ -28,15 +28,13 @@ export class CarouselComponent implements OnInit {
   @Input() subareaTipo!: string;
   @Input() objeto!: any;
   @Input() dificuldade!: string;
-  @Input() qntItens: number = 5;
+  @Input() qntItens: number = 2;
   //Usado para saber qual pagina está sendo exibida na lista
   escolhido!: number;
   pages!: number;
   resto!: number;
   //Usado quando o button add for removido
   showAdd: number = 1;
-  carousel: string = 'max-width:'+ ((120 * this.qntItens) + 80 + (this.qntItens * 15)) +'px;'
-  containerItens: string = 'min-width:'+ ((120 * this.qntItens) + (this.qntItens * 15)) +'px;';
 
   constructor(public classeService: ClasseService, private router: Router, private taskService: TaskService,
               private dialog: MatDialog, public templateService: TemplateService,
@@ -49,9 +47,9 @@ export class CarouselComponent implements OnInit {
     this.escolhido = 0;
   }
 
-  ngOnChanges(): void{
+  ngOnChanges(): void {
+
     if(this.objeto != undefined){
-      this.carousel = 'max-width:'+ ((120 * this.qntItens) + 80 + (this.qntItens * 15)) +'px;'
       if(this.objeto.objectType == "Ocupacao"){
         this.lista = OrdemDependency.ordenar(this.objeto.classes);
       }
@@ -77,8 +75,8 @@ export class CarouselComponent implements OnInit {
   borderDate(lista: any): boolean{
     const today = new Date()
     const year = today.getFullYear()
-    let month: String | Number = today.getMonth()+1
-    let day: String | Number = today.getDate()
+    let month: String | number = today.getMonth() + 1
+    let day: String | number = today.getDate()
     if(month < 10){
       month = `0${month}`
     }

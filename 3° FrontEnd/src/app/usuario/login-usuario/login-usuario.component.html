@@ -4,7 +4,7 @@
 
 <div class="authentication">
   <div class="containerAuth">
-    <h3><b style="cursor: default">Login</b></h3>
+    <h3>Login</h3>
     <div class="inputAuth">
       <label class="text-info">Username:</label>
       <input (keyup.enter)="onEnter()" [(ngModel)]="usuario.nome">
@@ -17,12 +17,14 @@
       </div>
       <div [ngClass]="{'invalide': senhaInv,  'alreadyOn': signOn, 'incorrectPassw': !senhaInv}">
         <b style="width: 100%">{{menssage}}</b>
-        <b style="text-align: end;">{{count}}</b>
+        <p style="text-align: end; font-weight: 700;">{{count}}</p>
       </div>
     </div>
     <div class="optionalAuth">
-      <b style="margin-left: 48px; cursor: default">Remember me</b>
-      <input style="margin: 7px 0px 0px 5px" type="checkbox" [(ngModel)]="check">
+      <div>
+        <b style="margin-left: 48px; cursor: default">Remember me</b>
+        <input style="margin: 7px 0px 0px 5px" type="checkbox" [(ngModel)]="check">
+      </div>
       <div>
         <a [routerLink]="['/cadastro']" class="registerHere">
           <b>Register here</b>

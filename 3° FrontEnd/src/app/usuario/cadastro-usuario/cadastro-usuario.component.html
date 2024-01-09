@@ -9,7 +9,7 @@
       <!-- UserName Validation -->
       <div style="display: flex; flex-direction: column"
            [ngClass]="{'red': invalid.includes('username')}">
-        <div style="display: flex;">
+        <div id="username" style="display: flex;">
           <label class="boldertext">Username:</label>
           <div [ngClass]="{'doubt': true, 'displayNone': !invalid.includes('username'),
           'invalidToolTip': invalid.includes('atleastfive'), 'inUse': invalid.includes('nameInUse')}">
@@ -21,7 +21,7 @@
       </div>
       <!-- Password Validation -->
       <div [ngClass]="{'red': invalid.includes('password')}">
-        <div style="display: flex">
+        <div id="password" style="display: flex">
           <label class="boldertext">Password:</label>
           <div id="validation">
             <div [ngClass]="{'greenToolTip': !validations().password.hasError('minlength')}"

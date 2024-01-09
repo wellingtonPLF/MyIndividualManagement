@@ -6,8 +6,7 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {Usuario} from "../../shared/model/usuario";
 import {Atividade} from "../../shared/model/atividade";
 import {MatDialog} from "@angular/material/dialog";
-import {IndisponivelComponent} from "../../management/indisponivel/indisponivel.component";
-import {StopwatchComponent} from "../../features/stopwatch/stopwatch.component";
+import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 
 @Component({
   selector: 'app-tela-management',
@@ -17,13 +16,14 @@ import {StopwatchComponent} from "../../features/stopwatch/stopwatch.component";
 export class TelaManagementComponent implements OnInit{
   usuario!: Usuario;
   atividade!: Atividade;
+  hide: boolean = false;
 
   constructor(private accountService: SessionStorageService, private rotalAtual: ActivatedRoute,
-              private dialog: MatDialog,
+              private dialog: MatDialog, private fshare: FuncShareService,
               private accountServiceLocal: LocalStorageService, private usuarioService: UsuarioService) {
-    this.usuario = new Usuario();
     // Initiated to solve ExpressionChangedAfterItHasBeenCheckedError
     this.atividade = new Atividade('');
+    this.usuario = new Usuario();
   }
 
   ngOnInit(): void {
@@ -44,5 +44,10 @@ export class TelaManagementComponent implements OnInit{
 
   enviarJanela(evento: Atividade): void{
     this.atividade = evento;
+  }
+
+  hideLeft(): void {
+    this.hide = !this.hide
+    this.fshare.sendClickEvent(this.hide);
   }
 }

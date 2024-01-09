@@ -1,10 +1,10 @@
-<div id="myCarousel" [style]="carousel">
+<div id="myCarousel">
   <!-- Left Button-->
   <button mat-icon-button (click)="left()">
     <i class="fas fa-caret-left"></i>
   </button>
   <!--carousel body -->
-  <div class="containerItens" [style]="containerItens" *ngIf="lista != undefined">
+  <div class="containerItens" *ngIf="lista != undefined">
     <!-- [Item] [Item] [Item] [Item] -->
     <div class="displayWrap" *ngFor="let paginas of counter(pages); let i = index">
       <div *ngFor="let range of counter(qntItens); let j = index"

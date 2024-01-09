@@ -3,9 +3,15 @@
   justify-content: center;
   align-items: center;
   width: 100vw;
+  min-width: 320px;
   height: 100vh;
   background-color: #378ce3;
   color: #17ABD1;
+}
+
+h3 {
+  font-weight: 700;
+  cursor: default;
 }
 
 .containerAuth{
@@ -110,4 +116,57 @@
   text-decoration: none;
   color: #17ABD1;
   width: 100px
+}
+
+@media screen and (max-width: 415px) {
+  .containerAuth {
+    width: 300px;
+    height: fit-content;
+
+    .inputAuth {
+      width: 70%;
+      padding-top: 10px;
+      align-items: flex-start;
+
+      > input {
+        width: 100%;
+      }
+    }
+
+    .optionalAuth {
+      flex-direction: column;
+
+      > :nth-child(2) {
+        display: flex;
+        margin-right: 32px;
+        justify-content: flex-end;
+      }
+    }
+
+    b {
+      font-size: 14px;
+    }
+
+    .registerHere {
+      margin-left: 0px;
+    }
+
+    h3 {
+      padding-top: 25px;
+      font-size: 22px;
+    }
+
+    label {
+      font-size: 15px;
+    }
+
+    input:not(input[type="checkbox"]) {
+      width: 80%;
+    }
+
+    .buttonAuth {
+      height: 75px;
+      padding-bottom: 20px;
+    }
+  }
 }

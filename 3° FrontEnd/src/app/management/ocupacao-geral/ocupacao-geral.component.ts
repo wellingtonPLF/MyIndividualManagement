@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {Subarea} from "../../shared/model/subarea";
 import {Ocupacao} from "../../shared/model/ocupacao";
 import {OcupacaoService} from "../../shared/service/ocupacao.service";
@@ -8,6 +8,7 @@ import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 
 @Component({
   selector: 'app-ocupacao-geral',
@@ -20,10 +21,35 @@ export class OcupacaoGeralComponent implements OnInit {
   ocupacoes!: Array<Ocupacao>;
   timeout: any = null;
 
-  constructor(private ocupacaoService: OcupacaoService, private dialog: MatDialog,
-              private templateService: TemplateService, private subareaService: SubareaService) { }
+  qntItens: number = 2;
+  logicExecuted = false;
+  leftSide = false;
+
+  @ViewChild('myDiv', { static: false }) myDiv!: ElementRef;
+
+  constructor(private ocupacaoService: OcupacaoService, private dialog: MatDialog, private fshare: FuncShareService,
+              private templateService: TemplateService, private subareaService: SubareaService) {
+    this.fshare.getClickEvent().subscribe(
+      it => {
+        this.leftSide = it
+        this.calcQntItens(it)
+      }
+    )
+  }
 
   ngOnInit(): void {
+    window.addEventListener('resize', () => {
+      this.calcQntItens(this.leftSide)
+    });
+  }
+
+  ngDoCheck() {
+    if (!this.logicExecuted) {
+      if (this.myDiv) {
+        this.calcQntItens(this.leftSide)
+        this.logicExecuted = true;
+      }
+    }
   }
 
   ngOnChanges(): void{
@@ -33,6 +59,24 @@ export class OcupacaoGeralComponent implements OnInit {
           this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
         }
       )
+    }
+  }
+
+  calcQntItens(value: boolean): void {
+    const windowWidth = window.innerWidth
+    const leftSide = (value)? 0 : 200
+    const paddingWorkSpace = 20
+    const borderRight = 3
+    const result = leftSide + borderRight + (paddingWorkSpace * 2)
+
+    let ocupationWidth = windowWidth - result
+
+    let calc = Math.floor((ocupationWidth - 80) / 135)
+    if (ocupationWidth > 350) {
+      this.qntItens = calc
+    }
+    else {
+      this.qntItens = 2
     }
   }
 

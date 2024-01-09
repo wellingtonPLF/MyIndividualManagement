@@ -95,6 +95,6 @@ export class LoginUsuarioComponent implements OnInit {
     this.usuario.nome = '';
     this.usuario.senha = this.usuario.nome;
     this.count += 1;
-    this.menssage = 'Invalide User! Please try again!';
+    this.menssage = 'Invalide User - Please try again!';
   }
 }
