@@ -1,37 +1,47 @@
-<div class="telagrid" [ngClass]="{'hide': hide }">
-
-  <!-- ---------------------------------Left------------------------------------------ -->
-  <div class="top-left" *ngIf="!hide">
-    <app-upload-image [usuario]="usuario"></app-upload-image>
-  </div>
-
-  <div class="middle-left" *ngIf="!hide">
-    <div>{{usuario.nome}}</div>
-  </div>
-
-  <div class="bottom-left" *ngIf="!hide">
-    <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
-  </div>
-
-  <!-- ---------------------------------Right------------------------------------------- -->
+<div style="width: 100%; height: 100%; display: flex; justify-content: center;">
+  <div id="management" [ngStyle]="{'max-width.px': maxWidthScreen}">
+    <!-- ---------------------------------Left------------------------------------------ -->
+    <div id="leftSide" *ngIf="!hide">
+      <div class="top-left">
+        <app-upload-image [usuario]="usuario"></app-upload-image>
+      </div>
+    
+      <div class="middle-left">
+        <div>{{usuario.nome}}</div>
+      </div>
+    
+      <div class="bottom-left">
+        <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
+      </div>
+    </div>
   
-  <div class="top-right" style="position: relative;">
-    <div id="hideLeft" (click)="hideLeft()">
+    <div id="hideLeft" [ngStyle]="{'left': (hide)? '0': '200px'}" (click)="hideLeft()">
       <mat-icon>compare_arrows</mat-icon>
     </div>
-    <div style="display: flex; flex-direction: column">
-      <button mat-icon-button style="color:#1976d2"
-              [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
-        <mat-icon color="white">home</mat-icon>
-      </button>
-      <button id="exitButton" (click)="signOut()" [routerLink]="['']">
-        <i class="fas fa-door-open"></i>
-      </button>
+  
+    <!-- ---------------------------------Right------------------------------------------- -->
+    <div id="rightSide" [ngStyle]="{'width': (hide)? '100%': ''}">
+      <div class="top-right" style="position: relative;">
+        <div>
+          <button mat-icon-button style="color:#1976d2"
+                  [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
+            <mat-icon color="white">home</mat-icon>
+          </button>
+          <button id="exitButton" (click)="signOut()" [routerLink]="['']">
+            <i class="fas fa-door-open"></i>
+          </button>
+        </div>
+        <app-stopwatch *ngIf="windowBool; else iconTimer"></app-stopwatch>
+        <ng-template #iconTimer>
+          <mat-icon id="timerIcon">av_timer</mat-icon>
+        </ng-template>
+      </div>
+    
+      <div class="bottom-right">
+        <app-workspace *ngIf="atividade" [activity]="atividade"></app-workspace>
+      </div>
     </div>
-    <app-stopwatch></app-stopwatch>
-  </div>
-
-  <div class="bottom-right">
-    <app-workspace *ngIf="atividade" [activity]="atividade"></app-workspace>
+    
   </div>
 </div>
+

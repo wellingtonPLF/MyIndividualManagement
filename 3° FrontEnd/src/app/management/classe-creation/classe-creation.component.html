@@ -1,5 +1,5 @@
 <div id="body">
-  <div style="display: flex">
+  <div style="display: flex; justify-content: center;">
     <div style="margin-left: 10px; margin-top: 10px">
       <div id="classeMenu">
         <div style="display: flex;">
@@ -26,15 +26,15 @@
       <div class="estrutura">
         <div>
           <div class="dificuldade" style="color: #02AAC9">Easy</div>
-          <app-carousel [qntItens]="6" [dificuldade]="'easy'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
+          <app-carousel [qntItens]=qntItens [dificuldade]="'easy'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
         </div>
         <div>
           <div class="dificuldade" style="color: #02b050">Medium</div>
-          <app-carousel [qntItens]="6" [dificuldade]="'medium'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
+          <app-carousel [qntItens]=qntItens [dificuldade]="'medium'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
         </div>
         <div>
           <div class="dificuldade" style="color: #f19817">Hard</div>
-          <app-carousel [qntItens]="6" [dificuldade]="'hard'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
+          <app-carousel [qntItens]=qntItens [dificuldade]="'hard'" [objeto]="classe" [subareaTipo]="'casual'"></app-carousel>
         </div>
       </div>
       </div>

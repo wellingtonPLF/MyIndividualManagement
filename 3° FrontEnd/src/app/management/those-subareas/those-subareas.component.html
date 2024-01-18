@@ -1,26 +1,49 @@
-<div style="display: flex; margin-left: 20px; align-items: center">
+<div *ngIf="subareas" style="display: flex; margin-left: 20px; align-items: center">
   <div style="margin-right: 10px; font-size: 15px">
     <b>-</b>&nbsp;&nbsp;&nbsp;{{templateName}}&nbsp;&nbsp;&nbsp;<b>-</b>
   </div>
-  <div style="display: flex" *ngFor="let subarea of subareas; let i = index">
-    <div style="display: flex; cursor: pointer; margin-left: 5px">
-      <div (click)="editarSubarea(i)" class="right-left left"
-           [ngClass]="{'right-left': true, 'left': true,'selected': index == i}">
-          <span id="span1">
-            <div class="out"></div>
-            <div class="in"></div>
-          </span>
-      </div>
-      <div (click)="enviarSubarea(i)"
-           [ngClass]="{'subarea': true, 'selected': index == i}">{{subarea.nome}}</div>
-      <div (click)="deleteSubarea(i)"
-           [ngClass]="{'right-left': true, 'right': true, 'selected': index == i}">
-          <span id="span2">
-            <div class="out"></div>
-            <div class="in"></div>
-          </span>
+
+  <div id="subareaDesktop">
+    <div style="display: flex" *ngFor="let subarea of subareas; let i = index">
+      <div style="display: flex; cursor: pointer; margin-left: 5px">
+        <div (click)="editarSubarea(i)" class="right-left left"
+             [ngClass]="{'right-left': true, 'left': true,'selected': index == i}">
+            <span id="span1">
+              <div class="out"></div>
+              <div class="in"></div>
+            </span>
+        </div>
+        <div (click)="enviarSubarea(i)"
+             [ngClass]="{'subarea': true, 'selected': index == i}">{{subarea.nome}}</div>
+        <div (click)="deleteSubarea(i)"
+             [ngClass]="{'right-left': true, 'right': true, 'selected': index == i}">
+            <span id="span2">
+              <div class="out"></div>
+              <div class="in"></div>
+            </span>
+        </div>
       </div>
     </div>
+    <div style="margin-left: 5px; margin-bottom: 2px; cursor:pointer;" *ngIf="subareas.length < subareas_limit" (click)="addSubarea()"><b>+</b></div>
   </div>
-  <div style="margin-left: 5px; cursor:pointer;" (click)="addSubarea()"><b>+</b></div>
+
+  <div id="subareaMobile">
+    <div (click)="editarSubarea()" class="right-left left selected">
+        <span id="span1">
+          <div class="out"></div>
+          <div class="in"></div>
+        </span>
+    </div>
+    <select name="select" class="subarea selected" style="border: unset;" [(ngModel)]="selectedSubarea" (click)="enviarSubarea()">
+      <option *ngFor="let subarea of subareas; let i = index"  [ngValue]="subarea">{{subarea.nome}}</option>
+    </select>
+    <div (click)="deleteSubarea()" class="right-left right selected">
+        <span id="span2">
+          <div class="out"></div>
+          <div class="in"></div>
+        </span>
+    </div>
+    <div style="margin-left: 5px; margin-bottom: 2px; cursor:pointer;" *ngIf="subareas.length < subareas_limit" (click)="addSubarea()"><b>+</b></div>
+  </div>
 </div>
+

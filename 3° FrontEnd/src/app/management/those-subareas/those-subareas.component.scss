@@ -8,6 +8,17 @@
   margin-top: 3px;
 }
 
+.subarea:focus {
+  outline: unset;
+}
+
+select {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  width: 60px;
+}
+
 .subarea:hover{
   color: black;
 }
@@ -17,6 +28,7 @@
   color: white;
   margin-top: 3px;
   height: 20px;
+  cursor: pointer;
   width: 20px;
 }
 
@@ -35,30 +47,6 @@
   background-color: #e9e9e9;
   color: black;
 }
-/*
-.selected #span1 div:first-child{
-  background-color: #1976D2;
-}
-
-.selected #span2 div:first-child{
-  background-color: #d21a6c;
-}
-
-.selected:hover #span1 div:first-child #span2 div:first-child{
-  background-color: white;
-}
-
-.selected:hover #span2 div:first-child{
-  background-color: white;
-}
-
-.selected:hover #span1 div:nth-child(2){
-  background-color: #1976D2;
-}
-
-.selected:hover #span2 div:nth-child(2){
-  background-color: #d21a6c;
-}*/
 
 .right{
   clip-path: ellipse(15px 12px at 0% 50%);
@@ -68,31 +56,9 @@
   background-color: #980846;
 }
 
-/*
-.right-left:hover span div:first-child{
-  background-color: white !important;
-}
-
-.right:hover span div:nth-child(2){
-  background-color:  #d21969 !important;
-}
-
-.right:hover{
-  background-color: #d21969;
-}*/
-
 .left{
   clip-path: ellipse(15px 12px at 100% 50%);
 }
-
-/*
-.left:hover{
-  background-color: #1976D2;
-}
-
-.left:hover span div:nth-child(2){
-  background-color: #1976D2 !important;
-}*/
 
 .out{
   background-color: #0c508f;
@@ -112,4 +78,24 @@
   position: absolute;
   clip-path: circle(28%);
   z-index: 3;
+}
+
+#subareaDesktop {
+  display: flex; 
+  align-items: center;
+}
+
+#subareaMobile {
+  display: none;
+  height: 26px;
+}
+
+@media screen and (max-width: 900px) {
+  #subareaMobile {
+    display: flex;
+  }
+
+  #subareaDesktop {
+    display: none;
+  }  
 }

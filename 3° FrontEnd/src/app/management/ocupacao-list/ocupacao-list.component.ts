@@ -26,6 +26,7 @@ export class OcupacaoListComponent implements OnInit {
   @Input() subarea!: Subarea;
   ocupacoes!: Array<Ocupacao>;
   lista: Array<any> = [];
+  qntItens: number = 2;
   timeout: any = null;
 
   constructor(private ocupacaoService: OcupacaoService, private casualService: CasualService,

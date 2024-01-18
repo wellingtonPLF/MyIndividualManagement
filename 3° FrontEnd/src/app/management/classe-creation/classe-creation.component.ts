@@ -20,6 +20,8 @@ export class ClasseCreationComponent implements OnInit {
   @Output() updateClick = new EventEmitter<any>();
   @Output() removedClick = new EventEmitter<any>();
 
+  qntItens: number = 2;
+
   constructor(private rotalAtual: ActivatedRoute, @Inject(MAT_DIALOG_DATA) public data: any,
               private dialog: MatDialog, private classeService: ClasseService) { }
 
@@ -27,8 +29,13 @@ export class ClasseCreationComponent implements OnInit {
     this.classeService.pesquisarPorId(this.data.datakey).subscribe(
       it => {
         this.classe = it;
+        this.calcQntItens()
       }
     );
+
+    window.addEventListener('resize', () => {
+      this.calcQntItens()
+    });
   }
 
   saveEdit(event: any) {
@@ -39,6 +46,24 @@ export class ClasseCreationComponent implements OnInit {
         $this.executeListing(event.target.value);
       }
     }, 1000);
+  }
+
+  calcQntItens(value?: boolean): void {
+    const windowWidth = window.innerWidth
+    const leftSide = 0
+    const paddingWorkSpace = 20
+    const borderRight = 3
+    const result = leftSide + borderRight + (paddingWorkSpace * 2)
+
+    let ocupationWidth = windowWidth - result
+
+    let calc = Math.floor((ocupationWidth - 80) / 135)
+    if (ocupationWidth > 350) {
+      this.qntItens = calc
+    }
+    else {
+      this.qntItens = 2
+    }
   }
 
   private executeListing(value: string) {

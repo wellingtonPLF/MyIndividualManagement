@@ -8,22 +8,28 @@
       </button>
     </div>
   </div>
-  <div id="tempo">
-    <div id="miniMenu">
-      <div id="time">{{task.tempo}}</div>
-      <input type="date" [(ngModel)]="tempo">
-      <div class="choice">{{task.dificuldade}}</div>
-      <select (change)="changeEtiqueta($event)">
-        <option>{{etiqueta}}</option>
-        <option *ngIf="etiqueta != '\u2754'">&#x2754;</option>
-        <option *ngIf="etiqueta != '\u2714'">&#x2714;</option>
-        <option *ngIf="etiqueta != '\u274C'">&#x274C;</option>
-      </select>
+  <div>
+    <div id="tempo">
+      <div id="miniMenu">
+        <div>
+          <div id="time">{{task.tempo}}</div>
+          <input type="date" [(ngModel)]="tempo">
+        </div>
+        <div>
+          <div class="choice">{{task.dificuldade}}</div>
+          <select (change)="changeEtiqueta($event)">
+            <option>{{etiqueta}}</option>
+            <option *ngIf="etiqueta != '\u2754'">&#x2754;</option>
+            <option *ngIf="etiqueta != '\u2714'">&#x2714;</option>
+            <option *ngIf="etiqueta != '\u274C'">&#x274C;</option>
+          </select>
+        </div>
+      </div>
     </div>
-  </div>
-  <div id="descricao">
-    <textarea [(ngModel)]="task.descricao" rows="7" cols="57" spellcheck="false"></textarea>
-  </div>
+    <div id="descricao">
+      <textarea [(ngModel)]="task.descricao" rows="7" cols="57" spellcheck="false"></textarea>
+    </div>
+  </div>  
   <div id="confirmCancel">
     <button mat-button mat-dialog-close (click)="updateTask()">Confirm</button>
     <button mat-button mat-dialog-close>Cancel</button>

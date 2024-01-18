@@ -1,7 +1,5 @@
 import {Component, EventEmitter, Inject, OnInit, Output} from '@angular/core';
-import {Task} from "../../shared/model/task";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
-import {CasualService} from "../../shared/service/casual.service";
 import {MAT_DIALOG_DATA, MatDialog} from "@angular/material/dialog";
 import {ProjetoService} from "../../shared/service/projeto.service";
 import {Projeto} from "../../shared/model/projeto";
@@ -41,10 +39,6 @@ export class TaskProjectComponent implements OnInit {
     )
   }
 
-  counter(qnt: number): Array<number>{
-    return new Array<number>(qnt)
-  }
-
   updateTask(): void{
     this.relacionar()
     this.taskService.pesquisarClassePorIdTask(this.task.idtask).subscribe(
@@ -64,7 +58,7 @@ export class TaskProjectComponent implements OnInit {
   removerTask(): void{
     let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
     dialogRef.componentInstance.deleteClick.subscribe(
-      result =>{
+      _ =>{
         this.taskService.remover((this.task.idtask).toString()).subscribe(
           it => this.removedClicked.emit()
         )
@@ -128,10 +122,6 @@ export class TaskProjectComponent implements OnInit {
       return '\u274C'
     }
     return '\u2754'
-  }
-
-  trackByIndex(index: number, obj: any): any {
-    return index;
   }
 
   relacionar(): void{

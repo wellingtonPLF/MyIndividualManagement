@@ -11,6 +11,7 @@ snack-bar-container.success{
 
 .mat-dialog-container{
   background-color: white;
+  min-width: 175px;
 }
 
 .full-screen-modal .mat-dialog-container {
@@ -31,6 +32,8 @@ snack-bar-container.success{
 
 .taskFile .mat-dialog-container{
   padding: 0px;
+  width: 525px;
+  min-width: 255px;
   background-color: transparent !important;
   box-shadow: unset;
 }

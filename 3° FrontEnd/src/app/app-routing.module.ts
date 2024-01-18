@@ -7,7 +7,6 @@ import {TelaManagementComponent} from "./main/tela-management/tela-management.co
 import {AuthenticationuserComponent} from "./usuario/authenticationuser/authenticationuser.component";
 import {AppComponent} from "./app.component";
 import {AuthGuard} from "./shared/guard/auth.guard";
-import {ClasseCreationComponent} from "./management/classe-creation/classe-creation.component";
 
 const routes: Routes = [
   {

@@ -11,6 +11,10 @@ import {OcupacaoFactory} from "../../shared/factoryDirectory/ocupacaoFactory";
 import {ClasseService} from "../../shared/service/classe.service";
 import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {DialogComponent} from "../../dialogs/dialog/dialog.component";
+import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
+import { FuncShareService } from 'src/app/shared/utils/func-share.service';
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-ocupacao-nominal',
@@ -24,12 +28,40 @@ export class OcupacaoNominalComponent implements OnInit {
   difficult!: string;
   timeout: any = null;
 
+  qntItens: number = 2;
+  leftSide = false;
+  variable$!: Observable<any>;
+
   constructor(private ocupacaoService: OcupacaoService,
-              private dialog: MatDialog, private classService: ClasseService,
-              private templateService: TemplateService, private subareaService: SubareaService) {
+              private dialog: MatDialog, private classService: ClasseService, private fshare: FuncShareService,
+              private templateService: TemplateService, private subareaService: SubareaService, private store: Store<any>) {
+    this.variable$ = this.store.select('leftSideReducer');
+    this.fshare.getClickEvent().subscribe(
+      it => {
+        this.leftSide = it
+        if (window.innerWidth < 582) {
+          this.leftSide = true
+        }
+        this.calcQntItens(this.leftSide)
+      }
+    )
   }
 
   ngOnInit(): void {
+    this.variable$.subscribe(
+      it => {
+        this.leftSide = it
+      }
+    )
+
+    this.calcQntItens(this.leftSide)
+
+    if (window.innerWidth < 582) {
+      this.leftSide = true
+    }
+    window.addEventListener('resize', () => {
+      this.calcQntItens(this.leftSide)
+    });
   }
 
   ngOnChanges(): void{
@@ -45,6 +77,24 @@ export class OcupacaoNominalComponent implements OnInit {
           this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
         }
       )
+    }
+  }
+
+  calcQntItens(value: boolean): void {
+    const windowWidth = (window.innerWidth >= ScreenWidthSize.maxWidth) ? ScreenWidthSize.maxWidth : window.innerWidth
+    const leftSide = (value)? 0 : ScreenWidthSize.leftSlideWitdh
+    const paddingWorkSpace = 20
+    const borderRight = 3
+    const result = leftSide + borderRight + (paddingWorkSpace * 2)
+
+    let ocupationWidth = windowWidth - result
+
+    let calc = Math.floor((ocupationWidth - 80) / 135)
+    if (ocupationWidth > 350) {
+      this.qntItens = calc
+    }
+    else {
+      this.qntItens = 2
     }
   }
 

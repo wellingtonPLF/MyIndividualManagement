@@ -20,7 +20,9 @@ import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-scr
 export class ThoseSubareasComponent implements OnInit {
   templateName!: String;
   subareas!: Array<Subarea>;
+  selectedSubarea!: Subarea;
   index!: number;
+  subareas_limit: number = 3;
   @Output() subareaEmitter = new EventEmitter<Subarea>();
   @Input() janela!: Janela;
 
@@ -38,6 +40,7 @@ export class ThoseSubareasComponent implements OnInit {
       this.janelaService.pesquisarPorId(this.janela.idjanela).subscribe(
         it => {
           this.subareas =  OrdemDependency.ordenar(it.subareas);
+          this.selectedSubarea = this.subareas[0];
           this.subareaEmitter.emit(this.subareas[0]);
         }
       )
@@ -52,7 +55,7 @@ export class ThoseSubareasComponent implements OnInit {
   }
 
   addSubarea(): void{
-    if(this.subareas.length < 6){
+    if(this.subareas.length < this.subareas_limit){
       let subarea!: Subarea;
       const ordem = this.subareas[this.subareas.length - 1].ordem + 1;
 
@@ -72,40 +75,48 @@ export class ThoseSubareasComponent implements OnInit {
     }
   }
 
-  enviarSubarea(index: number): void{
-    this.subareaEmitter.emit(this.subareas[index]);
-    this.index = index;
+  enviarSubarea(index?: number): void {
+    const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
+    this.subareaEmitter.emit(this.subareas[value]);
+    this.index = value;
   }
 
-  editarSubarea(index: number): void{
+  editarSubarea(index?: number): void{
+    const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
     let dialogRef = this.dialog.open(EditDialogComponent, {
       data:{
         type: ("subarea"),
-        datakey: (this.subareas[index].idsubarea).toString(),
+        datakey: (this.subareas[value].idsubarea).toString(),
         key: this.janela
       }
     });
 
     dialogRef.componentInstance.submitClicked.subscribe(
       result => {
-        this.subareas.splice(index, 1, result)
+        this.subareas.splice(value, 1, result)
       }
     );
   }
 
-  deleteSubarea(index: number): void{
-    if(index != 0){
+  deleteSubarea(index?: number): void{
+    const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
+    if(value != 0) {
       let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
       dialogRef.componentInstance.deleteClick.subscribe(
-        it =>{
-          if (this.index == index){
-            this.subareaEmitter.emit(this.subareas[index - 1]);
-            this.index = index - 1;
+        _ => {
+          if (this.index == value){
+            this.subareaEmitter.emit(this.subareas[value - 1]);
+            this.index = value - 1;
           }
-          this.subareaService.remover((this.subareas[index].idsubarea).toString()).subscribe(
-            result => this.subareas.splice(index, 1)
+
+          this.subareaService.remover((this.subareas[value].idsubarea).toString()).subscribe(
+            _ => {
+              this.subareas.splice(value, 1)
+              this.selectedSubarea = this.subareas[0]
+            }
           )
-        })
+        }
+      )
     }
   }
 }

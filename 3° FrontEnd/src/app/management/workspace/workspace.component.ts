@@ -12,11 +12,8 @@ import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {IndisponivelComponent} from "../indisponivel/indisponivel.component";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {TemplatesComponent} from "../templates/templates.component";
-import {TaskProjectComponent} from "../task-project/task-project.component";
 import {SubareaTemplateComponent} from "../subarea-template/subarea-template.component";
 import {DialogComponent} from "../../dialogs/dialog/dialog.component";
-import {CasualService} from "../../shared/service/casual.service";
-import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-workspace',
@@ -28,6 +25,7 @@ export class WorkspaceComponent implements OnInit  {
   janela!: Janela;
   subarea!: Subarea;
   index!: number;
+  windows_limit: number = 3;
   @Input() activity!: Atividade;
   
 
@@ -86,7 +84,7 @@ export class WorkspaceComponent implements OnInit  {
   }
 
   addJanela(): void{
-    if(this.windows.length < 6){
+    if(this.windows.length < this.windows_limit){
       let window!: Janela;
       const ordem = this.windows[this.windows.length - 1].ordem + 1;
 

@@ -2,6 +2,11 @@
   padding: 5px;
   color: black;
   padding-bottom: 3px;
+
+  textarea {
+    width: 400px; 
+    height: 150px;
+  }
 }
 
 #info{
@@ -13,4 +18,11 @@
   padding-left: 10px;
   align-items: center;
   padding-right: 15px;
+}
+
+@media screen and (max-width: 545px) {
+  #main textarea {
+    width: 72vw;
+    min-width: 165px;
+  }
 }

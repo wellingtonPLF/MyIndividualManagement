@@ -19,7 +19,7 @@
     </div>
   </div>
   <div [hidden]="show != i" style="background-color: #efefef">
-    <app-carousel [qntItens]="5" [dificuldade]="difficult" [objeto]="ocupacao.classes[0]" [subareaTipo]="subarea.tipo"></app-carousel>
+    <app-carousel [qntItens]=qntItens [dificuldade]="difficult" [objeto]="ocupacao.classes[0]" [subareaTipo]="subarea.tipo"></app-carousel>
   </div>
 </div>
 <div class="addOcupacao" (click)="addOccupation()"><b>+</b></div>

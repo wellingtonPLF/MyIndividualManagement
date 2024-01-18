@@ -21,7 +21,7 @@
         </div>
       </div>
     </div>
-    <div class="addJanela" *ngIf="windows" (click)="addJanela()"><b>+</b></div>
+    <div class="addJanela" *ngIf="windows.length < windows_limit" (click)="addJanela()"><b>+</b></div>
   </div>
   <div id="abaixoDaJanela">
 
