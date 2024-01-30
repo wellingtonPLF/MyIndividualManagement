@@ -1,14 +1,14 @@
-<div style="display: flex; justify-content: flex-end">
+<div style="display: flex; justify-content: flex-end; margin-bottom: 15px">
   <button mat-dialog-close class="closeButton" style="margin-top: 10px;
   margin-right: 10px; outline: none">
     <i class="fas fa-times"></i>
   </button>
 </div>
-<div cdkDropListGroup class="example-boundary" style="display: flex">
+<div cdkDropListGroup class="example-boundary">
   <div class="example-container" id="locking">
     <mat-card id="firstPart"  *ngFor="let janela of janelas_templates; let i = index"
          [ngClass]="{'displayNone': calcItensByPage(i) }">
-      <div id="janelas">
+      <div id="janelas" [ngStyle]="{'width': (janelas[this.indexItens(i)] == undefined)? '100%': ''}">
         <div class="labelJanela" *ngIf ="janelas[this.indexItens(i)] != undefined; else elseBlock">
           {{janelas[this.indexItens(i)].nome}}
         </div>

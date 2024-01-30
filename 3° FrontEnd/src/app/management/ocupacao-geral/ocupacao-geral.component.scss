@@ -7,6 +7,10 @@
   height: 42px;
 }
 
+#main > div:not(:first-child) {
+  margin-top: 15px;
+}
+
 .ocupacaoNome{
   margin-top: 8px;
   margin-left: 30px;

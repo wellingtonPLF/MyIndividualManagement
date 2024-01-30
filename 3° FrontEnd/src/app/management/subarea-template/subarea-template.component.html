@@ -1,33 +1,31 @@
-<div style="padding: 15px; background-color: #efefef">
+<div id="options" style="padding: 15px; background-color: #efefef">
   <div id="closeBtn">
     <i class="fas fa-times" mat-dialog-close></i>
   </div>
   <div *ngIf="janela != undefined">
-    <!-- List Subarea -->
-    <div style="margin-top: 10px" *ngFor="let tripla of counter(3); index as i;"
-         id="listaDeSubarea">
-      <!-- Subarea -->
+    <div id="listaDeSubarea">
       <span>
-          <div *ngFor="let dupla of counter(2); index as j" class="subareaObject">
-            <div style="display: flex;">
-                <div class="subareaName" *ngIf="janela.subareas[(j + (2 * i))] != undefined">
-                  {{janela.subareas[(j + (2 * i))].nome}}
-                </div>
-                <div class="chooseOption"*ngIf="janela.subareas[(j + (2 * i))] != undefined">
-                  <select style="width: 80px;" disabled>
-                    <option>list</option>
-                    <option>geral</option>
-                  </select>
-                  <select style="width: 80px"  disabled
-                          (change)="changeTipo($event, janela.subareas[(j + (2 * i))])">
-                    <option>{{janela.subareas[(j + (2 * i))].tipo}}</option>
-                    <option *ngIf="janela.subareas[(j + (2 * i))].tipo != 'casual'">casual</option>
-                    <option *ngIf="janela.subareas[(j + (2 * i))].tipo != 'projeto'">projeto</option>
-                  </select>
-                </div>
-                <div class="undefinedSubarea" *ngIf="janela.subareas[(j + (2 * i))] == undefined">...</div>
-            </div>
+        <div class="subareaObject" *ngFor="let subarea of subareas">
+          <div class="subareaName" *ngIf="subarea != undefined">
+            {{subarea.nome}}
           </div>
+          <div class="chooseOption"*ngIf="subarea != undefined">
+            <select style="width: 80px;" disabled>
+              <option>list</option>
+              <option>geral</option>
+            </select>
+            <select style="width: 80px"  disabled
+                    (change)="changeTipo($event, subarea)">
+              <option>{{subarea.tipo}}</option>
+              <option *ngIf="subarea.tipo != 'casual'">casual</option>
+              <option *ngIf="subarea.tipo != 'projeto'">projeto</option>
+            </select>
+          </div>
+        </div>
+        <div *ngIf="subareas.length >= qntDefault; else elseBlock">??</div>  
+        <ng-template #elseBlock>
+          <div class="undefinedSubarea" *ngFor="let x of counter(qntDefault - subareas.length)"></div>
+        </ng-template>
       </span>
     </div>
   </div>

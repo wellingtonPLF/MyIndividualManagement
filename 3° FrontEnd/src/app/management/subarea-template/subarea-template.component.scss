@@ -5,7 +5,8 @@ select:focus{
 #closeBtn{
   color: black;
   display: flex;
-  justify-content: flex-end
+  justify-content: flex-end;
+  margin-bottom: 15px;
 }
 
 .undefinedSubarea{
@@ -21,10 +22,18 @@ select:focus{
 
 #listaDeSubarea span{
   display: flex;
+  flex-wrap: wrap;
+  max-width: 650px;
+  justify-content: center;
+  min-height: 250px;
 }
 
-#listaDeSubarea span .subareaObject:nth-child(2){
-  margin-left: 10px;
+#listaDeSubarea span > div{
+  margin: 5px;
+}
+
+.subareaObject {
+  display: flex;
 }
 
 .subareaName{
@@ -46,4 +55,14 @@ select:focus{
   flex-direction: column;
   justify-content: space-evenly;
   align-items: center
+}
+
+@media screen and (max-width: 840px) {
+  #options {
+    width: 350px;
+  }
+}
+
+@media screen and (max-width: 430px) {
+  
 }

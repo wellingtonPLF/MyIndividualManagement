@@ -9,6 +9,10 @@ snack-bar-container.success{
   border-radius: 2%;
 }
 
+.cdk-global-overlay-wrapper {
+  min-width: 435px;
+}
+
 .mat-dialog-container{
   background-color: white;
   min-width: 175px;
@@ -28,6 +32,14 @@ snack-bar-container.success{
 
 .dialogPadding .mat-dialog-container{
   padding: 0px;
+}
+
+.dialogTemplate {
+  max-width: fit-content !important;
+}
+
+.dialogTemplate .mat-dialog-container{
+  min-width: 365px;
 }
 
 .taskFile .mat-dialog-container{

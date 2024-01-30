@@ -105,6 +105,7 @@ $leftWidth: 200px;
     height: calc(100% - #{$topRight_Height});
     border-bottom: #1976d2 solid 3px;
     border-right: #1976d2 solid 3px;
+    min-height: 400px;
 
     button{
       margin: 10px 0px 0px 10px;

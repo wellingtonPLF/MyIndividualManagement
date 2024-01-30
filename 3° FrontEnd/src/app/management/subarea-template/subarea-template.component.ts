@@ -12,6 +12,8 @@ import {Janela} from "../../shared/model/janela";
 })
 export class SubareaTemplateComponent implements OnInit {
   janela!:Janela;
+  subareas!: Array<Subarea>;
+  qntDefault = 6;
 
   constructor(private janelaService: JanelaService, private subareaService: SubareaService,
               @Inject(MAT_DIALOG_DATA) public data: any) { }
@@ -20,6 +22,7 @@ export class SubareaTemplateComponent implements OnInit {
     this.janelaService.pesquisarPorId(this.data.idjanela).subscribe(
       it => {
         this.janela = it;
+        this.subareas = it.subareas;
       }
     )
   }

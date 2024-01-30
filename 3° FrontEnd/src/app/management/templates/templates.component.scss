@@ -1,12 +1,20 @@
+.example-boundary {
+  display: flex;
+  justify-content: space-evenly;
+  min-width: 365px;
+}
+
 .example-container {
-  max-width: 100%;
-  margin: 25px 25px 15px 0;
   display: inline-block;
   vertical-align: top;
 }
 
-.example-container:first-child{
-  margin-left: 25px;
+.example-container:first-child {
+  width: 60%;
+}
+
+.example-container:last-child {
+  width: 30%;
 }
 
 #firstPart{
@@ -43,16 +51,13 @@
 
 .example-list {
   height: 100%;
+  width: 100%;
+  min-width: 100px;
   background: white;
-  width: 180px;
   border: 1px solid #ccc;
   border-left: none;
   overflow: hidden;
   display: block;
-}
-
-#firstPart .example-list{
-  width: 180px;
 }
 
 .example-container:nth-child(2) .example-list{
@@ -78,10 +83,6 @@
 
 .rec .example-list{
   width: 300px;
-}
-
-.rec .example-box{
-  width: 180px;
 }
 
 #firstPart .example-box{
@@ -139,7 +140,7 @@
 }
 
 #undefinedBox{
-  width: 300px;
+  width: 100%;
   height: 63px;
   display: flex;
   color: black;

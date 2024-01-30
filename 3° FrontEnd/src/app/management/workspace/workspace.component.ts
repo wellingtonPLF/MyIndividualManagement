@@ -121,7 +121,7 @@ export class WorkspaceComponent implements OnInit  {
 
   openTemplates(): void{
     let dialogRef = this.dialog.open(TemplatesComponent, {
-      panelClass: 'dialogPadding',
+      panelClass: ['dialogPadding','dialogTemplate'],
       data: this.activity
     });
 
