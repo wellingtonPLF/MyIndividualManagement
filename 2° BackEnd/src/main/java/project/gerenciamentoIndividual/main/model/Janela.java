@@ -1,6 +1,5 @@
 package project.gerenciamentoIndividual.main.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -19,12 +18,14 @@ import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import project.gerenciamentoIndividual.main.serializer.JanelaSerializer;
 
 @Entity
 @Table(name = "janela")
+@JsonSerialize(using = JanelaSerializer.class)
 public class Janela{
 
 	@Id

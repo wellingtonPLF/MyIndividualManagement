@@ -1,7 +1,9 @@
 
+$blueColor: #1976d2;
+
 .ocupacao{
   display: flex;
-  background-color: #1976d2;
+  background-color: $blueColor;
   color: white;
   width: 100%;
   height: 42px;
@@ -77,10 +79,32 @@ input:focus, textarea:focus, select:focus{
   display: flex;
 }
 
+$pinkColor: #d21969;
+
 .pendente{
-  background-color: #d21969;
+  background-color: $pinkColor;
 }
 
 .indefinido{
   background-color: black;
+}
+
+.colorType {
+  display:flex; 
+  justify-content: center; 
+  align-items: center; 
+  height: 145px; 
+  font-weight: 600;
+}
+
+#ocupationList > div:first-child .colorType{
+  color: $blueColor;
+}
+
+#ocupationList > div:nth-child(2)  .colorType{
+  color: $pinkColor;
+}
+
+#ocupationList > div:last-child .colorType{
+  color: black;
 }

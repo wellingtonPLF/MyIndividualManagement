@@ -29,24 +29,24 @@ public interface CasualRepository extends JpaRepository<Casual, Long> {
 	List<Long> getIfDiarias();
 	
 	@Query ("select c from Casual as c "
-			+ "where age(c.data, current_date) < '0 days' and idclasse in (select idclasse from Classe " 
+			+ "where c.data < current_date and idclasse in (select idclasse from Classe " 
 			+ "where idocupacao in (select idocupacao from Ocupacao " 
 			+ "where idsubarea in (select idsubarea from Subarea where nome = 'Diarias')))")
 	List<Casual> getIfDiariasPendente();
 	
-	@Query ("Select t from Casual t "
+	@Query ("select t from Casual t "
 			+ "where idclasse in (select idclasse from Classe "
 			+ "where idocupacao in (select idocupacao from Ocupacao "
 			+ "where idsubarea in (select idsubarea from Subarea s "
 			+ "where s.tipo = 'casual' and "
 			+ "idjanela in (select idjanela from Janela "
 			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) "
-			+ "and age(t.data, current_date) < '7 days' and age(t.data, current_date) > '-1 days' "
+			+ "and (t.data - current_date) < 7 and (t.data - current_date) > -1 "
 			+ "and etiqueta in ('undone', 'problem') "
 			+ "order by data, tempo")
 	List<Casual> requestCasualTask(Long iduser);
 	
-	@Query (queryBased + "and age(t.data, current_date) < '0 days' "
+	@Query (queryBased + "and t.data < current_date "
 			+ "and etiqueta in ('undone', 'problem') "
 			+ "order by data, tempo")
 	List<Casual> requestLate(Long iduser);

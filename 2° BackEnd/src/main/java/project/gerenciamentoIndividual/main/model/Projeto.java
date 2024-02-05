@@ -7,9 +7,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import project.gerenciamentoIndividual.main.serializer.ProjetoSerializer;
 
 @Entity
 @Table(name = "projeto")
+@JsonSerialize(using = ProjetoSerializer.class)
 public class Projeto extends Task{
 	
 	@Column(columnDefinition="TEXT")

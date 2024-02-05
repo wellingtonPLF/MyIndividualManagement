@@ -29,12 +29,12 @@ public interface ProjetoRepository extends JpaRepository<Projeto, Long>{
 			+ "where s.tipo = 'projeto' and "
 			+ "idjanela in (select idjanela from Janela "
 			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) "
-			+ "and age(t.data, current_date) < '14 days' and age(t.data, current_date) > '-1 days' "
+			+ "and (t.data - current_date) < 14 and (t.data - current_date) > -1 "
 			+ "and etiqueta in ('undone', 'problem') "
 			+ "order by data, tempo")
 	List<Task> requestProjectTask(Long iduser);
 	
-	@Query (queryBased + "and age(t.data, current_date) < '0 days' "
+	@Query (queryBased + "and (t.data - current_date) < 0 "
 			+ "and etiqueta in ('undone', 'problem') "
 			+ "order by data, tempo")
 	List<Task> requestLate(Long iduser);

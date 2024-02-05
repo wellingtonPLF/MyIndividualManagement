@@ -6,6 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Base64;
 import java.util.List;
 
 @Service
@@ -18,7 +23,7 @@ public class UsuarioService {
        return this.usuarioRepository.findAll();
    }
    
-   public Usuario getUsuariosPorId(Long idusuario) {
+   public Usuario getUsuariosPorId(Long idusuario) {	   
        return this.usuarioRepository.findById(idusuario).orElse(null);
    }
    
@@ -28,6 +33,22 @@ public class UsuarioService {
    
    @Transactional
    public Usuario inserirOuAtualizar(Usuario usuario) {
+	   String[] imageType = usuario.getImg().split("[.;]");
+	   
+	   String[] parts = usuario.getImg().split(String.format(";data:image/%s;base64,", imageType[1]));
+	   String imageName = parts[0];
+	   String base64Image = parts[1];
+	   
+	   byte[] decodedBytes = Base64.getDecoder().decode(base64Image);
+	   
+       try {
+    	   Path path = Paths.get("src/main/resources", "/assets/imgs/" + imageName);
+           Files.write(path, decodedBytes);
+       } catch (IOException e) {
+           System.err.println("Error saving image: " + e.getMessage());
+       }
+       
+       usuario.setImg(imageName);
        return this.usuarioRepository.save(usuario);
    } 
    

@@ -32,9 +32,11 @@ export class UploadImageComponent implements OnInit {
         this.url = reader.result;
         this.usuarioService.pesquisarPorId(this.usuario.idusuario).subscribe(
           result => {
-            result.img = this.url;
+
+            const match = this.url.match(/data:image\/([^;]+)/);
+            result.img = `${result.idusuario}.${match[1]};${this.url}`;
             this.usuarioService.atualizar(result).subscribe(
-              it => {}
+              _ => {}
             )
           }
         )

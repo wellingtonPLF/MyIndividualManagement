@@ -12,9 +12,12 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import project.gerenciamentoIndividual.main.serializer.UsuarioSerializer;
 
 @Entity
 @Table(name = "usuario")
+@JsonSerialize(using = UsuarioSerializer.class)
 public class Usuario{
 
    @Id

@@ -16,9 +16,13 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import project.gerenciamentoIndividual.main.serializer.AtividadeSerializer;
 
 @Entity
 @Table(name = "atividade")
+@JsonSerialize(using = AtividadeSerializer.class)
 public class Atividade{
 	
 	@Id

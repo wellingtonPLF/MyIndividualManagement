@@ -7,9 +7,13 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+
+import project.gerenciamentoIndividual.main.serializer.CasualSerializer;
 
 @Entity
 @Table(name = "casual")
+@JsonSerialize(using = CasualSerializer.class)
 public class Casual extends Task{
 	
 	@Column(columnDefinition="TEXT")

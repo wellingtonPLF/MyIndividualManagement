@@ -21,7 +21,7 @@ public class GerenciamentoIndividualApplication {
 	public static synchronized void playSound() {
 	  new Thread(new Runnable() {
 	    public void run() {
-	      try {
+	      try {	    	
 	        Clip clip = AudioSystem.getClip();
 	        String music = "..\\..\\..\\beeps\\HoraDoShowPorra.wav";
 	        AudioInputStream inputStream = AudioSystem.getAudioInputStream(getClass().getResource(music));
