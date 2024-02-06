@@ -32,6 +32,11 @@ public class UsuarioController {
        return this.usuarioService.getUsuariosPorId(idusuario);
    }
    
+   @GetMapping("/usuario/checkLimit")
+   public Boolean checkLimit() {
+       return this.usuarioService.checkLimit();
+   }
+   
    @GetMapping("/usuario/myuser/{nome}")
    public Usuario getUsuarioByNomeAndSenha(@PathVariable("nome") String nome) {
        return usuarioService.getUsuarioByNome(nome);
@@ -39,12 +44,12 @@ public class UsuarioController {
 
    @PostMapping("/usuario")
    public Usuario inserirUsuario(@RequestBody Usuario usuario){
-       return this.usuarioService.inserirOuAtualizar(usuario);
+       return this.usuarioService.inserir(usuario);
    }
    
    @PutMapping("/usuario/{idusuario}")
    public Usuario atualizarUsuario(@RequestBody Usuario usuario){
-       return this.usuarioService.inserirOuAtualizar(usuario);
+       return this.usuarioService.atualizar(usuario);
    }
 
    @DeleteMapping("/usuario/{idusuario}")

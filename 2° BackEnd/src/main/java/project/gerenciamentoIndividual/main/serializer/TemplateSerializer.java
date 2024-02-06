@@ -19,6 +19,9 @@ public class TemplateSerializer extends JsonSerializer<Template> {
         jsonGenerator.writeNumberField("idtemplate", template.getIdtemplate());
         jsonGenerator.writeStringField("nome", template.getNome());
         jsonGenerator.writeStringField("objectType", template.getObjectType());
+        
+        jsonGenerator.writeFieldName("janela_c");
+        new JanelaSerializer().serialize(template.getJanela_c(), jsonGenerator, serializerProvider);
                        
         // Serialize the list of Subarea
         jsonGenerator.writeFieldName("janelas");

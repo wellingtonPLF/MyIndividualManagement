@@ -31,8 +31,24 @@ public class UsuarioService {
 	   return this.usuarioRepository.findUsuarioByNome(nome);
    }
    
+   public Boolean checkLimit() {
+	   int qnt = this.usuarioRepository.findAll().size();
+	   if (qnt >= 3) {
+		   throw new RuntimeException();
+	   }
+	   return false;
+   }
+   
+   public Usuario inserir(Usuario usuario) {
+	   int qnt = this.usuarioRepository.findAll().size();
+	   if (qnt >= 2) {
+		   throw new RuntimeException();
+	   }
+	   return this.usuarioRepository.save(usuario);
+   }
+   
    @Transactional
-   public Usuario inserirOuAtualizar(Usuario usuario) {
+   public Usuario atualizar(Usuario usuario) {
 	   String[] imageType = usuario.getImg().split("[.;]");
 	   
 	   String[] parts = usuario.getImg().split(String.format(";data:image/%s;base64,", imageType[1]));
