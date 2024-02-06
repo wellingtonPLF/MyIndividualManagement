@@ -1,0 +1,38 @@
+#outlimit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1976d2;
+    height: 100%;
+    color: white;
+    text-align: center;
+}
+
+#outlimit > div {
+    position: relative;
+}
+
+#outlimit > div > div:first-child {
+    font-size: 50px;
+    font-family: "ZCOOL KuaiLe", cursive;
+    margin-bottom: 10px;
+}
+
+#outlimit > div > p {
+    font-size: 20px;
+}
+
+#outlimit button {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #11285b30;
+    font-weight: 600;
+    border: 2px solid white;
+    color: white;
+    margin-bottom: 150px;
+}
+
+#outlimit button:focus {
+    outline: off;
+}

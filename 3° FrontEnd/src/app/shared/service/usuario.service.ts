@@ -30,6 +30,10 @@ export class UsuarioService {
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`);
   }
 
+  checkLimit(): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/checkLimit`);
+  }
+
   /*pesquisarPorUsuario(usuario: Usuario): Observable<Usuario []> {
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
       map(users=> users.filter(u => u.nome == usuario.nome && u.senha == usuario.senha)));

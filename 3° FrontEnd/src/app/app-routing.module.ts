@@ -7,6 +7,8 @@ import {TelaManagementComponent} from "./main/tela-management/tela-management.co
 import {AuthenticationuserComponent} from "./usuario/authenticationuser/authenticationuser.component";
 import {AppComponent} from "./app.component";
 import {AuthGuard} from "./shared/guard/auth.guard";
+import { LimitGuardGuard } from './shared/guard/limit-guard.guard';
+import { OutlimitComponent } from './management/outlimit/outlimit.component';
 
 const routes: Routes = [
   {
@@ -36,8 +38,13 @@ const routes: Routes = [
             component: LoginUsuarioComponent
           },
           {
+            path: 'outlimit',
+            component: OutlimitComponent
+          },
+          {
             path: 'cadastro',
-            component: CadastroUsuarioComponent
+            component: CadastroUsuarioComponent,
+            canActivate: [LimitGuardGuard]
           },
           {
             path: 'management',
@@ -48,7 +55,7 @@ const routes: Routes = [
             component: TelaManagementComponent,
           }
           ]
-      }
+      },
     ]
   }
 ];

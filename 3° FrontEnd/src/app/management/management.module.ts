@@ -29,6 +29,7 @@ import { TaskProjectComponent } from './task-project/task-project.component';
 import { SubareaTemplateComponent } from './subarea-template/subarea-template.component';
 import { UserListComponent } from './user-list/user-list.component';
 import { MatIconModule } from '@angular/material/icon';
+import { OutlimitComponent } from './outlimit/outlimit.component';
 
 
 @NgModule({
@@ -49,7 +50,8 @@ import { MatIconModule } from '@angular/material/icon';
         OcupacaoListComponent,
         TaskProjectComponent,
         SubareaTemplateComponent,
-        UserListComponent
+        UserListComponent,
+        OutlimitComponent
     ],
   exports: [
     AtividadeComponent,

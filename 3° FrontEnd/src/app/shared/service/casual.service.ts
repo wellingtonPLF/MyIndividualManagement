@@ -1,9 +1,10 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Classe} from "../model/classe";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {Casual} from "../model/casual";
 import {Task} from "../model/task";
+import { catchError } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
@@ -20,7 +21,11 @@ export class CasualService {
   }
 
   inserir(task: Casual): Observable<Casual>{
-    return this.httpClient.post<Casual>(this.URL_TASK, task);
+    return this.httpClient.post<Casual>(this.URL_TASK, task).pipe(
+      catchError( error => {
+          return throwError(() => error.error);
+        })
+      );
   }
 
   atualizar(task: Casual): Observable<Casual> {

@@ -35,8 +35,7 @@ export class CadastroUsuarioComponent implements OnInit {
     this.reactiveForm = this.validate.createSignupForm();
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   validations(): any{
     return this.reactiveForm.controls
@@ -52,10 +51,14 @@ export class CadastroUsuarioComponent implements OnInit {
             this.templateService.pesquisarPorId(1).subscribe(
               result => {
                 UsuarioFactory.criarUsuario(result, this.usuario)
-                this.usuarioService.inserir(this.usuario).subscribe(
-                  it => {
-                    this.snackResult.success("Cadastro realizado com sucesso!")
-                    this.router.navigate(['management'])
+                this.usuarioService.inserir(this.usuario).subscribe({
+                    next: _ => {
+                      this.snackResult.success("Cadastro realizado com sucesso!")
+                      this.router.navigate(['management'])
+                    },
+                    error: (_) => {
+                      console.log("Limit Users")
+                    }
                   }
                 )
               }
