@@ -34,6 +34,11 @@ snack-bar-container.success{
   padding: 0px;
 }
 
+.mat-mdc-icon-button.mat-mdc-button-base {
+  padding: 0px !important;
+  font-size: 20px !important;
+}
+
 .dialogTemplate {
   max-width: fit-content !important;
 }
@@ -58,9 +63,11 @@ snack-bar-container.success{
   display: none;
 }
 
-@import "~bootstrap/dist/css/bootstrap-grid.min.css";
-@import '~bootstrap/scss/bootstrap';
+.mat-mdc-paginator-outer-container {
+  background-color: black !important;
+}
 
+@import "~bootstrap/dist/css/bootstrap-grid.min.css";
 
 *::-webkit-scrollbar, .about::-webkit-scrollbar {
   width: 1vh;

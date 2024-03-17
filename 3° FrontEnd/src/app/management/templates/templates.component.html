@@ -1,61 +1,59 @@
-<div style="display: flex; justify-content: flex-end; margin-bottom: 15px">
-  <button mat-dialog-close class="closeButton" style="margin-top: 10px;
-  margin-right: 10px; outline: none">
-    <i class="fas fa-times"></i>
-  </button>
-</div>
-<div cdkDropListGroup class="example-boundary">
-  <div class="example-container" id="locking">
-    <mat-card id="firstPart"  *ngFor="let janela of janelas_templates; let i = index"
-         [ngClass]="{'displayNone': calcItensByPage(i) }">
-      <div id="janelas" [ngStyle]="{'width': (janelas[this.indexItens(i)] == undefined)? '100%': ''}">
-        <div class="labelJanela" *ngIf ="janelas[this.indexItens(i)] != undefined; else elseBlock">
-          {{janelas[this.indexItens(i)].nome}}
+<div style="background-color: white">
+  <div id="closeBtn">
+    <button mat-dialog-close class="closeButton">
+      <i class="fas fa-times"></i>
+    </button>
+  </div>
+  <div cdkDropListGroup class="example-boundary">
+    <div class="example-container" id="locking">
+      <mat-card id="firstPart"  *ngFor="let janela of janelas_templates; let i = index"
+           [ngClass]="{'displayNone': calcItensByPage(i) }">
+
+        <div id="janelas" [ngStyle]="{'width': (janelas[this.indexItens(i)] == undefined)? '100%': ''}">
+          <div class="labelJanela" *ngIf ="janelas[this.indexItens(i)] != undefined; else elseBlock">
+            {{janelas[this.indexItens(i)].nome}}
+          </div>
+          <ng-template #elseBlock>
+            <div id="undefinedBox">.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.</div>
+          </ng-template>
         </div>
-        <ng-template #elseBlock>
-          <div id="undefinedBox">.&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp;&nbsp;.</div>
-        </ng-template>
+
+        <div cdkDropList *ngIf ="janelas[this.indexItens(i)] != undefined"
+             [cdkDropListData]="janela"
+             class="example-list"
+             (cdkDropListDropped)="drop($event, i)"
+             [cdkDropListEnterPredicate]="evenPredicate">
+          <div *ngFor="let item of janela;" class="example-box"
+               cdkDrag cdkDragBoundary=".example-boundary" cdkDragLockAxis="y" cdkDragBoundary="#locking">
+              {{item.nome}}
+            <button class="closeButton" (click)="removeBox(i)">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+        </div>
+      </mat-card>
+      <div id="templatePaginator">
+        <mat-paginator *ngIf="this.janelas != undefined"
+            [length]="this.janelas.length"
+            [pageSize]="eventlength"
+            (page)="onPageChange($event)">
+        </mat-paginator>
       </div>
-      <div cdkDropList *ngIf ="janelas[this.indexItens(i)] != undefined"
-           [cdkDropListData]="janela"
-           class="example-list"
-           (cdkDropListDropped)="drop($event, i)"
-           [cdkDropListEnterPredicate]="evenPredicate">
-        <div *ngFor="let item of janela;" class="example-box"
-             cdkDrag cdkDragBoundary=".example-boundary" cdkDragLockAxis="y" cdkDragBoundary="#locking">
+    </div>
+    <div class="example-container">
+      <div cdkDropList [cdkDropListData]="templates" class="example-list rec"
+           [cdkDropListSortingDisabled]="true"
+           (cdkDropListEntered)="entered()" (cdkDropListExited)="exited($event)">
+        <ng-container *ngFor="let item of templates">
+          <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [cdkDragData]="item.nome">
             {{item.nome}}
-          <button class="closeButton" (click)="removeBox(i)">
-            <i class="fas fa-times"></i>
-          </button>
-        </div>
+          </div>
+          <div class="example-box" *ngIf="transferringItem === item.nome">
+            {{item.nome}}
+          </div>
+        </ng-container>
+        <div id="happyFace" class="example-box">（ʘ‿ʘ）</div>
       </div>
-    </mat-card>
-    <div id="templatePaginator">
-      <div id="contadorDePaginas">{{pageIndex}}&nbsp;&nbsp;&nbsp; of&nbsp;&nbsp;&nbsp;{{this.calcPages()}}</div>
-      <mat-paginator *ngIf="this.janelas != undefined"
-          [length]="this.janelas.length"
-          [pageSize]="eventlength"
-          (page)="onPageChange($event)">
-      </mat-paginator>
     </div>
-  </div>
-  <div class="example-container">
-    <div cdkDropList [cdkDropListData]="templates" class="example-list rec"
-         [cdkDropListSortingDisabled]="true"
-         (cdkDropListEntered)="entered()" (cdkDropListExited)="exited($event)">
-      <ng-container *ngFor="let item of templates">
-        <div class="example-box" cdkDragBoundary=".example-boundary" cdkDrag [cdkDragData]="item.nome">
-          {{item.nome}}
-        </div>
-        <div class="example-box" *ngIf="transferringItem === item.nome">
-          {{item.nome}}
-        </div>
-      </ng-container>
-      <div class="example-box"
-           style="color: white; height: 56px; cursor: default;
-           background-color: black">（ʘ‿ʘ）</div>
-    </div>
-  </div>
+  </div>  
 </div>
-
-

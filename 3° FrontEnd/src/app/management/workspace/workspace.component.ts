@@ -25,7 +25,7 @@ export class WorkspaceComponent implements OnInit  {
   janela!: Janela;
   subarea!: Subarea;
   index!: number;
-  windows_limit: number = 3;
+  windows_limit: number = 5;
   @Input() activity!: Atividade;
   
 

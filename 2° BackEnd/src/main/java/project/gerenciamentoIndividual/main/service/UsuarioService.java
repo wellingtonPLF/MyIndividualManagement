@@ -15,6 +15,8 @@ import java.util.List;
 
 @Service
 public class UsuarioService {
+	
+   private Integer userLimit = 3; 
 
    @Autowired
    private UsuarioRepository usuarioRepository;
@@ -33,7 +35,7 @@ public class UsuarioService {
    
    public Boolean checkLimit() {
 	   int qnt = this.usuarioRepository.findAll().size();
-	   if (qnt >= 3) {
+	   if (qnt >= this.userLimit) {
 		   throw new RuntimeException();
 	   }
 	   return false;
@@ -41,7 +43,7 @@ public class UsuarioService {
    
    public Usuario inserir(Usuario usuario) {
 	   int qnt = this.usuarioRepository.findAll().size();
-	   if (qnt >= 2) {
+	   if (qnt >= this.userLimit) {
 		   throw new RuntimeException();
 	   }
 	   return this.usuarioRepository.save(usuario);

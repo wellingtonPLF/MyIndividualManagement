@@ -46,6 +46,26 @@
   cursor: pointer;
 }
 
+.buttonStyle {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  border: unset;
+  border-radius: 100%;
+  cursor: pointer !important;
+  font-weight: 600;
+  background-color: transparent;
+}
+
+.buttonStyle:hover {
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.sign {
+  display: flex;
+}
+
 #searchButton {
   color: black;
   height: 40px;
@@ -98,22 +118,6 @@
 
 .displayNone{
   display: none;
-}
-
-.sign :first-child{
-  width: 55px;
-  height: 55px;
-}
-
-.sign :first-child:hover{
-  cursor: pointer;
-}
-
-.sign button:nth-child(2){
-  width: 58px;
-  height: 58px;
-  color: #30618a;
-  background-color: white;
 }
 
 .screen{
