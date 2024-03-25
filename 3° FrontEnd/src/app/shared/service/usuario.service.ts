@@ -20,6 +20,7 @@ export class UsuarioService {
   listar(): Observable<Usuario []>{
     console.log(this.URL_USUARIOS);
     console.log(this.URL_USER);
+    console.log(import.meta.env.NG_APP_HI)
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
   }
 
