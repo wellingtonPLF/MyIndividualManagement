@@ -15,8 +15,7 @@ import { environment } from '../../environments/environment';
 export class CorsInterceptorService implements HttpInterceptor {
   
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    console.log(environment.apiUrl)
-    
+        
     const headers = new HttpHeaders({
       'X-CSRF-Token': '{{ csrftoken }}',
       'Content-Type': 'application/json',
