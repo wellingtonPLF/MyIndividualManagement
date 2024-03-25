@@ -9,6 +9,8 @@ import {
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
+import { environment } from '../../environments/environment.prod';
+
 @Injectable()
 export class CorsInterceptorService implements HttpInterceptor {
   
@@ -17,7 +19,7 @@ export class CorsInterceptorService implements HttpInterceptor {
     const headers = new HttpHeaders({
       'X-CSRF-Token': '{{ csrftoken }}',
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': 'https://2c1c-187-19-176-242.ngrok-free.app'
+      'Access-Control-Allow-Origin': environment.apiUrl
     });
 
     const modifiedRequest = request.clone({

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/")
@@ -26,11 +27,6 @@ public class UsuarioController {
    @GetMapping("/usuario")
    public List<Usuario> getUsuarios() {
        return this.usuarioService.getUsuarios();
-   }
-   
-   @GetMapping("/usuario/example")
-   public String example(@RequestHeader("User-Agent") String userAgent) {
-       return "User-Agent: " + userAgent;
    }
    
    @GetMapping("/usuario/{idusuario}")

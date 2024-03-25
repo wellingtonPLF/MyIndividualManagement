@@ -1,5 +1,4 @@
 import {Component} from '@angular/core';
-import {from, Observable} from "rxjs";
 import { UsuarioService } from './shared/service/usuario.service';
 
 @Component({
@@ -14,9 +13,5 @@ export class AppComponent {
 
   }
 
-  ngOnInit(): void{
-    this.userService.checkHeader().subscribe(
-      _ => {}
-    )
-  }
+  ngOnInit(): void{}
 }

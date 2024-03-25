@@ -16,9 +16,9 @@ public class AppConfig {
        return new WebMvcConfigurer() {
            @Override public void addCorsMappings(CorsRegistry registry) {
                registry.addMapping("/**")
-               .allowedOrigins("https://myindividualmanagement.netlify.app/")
+               .allowedOrigins("https://myindividualmanagement.netlify.app", "http://localhost:4200")
                .allowCredentials(true)
-               .allowedHeaders("*")
+               .allowedHeaders("X-CSRF-Token", "Content-Type", "Access-Control-Allow-Origin")
                .allowedMethods("GET", "POST", "PUT", "DELETE");
            }
        };
