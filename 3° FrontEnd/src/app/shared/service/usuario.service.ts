@@ -11,16 +11,13 @@ import { environment } from '../../../environments/environment';
 })
 export class UsuarioService {
 
-  URL_USUARIOS = `${environment.apiUrl}/usuario`;
+  URL_USUARIOS = `${environment.URL_BACKEND}/usuario`;
 
   constructor(private httpClient: HttpClient) {
   }
 
-  checkHeader(): Observable<String> {
-    return this.httpClient.get<String>(`${this.URL_USUARIOS}/example`);
-  }
-
   listar(): Observable<Usuario []>{
+    console.log(this.URL_USUARIOS);
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
   }
 
