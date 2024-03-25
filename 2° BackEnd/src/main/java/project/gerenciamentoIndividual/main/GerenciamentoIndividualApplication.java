@@ -10,7 +10,7 @@ import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfi
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication//(exclude = {SecurityAutoConfiguration.class})
 public class GerenciamentoIndividualApplication {
 
 	public static void main(String[] args) {

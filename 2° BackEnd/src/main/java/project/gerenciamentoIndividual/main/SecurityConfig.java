@@ -1,4 +1,4 @@
-package project.gerenciamentoIndividual.main;
+/*package project.gerenciamentoIndividual.main;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -15,7 +15,7 @@ public class SecurityConfig {
         http.authorizeRequests()
         .antMatchers("/**").permitAll()
         .anyRequest().authenticated()
-        .and().formLogin().and().httpBasic();
+        .and().formLogin().and().csrf().disable().httpBasic();
         return http.build();
     }
-}
+}*/
