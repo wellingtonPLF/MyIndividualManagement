@@ -11,16 +11,12 @@ import { environment } from '../../../environments/environment';
 })
 export class UsuarioService {
 
-  URL_USUARIOS = `${environment.URL_BACKEND}/usuario`;
-  URL_USER = `${environment.apiUrl}/usuario`;
+  URL_USUARIOS = `${environment.apiUrl}/usuario`;
 
   constructor(private httpClient: HttpClient) {
   }
 
   listar(): Observable<Usuario []>{
-    console.log(this.URL_USUARIOS);
-    console.log(this.URL_USER);
-    console.log(import.meta.env.NG_APP_HI)
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
   }
 
