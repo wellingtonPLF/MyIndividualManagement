@@ -16,7 +16,8 @@ export class CorsInterceptorService implements HttpInterceptor {
     
     const headers = new HttpHeaders({
       'X-CSRF-Token': '{{ csrftoken }}',
-      'Content-Type': 'application/json'
+      'Content-Type': 'application/json',
+      'Access-Control-Allow-Origin': '*'
     });
 
     const modifiedRequest = request.clone({
