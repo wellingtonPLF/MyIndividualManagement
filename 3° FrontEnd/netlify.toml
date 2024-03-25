@@ -1,7 +1,6 @@
 [build]
   command = "ng build --configuration=production"
   publish = "dist/myIndividualManagement"
-  functions = "functions"
 
 [[redirects]]
   from = "/*"

@@ -1,5 +1,5 @@
 export const environment = {
   production: false,
-  apiUrl: process.env['API_URL'],
+  apiUrl: import.meta.env.NG_APP_API_URL,
   URL_BACKEND: 'http://localhost:8080'
 };
