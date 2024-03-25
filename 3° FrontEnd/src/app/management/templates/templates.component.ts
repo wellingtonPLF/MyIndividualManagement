@@ -88,6 +88,7 @@ export class TemplatesComponent implements OnInit {
         window = JanelaFactory.criarJanela(result, this.janelas[this.indexItens(index)].ordem);
         window.atividade = this.data;
         window.idjanela = this.janelas[this.indexItens(index)].idjanela;
+        window.nome = this.janelas[this.indexItens(index)].nome
         this.janelaService.atualizar(window).subscribe(
           it => {
             this.janelas[this.indexItens(index)] = it;

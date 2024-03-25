@@ -44,11 +44,6 @@ public class Task{
 	@JoinColumn(name="idencadeamento")
 	private Task encadeamento;
 	
-	/*@ManyToOne
-	@JoinColumn(name="idclasse")
-	@JsonBackReference(value="classe_Task")
-	private Classe classe;*/
-	
 	public Task() {}
 
 	public Long getIdtask() {

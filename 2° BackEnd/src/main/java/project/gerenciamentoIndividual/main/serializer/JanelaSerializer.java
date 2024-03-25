@@ -18,13 +18,13 @@ public class JanelaSerializer extends JsonSerializer<Janela> {
         jsonGenerator.writeNumberField("idjanela", janela.getIdjanela());
         jsonGenerator.writeStringField("nome", janela.getNome());
         
-        /*
         if (janela.getOrdem() == null) {
         	jsonGenerator.writeNumberField("ordem", 0);
         }
+        else {
+        	jsonGenerator.writeNumberField("ordem", janela.getOrdem());
+        }
 
-        jsonGenerator.writeNumberField("ordem", janela.getOrdem());
-        */
         jsonGenerator.writeStringField("objectType", janela.getObjectType());
         jsonGenerator.writeStringField("info", janela.getInfo());
         

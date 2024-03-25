@@ -1,5 +1,6 @@
 #myTask{
   width: 100%;
+  min-height: 375px;
 
   > :nth-child(2) {
     padding: 0 30px;
@@ -32,6 +33,7 @@
 
   .deleteTask{
     color: white;
+    height: 100%;
     background-color: #d21969;
     display: flex;
     width: 25%;

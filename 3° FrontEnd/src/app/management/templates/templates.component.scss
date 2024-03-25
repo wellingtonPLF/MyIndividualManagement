@@ -27,6 +27,10 @@
   background-color: white;
 }
 
+#locking {
+  padding: 0 0 8px 10px;
+}
+
 #locking .cdk-drag {
   display: flex;
   justify-content: space-evenly;
@@ -112,7 +116,7 @@ mat-card .cdk-drop-list {
   color: white; 
   cursor: default; 
   background-color: black;
-  margin-bottom: 0px;
+  margin-bottom: 8px;
 }
 
 // ------------------------------------------------------

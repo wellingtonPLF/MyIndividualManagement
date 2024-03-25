@@ -13,12 +13,12 @@ snack-bar-container.success{
   min-width: 435px;
 }
 
-.mat-dialog-container{
+.mat-mdc-dialog-container .mdc-dialog__surface{
   background-color: white;
   min-width: 175px;
 }
 
-.full-screen-modal .mat-dialog-container {
+.full-screen-modal .mat-mdc-dialog-container .mdc-dialog__surface {
   border-radius: unset;
   padding: 0px;
 }
@@ -30,7 +30,7 @@ snack-bar-container.success{
   height: 100vh;
 }
 
-.dialogPadding .mat-dialog-container{
+.dialogPadding .mat-mdc-dialog-container .mdc-dialog__surface{
   padding: 0px;
 }
 
@@ -43,13 +43,14 @@ snack-bar-container.success{
   max-width: fit-content !important;
 }
 
-.dialogTemplate .mat-dialog-container{
+.dialogTemplate .mat-mdc-dialog-container .mdc-dialog__surface{
   min-width: 365px;
 }
 
-.taskFile .mat-dialog-container{
+.taskFile .mat-mdc-dialog-container .mdc-dialog__surface{
   padding: 0px;
   width: 525px;
+  overflow-y: unset;
   min-width: 255px;
   background-color: transparent !important;
   box-shadow: unset;

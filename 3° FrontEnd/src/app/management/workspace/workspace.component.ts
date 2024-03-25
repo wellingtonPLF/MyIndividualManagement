@@ -33,7 +33,7 @@ export class WorkspaceComponent implements OnInit  {
               private templateService: TemplateService, private atividadeService: AtividadeService) {}
 
   ngOnInit(): void {
-    this.index = 0;    
+    this.index = 0;
   }
 
   ngOnChanges() {

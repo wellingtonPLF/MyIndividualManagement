@@ -22,7 +22,12 @@ public class CasualSerializer extends JsonSerializer<Casual> {
         jsonGenerator.writeNumberField("ordem", casual.getOrdem());
         jsonGenerator.writeStringField("dificuldade", casual.getDificuldade());
         
-        jsonGenerator.writeStringField("data", dateFormat.format(casual.getData()));
+        if (casual.getData() == null) {
+        	jsonGenerator.writeStringField("data", null);
+        }
+        else {
+        	jsonGenerator.writeStringField("data", dateFormat.format(casual.getData()));
+        }
         
         jsonGenerator.writeStringField("tempo", casual.getTempo());
         jsonGenerator.writeStringField("etiqueta", casual.getEtiqueta());        

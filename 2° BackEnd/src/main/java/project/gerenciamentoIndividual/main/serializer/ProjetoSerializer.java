@@ -30,7 +30,12 @@ public class ProjetoSerializer extends JsonSerializer<Projeto> {
         jsonGenerator.writeNumberField("ordem", projeto.getOrdem());
         jsonGenerator.writeStringField("dificuldade", projeto.getDificuldade());
         
-        jsonGenerator.writeStringField("data", dateFormat.format(projeto.getData()));
+        if (projeto.getData() == null) {
+        	jsonGenerator.writeStringField("data", null);
+        }
+        else {
+        	jsonGenerator.writeStringField("data", dateFormat.format(projeto.getData()));
+        }
         
         jsonGenerator.writeStringField("tempo", projeto.getTempo());
         jsonGenerator.writeStringField("etiqueta", projeto.getEtiqueta());        
