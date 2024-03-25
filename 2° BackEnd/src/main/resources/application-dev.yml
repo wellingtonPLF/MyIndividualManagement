@@ -20,3 +20,18 @@ spring:
 # server
 server:
   port: 8080
+  
+# monitoring RAM
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, info, metrics
+  endpoint:
+    metrics:
+      enabled: true
+
+#Cors Url
+config:
+  cors:
+    url: http://localhost:4200/
