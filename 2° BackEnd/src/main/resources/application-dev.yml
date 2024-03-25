@@ -34,4 +34,6 @@ management:
 #Cors Url
 config:
   cors:
-    url: http://localhost:4200/
+    url: https://myindividualmanagement.netlify.app/
+    #url: http://localhost:4200/
+    

@@ -18,6 +18,7 @@ public class AppConfig {
                registry.addMapping("/**")
                .allowedOrigins(url)
                .allowCredentials(true)
+               .allowedHeaders("*")
                .allowedMethods("GET", "POST", "PUT", "DELETE");
            }
        };
