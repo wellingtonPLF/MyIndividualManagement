@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import {from, Observable} from "rxjs";
+import { UsuarioService } from './shared/service/usuario.service';
 
 @Component({
   selector: 'app-root',
@@ -9,6 +10,13 @@ import {from, Observable} from "rxjs";
 export class AppComponent {
   title = 'myIndividualManagement';
 
+  constructor(public userService: UsuarioService){
+
+  }
+
   ngOnInit(): void{
+    this.userService.checkHeader().subscribe(
+      _ => {}
+    )
   }
 }

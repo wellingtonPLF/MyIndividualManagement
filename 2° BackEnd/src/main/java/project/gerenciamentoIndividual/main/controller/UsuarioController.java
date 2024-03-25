@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
@@ -25,6 +26,11 @@ public class UsuarioController {
    @GetMapping("/usuario")
    public List<Usuario> getUsuarios() {
        return this.usuarioService.getUsuarios();
+   }
+   
+   @GetMapping("/usuario/example")
+   public String example(@RequestHeader("User-Agent") String userAgent) {
+       return "User-Agent: " + userAgent;
    }
    
    @GetMapping("/usuario/{idusuario}")

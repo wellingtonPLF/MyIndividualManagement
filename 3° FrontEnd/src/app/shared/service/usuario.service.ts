@@ -16,6 +16,10 @@ export class UsuarioService {
   constructor(private httpClient: HttpClient) {
   }
 
+  checkHeader(): Observable<Usuario> {
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/example`);
+  }
+
   listar(): Observable<Usuario []>{
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
   }
