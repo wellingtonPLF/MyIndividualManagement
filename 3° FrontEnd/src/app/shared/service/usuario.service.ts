@@ -13,11 +13,14 @@ export class UsuarioService {
 
   URL_USUARIOS = `${environment.URL_BACKEND}/usuario`;
 
+  URL_USER = `${environment.apiUrl}/usuario`;
+
   constructor(private httpClient: HttpClient) {
   }
 
   listar(): Observable<Usuario []>{
     console.log(this.URL_USUARIOS);
+    console.log(this.URL_USER);
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
   }
 
