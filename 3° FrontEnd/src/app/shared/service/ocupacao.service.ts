@@ -4,12 +4,14 @@ import {Observable} from "rxjs";
 import {Ocupacao} from "../model/ocupacao";
 import {Subarea} from "../model/subarea";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class OcupacaoService {
 
-  URL_OCUPACAO = 'http://localhost:8080/ocupacao';
+  URL_OCUPACAO = `${environment.apiUrl}/ocupacao`;
 
   constructor(private httpClient: HttpClient) {
   }

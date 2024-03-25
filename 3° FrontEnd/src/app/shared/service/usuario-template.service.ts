@@ -3,12 +3,14 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {UsuarioTemplate} from "../model/usuarioTemplate";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioTemplateService {
 
-  URL_USUARIOS_TEMPLATE = 'http://localhost:8080/usuarioTemplate';
+  URL_USUARIOS_TEMPLATE = `${environment.apiUrl}/usuarioTemplate`;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -4,12 +4,14 @@ import {Observable} from "rxjs";
 import {Classe} from "../model/classe";
 import {Ocupacao} from "../model/ocupacao";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ClasseService {
 
-  URL_CLASSE = 'http://localhost:8080/classe';
+  URL_CLASSE = `${environment.apiUrl}/classe`;
 
   constructor(private httpClient: HttpClient) {
   }

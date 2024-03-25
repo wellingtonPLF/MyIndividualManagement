@@ -7,12 +7,14 @@ import {Janela} from "../model/janela";
 import {Template} from "../model/template";
 import {Atividade} from "../model/atividade";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class JanelaService {
 
-  URL_JANELAS = 'http://localhost:8080/janela';
+  URL_JANELAS = `${environment.apiUrl}/janela`;
 
   constructor(private httpClient: HttpClient) {
   }

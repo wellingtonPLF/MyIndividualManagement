@@ -5,12 +5,14 @@ import {Projeto} from "../model/projeto";
 import {Classe} from "../model/classe";
 import {Task} from "../model/task";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class ProjetoService {
-
-  URL_TASK = 'http://localhost:8080/projeto';
+  
+  URL_TASK = `${environment.apiUrl}/projeto`;
 
   constructor(private httpClient: HttpClient) {
   }

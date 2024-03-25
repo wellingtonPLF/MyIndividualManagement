@@ -4,13 +4,15 @@ import {Observable} from "rxjs";
 import {Subarea} from "../model/subarea";
 import {Janela} from "../model/janela";
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class SubareaService {
 
-  URL_SUBAREA = 'http://localhost:8080/subarea';
-
+  URL_SUBAREA = `${environment.apiUrl}/subarea`;
+  
   constructor(private httpClient: HttpClient) {
   }
 

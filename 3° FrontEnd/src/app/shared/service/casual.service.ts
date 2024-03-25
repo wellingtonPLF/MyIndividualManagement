@@ -6,12 +6,14 @@ import {Casual} from "../model/casual";
 import {Task} from "../model/task";
 import { catchError } from 'rxjs/operators';
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class CasualService {
 
-  URL_TASK = 'http://localhost:8080/casual';
+  URL_TASK = `${environment.apiUrl}/casual`;
 
   constructor(private httpClient: HttpClient) {
   }

@@ -3,13 +3,15 @@ import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Template} from "../model/template"
 
+import { environment } from '../../../environments/environment';
+
 @Injectable({
   providedIn: 'root'
 })
 export class TemplateService {
 
-  URL_TEMPLATE = 'http://localhost:8080/template';
-
+  URL_TEMPLATE = `${environment.apiUrl}/template`;
+  
   constructor(private httpClient: HttpClient) {
   }
 

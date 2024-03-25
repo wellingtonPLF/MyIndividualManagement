@@ -15,6 +15,7 @@ import { DialogComponent } from './dialogs/dialog/dialog.component';
 import {FormsModule} from "@angular/forms";
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './shared/ngRx/store';
+import { authInterceptorProviders } from './interceptor/cors-interceptor.service';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,7 @@ import { reducers } from './shared/ngRx/store';
         // StoreModule.forRoot({}, {})
         StoreModule.forRoot(reducers)
     ],
-  providers: [],
+  providers: [authInterceptorProviders],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

@@ -2,15 +2,16 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {Usuario} from "../model/usuario";
-import {map} from "rxjs/operators";
 import {Atividade} from "../model/atividade";
+
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AtividadeService {
 
-  URL_ATIVIDADE = 'http://localhost:8080/atividade';
+  URL_ATIVIDADE = `${environment.apiUrl}/atividade`;
 
   constructor(private httpClient: HttpClient) {
   }
