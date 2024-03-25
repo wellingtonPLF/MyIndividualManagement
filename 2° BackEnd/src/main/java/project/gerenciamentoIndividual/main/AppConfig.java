@@ -18,7 +18,7 @@ public class AppConfig {
                registry.addMapping("/**")
                .allowedOrigins("https://myindividualmanagement.netlify.app", "http://localhost:4200")
                .allowCredentials(true)
-               .allowedHeaders("X-CSRF-Token", "Content-Type", "Access-Control-Allow-Origin")
+               .allowedHeaders("X-CSRF-Token", "Content-Type", "Access-Control-Allow-Origin", "ngrok-skip-browser-warning")
                .allowedMethods("GET", "POST", "PUT", "DELETE");
            }
        };
