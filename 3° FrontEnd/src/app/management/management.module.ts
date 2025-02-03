@@ -6,7 +6,7 @@ import {MatButtonModule} from "@angular/material/button";
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { EditDialogComponent } from './edit-dialog/edit-dialog.component';
 import {MatDialogModule} from "@angular/material/dialog";
-import { WorkspaceComponent } from './workspace/workspace.component';
+import { WorkspaceComponent } from './_workspace/workspace.component';
 import { ThoseSubareasComponent } from './those-subareas/those-subareas.component';
 import { OcupacaoGeralComponent } from './ocupacao-geral/ocupacao-geral.component';
 import { ClasseCreationComponent } from './classe-creation/classe-creation.component';

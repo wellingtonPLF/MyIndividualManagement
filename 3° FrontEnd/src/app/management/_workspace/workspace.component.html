@@ -23,7 +23,7 @@
     </div>
     <div class="addJanela" *ngIf="windows.length < windows_limit" (click)="addJanela()"><b>+</b></div>
   </div>
-  <div id="abaixoDaJanela">
+  <!-- <div id="abaixoDaJanela">
 
     <app-those-subareas [janela]="janela" (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
 
@@ -48,5 +48,5 @@
         <app-ocupacao-geral *ngIf="subarea.estilo == 1" [subarea]="subarea"></app-ocupacao-geral>
         <app-ocupacao-nominal *ngIf="subarea.estilo == 2" [subarea]="subarea"></app-ocupacao-nominal>
       </div>
-  </div>
+  </div> -->
 </div>

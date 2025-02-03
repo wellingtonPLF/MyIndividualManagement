@@ -16,6 +16,7 @@ import {FormsModule} from "@angular/forms";
 import { StoreModule } from '@ngrx/store';
 import { reducers } from './shared/ngRx/store';
 import { authInterceptorProviders } from './interceptor/cors-interceptor.service';
+import { RegistryStore } from './shared/ngRx/registryStore';
 
 @NgModule({
   declarations: [

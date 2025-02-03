@@ -2,6 +2,9 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+button:focus {
+  outline: unset;
+}
 
 snack-bar-container.success{
   color: #0eba57;

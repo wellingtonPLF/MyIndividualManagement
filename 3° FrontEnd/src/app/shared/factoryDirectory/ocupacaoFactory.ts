@@ -14,6 +14,6 @@ export class OcupacaoFactory{
     ocupacao.nome = subarea.ocupacoes[ordem].nome;
     ocupacao.objectType = 'Ocupacao';
     ocupacao.classes.push(ClasseFactory.criarClasse(subarea.ocupacoes[ordem], 0, subarea.tipo));
-    return ocupacao;
+    return {...ocupacao};
   }
 }

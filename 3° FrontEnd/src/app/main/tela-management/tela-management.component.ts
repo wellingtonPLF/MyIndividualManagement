@@ -1,11 +1,8 @@
 import {Component, OnInit} from '@angular/core';
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
-import {ActivatedRoute} from "@angular/router";
-import {UsuarioService} from "../../shared/service/usuario.service";
 import {Usuario} from "../../shared/model/usuario";
 import {Atividade} from "../../shared/model/atividade";
-import {MatDialog} from "@angular/material/dialog";
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
@@ -17,21 +14,25 @@ import { Observable } from 'rxjs';
   styleUrls: ['./tela-management.component.scss']
 })
 export class TelaManagementComponent implements OnInit{
+  //Must Be instanced
+  user$!: Observable<any>;
   usuario!: Usuario;
   atividade!: Atividade;
+  // -------------------------
   hide: boolean = false;
   stopCheck: boolean = false;
   maxWidthScreen: number = ScreenWidthSize.maxWidth;
   windowBool: boolean = window.innerWidth > 642
+  isLoggedIn: string | null = null
 
-  variable$!: Observable<any>;
-
-  constructor(private accountService: SessionStorageService, private rotalAtual: ActivatedRoute,
-              private dialog: MatDialog, private fshare: FuncShareService, private store: Store<any>,
-              private accountServiceLocal: LocalStorageService, private usuarioService: UsuarioService) {
-    // Initiated to solve ExpressionChangedAfterItHasBeenCheckedError
+  constructor(private accountService: SessionStorageService,
+              private fshare: FuncShareService, 
+              private store: Store<any>,
+              private accountServiceLocal: LocalStorageService) {
     this.atividade = new Atividade('');
     this.usuario = new Usuario();
+    this.user$ = this.store.select('userReducer');
+    this.isLoggedIn = this.accountService.getToken();
   }
 
   ngOnInit(): void {
@@ -43,14 +44,11 @@ export class TelaManagementComponent implements OnInit{
       }
     });
 
-    if (this.rotalAtual.snapshot.paramMap.has('id')) {
-      const id = Number(this.rotalAtual.snapshot.paramMap.get('id'));
-      this.usuarioService.pesquisarPorId(id).subscribe(
-        it => {
-          this.usuario = it
-        }
-      );
-    }
+    this.user$.subscribe(
+      it => {
+        this.usuario = {...it}
+      }
+    )
   }
 
   ngDoCheck(): void {
@@ -65,10 +63,6 @@ export class TelaManagementComponent implements OnInit{
   signOut(): void{
     this.accountService.removeToken('my-token');
     this.accountServiceLocal.removeToken('my-token');
-  }
-
-  enviarJanela(evento: Atividade): void{
-    this.atividade = evento;
   }
 
   hideLeft(): void {

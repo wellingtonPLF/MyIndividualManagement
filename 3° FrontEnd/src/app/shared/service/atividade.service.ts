@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 import {Usuario} from "../model/usuario";
 import {Atividade} from "../model/atividade";
 
@@ -17,26 +17,50 @@ export class AtividadeService {
   }
 
   listar(): Observable<Atividade []>{
-    return this.httpClient.get<Atividade []>(this.URL_ATIVIDADE);
+    return this.httpClient.get<Atividade []>(this.URL_ATIVIDADE).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   inserir(atividade: Atividade): Observable<Atividade>{
-    return this.httpClient.post<Atividade>(this.URL_ATIVIDADE, atividade);
+    return this.httpClient.post<Atividade>(this.URL_ATIVIDADE, atividade).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
-  remover(id: string): Observable<object> {
-    return this.httpClient.delete(`${this.URL_ATIVIDADE}/${id}`);
+  remover(id: number): Observable<object> {
+    return this.httpClient.delete(`${this.URL_ATIVIDADE}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarPorId(id: number): Observable<Atividade> {
-    return this.httpClient.get<Atividade>(`${this.URL_ATIVIDADE}/${id}`);
+    return this.httpClient.get<Atividade>(`${this.URL_ATIVIDADE}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarUsuarioPorIdAtividade(id: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.URL_ATIVIDADE}/myActivity/${id}`);
+    return this.httpClient.get<Usuario>(`${this.URL_ATIVIDADE}/myActivity/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   atualizar(atividade: Atividade): Observable<Atividade> {
-    return this.httpClient.put<Atividade>(`${this.URL_ATIVIDADE}/${atividade.idatividade}`, atividade);
+    return this.httpClient.put<Atividade>(`${this.URL_ATIVIDADE}/${atividade.idatividade}`, atividade).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 }

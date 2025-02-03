@@ -1,0 +1,46 @@
+{
+    "idtemplate": 1,
+    "nome": "Default",
+    "objectType": "Template",
+    "janela_c": {
+        "idjanela": 1,
+        "nome": "Janela X",
+        "ordem": 0,
+        "objectType": "0",
+        "info": "MySpace",
+        "subareas": [
+            {
+                "idsubarea": 1,
+                "nome": "Main",
+                "tipo": "casual",
+                "estilo": 1,
+                "ordem": 0,
+                "objectType": "Subarea",
+                "ocupacoes": [
+                    {
+                        "idocupacao": 1,
+                        "nome": "Gerais",
+                        "ordem": 0,
+                        "objectType": "Ocupacao",
+                        "classes": [
+                            {
+                                "idclasse": 1,
+                                "nome": "All",
+                                "ordem": 0,
+                                "padrao": null,
+                                "quando": null,
+                                "info": null,
+                                "porque": null,
+                                "oque": null,
+                                "como": null,
+                                "objectType": "Classe",
+                                "casual": [],
+                                "projeto": []
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+}

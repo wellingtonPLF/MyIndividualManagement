@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {catchError, Observable, throwError} from "rxjs";
 import {Classe} from "../model/classe";
 import {Ocupacao} from "../model/ocupacao";
 
@@ -17,30 +17,58 @@ export class ClasseService {
   }
 
   listar(): Observable<Classe []>{
-    return this.httpClient.get<Classe []>(this.URL_CLASSE);
+    return this.httpClient.get<Classe []>(this.URL_CLASSE).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   inserir(classe: Classe): Observable<Classe>{
-    return this.httpClient.post<Classe>(this.URL_CLASSE, classe);
+    return this.httpClient.post<Classe>(this.URL_CLASSE, classe).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   remover(id: string): Observable<object> {
-    return this.httpClient.delete(`${this.URL_CLASSE}/${id}`);
+    return this.httpClient.delete(`${this.URL_CLASSE}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarPorId(id: number): Observable<Classe> {
-    return this.httpClient.get<Classe>(`${this.URL_CLASSE}/${id}`);
+    return this.httpClient.get<Classe>(`${this.URL_CLASSE}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarOcupacaoPorIdClasse(id: number): Observable<Ocupacao> {
-    return this.httpClient.get<Ocupacao>(`${this.URL_CLASSE}/myClasse/${id}`);
+    return this.httpClient.get<Ocupacao>(`${this.URL_CLASSE}/myClasse/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarTipoPorIdClasse(id: number): Observable<string> {
-    return this.httpClient.get<string>(`${this.URL_CLASSE}/myTipo/${id}`);
+    return this.httpClient.get<string>(`${this.URL_CLASSE}/myTipo/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   atualizar(classe: Classe): Observable<Classe> {
-    return this.httpClient.put<Classe>(`${this.URL_CLASSE}/${classe.idclasse}`, classe);
+    return this.httpClient.put<Classe>(`${this.URL_CLASSE}/${classe.idclasse}`, classe).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 }

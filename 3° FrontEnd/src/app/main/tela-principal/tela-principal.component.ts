@@ -1,11 +1,10 @@
-import {AfterViewInit, Component, ElementRef, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from "@angular/material/dialog";
+import {Component, OnInit} from '@angular/core';
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
-import {ActivatedRoute} from "@angular/router";
 import {Usuario} from "../../shared/model/usuario";
 import {UsuarioService} from "../../shared/service/usuario.service";
-import {IndisponivelComponent} from "../../management/indisponivel/indisponivel.component";
+import { Store } from '@ngrx/store';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-tela-principal',
@@ -17,11 +16,13 @@ export class TelaPrincipalComponent implements OnInit {
   conta: boolean = false;
   widthScreen: boolean = window.innerWidth >= 500;
   searchUser: any = { value: '', status: false};
+
+  user$!: Observable<any>;
   usuario!: Usuario;
 
   constructor(private accountService: SessionStorageService, private usuarioService: UsuarioService,
-              private dialog: MatDialog,
-              private accountServiceLocal: LocalStorageService, private navUsuario: ActivatedRoute) {
+              private store: Store<any>, private accountServiceLocal: LocalStorageService) {
+    this.user$ = this.store.select('userReducer');
     this.usuario = new Usuario();
   }
 
@@ -42,7 +43,19 @@ export class TelaPrincipalComponent implements OnInit {
       }
 
       this.usuarioService.pesquisarPorId(parseInt(usuarioID)).subscribe(
-        it => this.usuario = it
+        {
+          next: it => {
+            this.usuario = it;
+            this.store.dispatch({type: 'user', payload: it})
+          },
+          error: () => {
+            this.user$.subscribe(
+              it => {
+                this.usuario = {...it}
+              }
+            )
+          }
+        }
       );
       this.conta = true;
     }

@@ -31,13 +31,16 @@ export class UploadImageComponent implements OnInit {
       reader.onload = (_event) => {
         this.url = reader.result;
         this.usuarioService.pesquisarPorId(this.usuario.idusuario).subscribe(
-          result => {
+          {
+            next: result => {
 
-            const match = this.url.match(/data:image\/([^;]+)/);
-            result.img = `${result.idusuario}.${match[1]};${this.url}`;
-            this.usuarioService.atualizar(result).subscribe(
-              _ => {}
-            )
+              const match = this.url.match(/data:image\/([^;]+)/);
+              result.img = `${result.idusuario}.${match[1]};${this.url}`;
+              this.usuarioService.atualizar(result).subscribe(
+                _ => {}
+              )
+            },
+            error: _ => {}
           }
         )
       }

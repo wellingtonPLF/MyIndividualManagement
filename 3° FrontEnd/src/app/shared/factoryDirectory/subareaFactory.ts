@@ -20,6 +20,6 @@ export class SubareaFactory{
     for (let i = 0; i< template.janela_c.subareas[ordem].ocupacoes.length; i++){
       subarea.ocupacoes.push(OcupacaoFactory.criarOcupacao(subareaTemplate, i));
     }
-    return subarea;
+    return {...subarea};
   }
 }

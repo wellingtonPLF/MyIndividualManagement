@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {Usuario} from "../model/usuario";
 import {HttpClient} from "@angular/common/http";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 
 import { environment } from '../../../environments/environment';
 
@@ -17,32 +17,51 @@ export class UsuarioService {
   }
 
   listar(): Observable<Usuario []>{
-    return this.httpClient.get<Usuario []>(this.URL_USUARIOS);
+    return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   inserir(usuario: Usuario): Observable<Usuario>{
-    return this.httpClient.post<Usuario>(this.URL_USUARIOS, usuario);
+    return this.httpClient.post<Usuario>(this.URL_USUARIOS, usuario).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   remover(id: string): Observable<object> {
-    return this.httpClient.delete(`${this.URL_USUARIOS}/${id}`);
+    return this.httpClient.delete(`${this.URL_USUARIOS}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarPorId(id: number): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`);
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   checkLimit(): Observable<Usuario> {
-    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/checkLimit`);
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/checkLimit`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
-  /*pesquisarPorUsuario(usuario: Usuario): Observable<Usuario []> {
-    return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
-      map(users=> users.filter(u => u.nome == usuario.nome && u.senha == usuario.senha)));
-  }*/
-
   getUsuarioByNome(nome: String): Observable<Usuario>{
-    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/myuser/${nome}`);
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/myuser/${nome}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarPorValidacao(usuario: Usuario): Observable<Usuario []>{
@@ -51,6 +70,10 @@ export class UsuarioService {
   }
 
   atualizar(usuario: Usuario): Observable<Usuario> {
-    return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.idusuario}`, usuario);
+    return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.idusuario}`, usuario).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 }

@@ -22,6 +22,6 @@ export class ClasseFactory{
 
     classe.nome = ocupacao.classes[ordem].nome;
     classe.objectType = 'Classe';
-    return classe;
+    return {...classe};
   }
 }

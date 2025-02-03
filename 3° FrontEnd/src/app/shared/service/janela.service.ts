@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {Observable} from "rxjs";
+import {Observable, throwError} from "rxjs";
 import {Usuario} from "../model/usuario";
-import {map} from "rxjs/operators";
+import {catchError, map} from "rxjs/operators";
 import {Janela} from "../model/janela";
 import {Template} from "../model/template";
 import {Atividade} from "../model/atividade";
@@ -20,30 +20,58 @@ export class JanelaService {
   }
 
   listar(): Observable<Janela []>{
-    return this.httpClient.get<Janela []>(this.URL_JANELAS);
+    return this.httpClient.get<Janela []>(this.URL_JANELAS).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   inserir(janela: Janela): Observable<Janela>{
-    return this.httpClient.post<Janela>(this.URL_JANELAS, janela);
+    return this.httpClient.post<Janela>(this.URL_JANELAS, janela).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
-  remover(id: string): Observable<object> {
-    return this.httpClient.delete(`${this.URL_JANELAS}/${id}`);
+  remover(id: number): Observable<object> {
+    return this.httpClient.delete(`${this.URL_JANELAS}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarPorId(id: number): Observable<Janela> {
-    return this.httpClient.get<Janela>(`${this.URL_JANELAS}/${id}`);
+    return this.httpClient.get<Janela>(`${this.URL_JANELAS}/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarTemplateByIdJanela(id: number): Observable<Template> {
-    return this.httpClient.get<Template>(`${this.URL_JANELAS}/myWindow/template/${id}`);
+    return this.httpClient.get<Template>(`${this.URL_JANELAS}/myWindow/template/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   pesquisarAtividadeByIdJanela(id: number): Observable<Atividade> {
-    return this.httpClient.get<Atividade>(`${this.URL_JANELAS}/myWindow/atividade/${id}`);
+    return this.httpClient.get<Atividade>(`${this.URL_JANELAS}/myWindow/atividade/${id}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 
   atualizar(janela: Janela): Observable<Janela> {
-    return this.httpClient.put<Janela>(`${this.URL_JANELAS}/${janela.idjanela}`, janela);
+    return this.httpClient.put<Janela>(`${this.URL_JANELAS}/${janela.idjanela}`, janela).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
   }
 }

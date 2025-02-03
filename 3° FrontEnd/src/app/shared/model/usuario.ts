@@ -13,6 +13,5 @@ export class Usuario{
   atividades: Array<Atividade> = new Array<Atividade>();
   usuarioTemplates: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
 
-  constructor() {
-  }
+  constructor() {}
 }

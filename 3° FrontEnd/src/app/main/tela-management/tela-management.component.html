@@ -7,11 +7,11 @@
       </div>
     
       <div class="middle-left">
-        <div>{{usuario.nome}}{{windowBool}}</div>
+        <div>{{isLoggedIn ? usuario.nome: 'Tester'}}</div>
       </div>
     
       <div class="bottom-left">
-        <app-atividade *ngIf="usuario.nome" [usuario]="usuario" (newEmitter)="enviarJanela($event)"></app-atividade>
+        <app-atividade *ngIf="usuario.nome" [usuario]="usuario"></app-atividade>
       </div>
     </div>
   
@@ -38,7 +38,7 @@
       </div>
     
       <div class="bottom-right">
-        <app-workspace *ngIf="atividade" [activity]="atividade"></app-workspace>
+        <app-workspace *ngIf="atividade"></app-workspace>
       </div>
     </div>
     

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { Observable, of } from 'rxjs';
 import { UsuarioService } from '../service/usuario.service';
 import { catchError, map } from 'rxjs/operators';
@@ -7,7 +7,7 @@ import { catchError, map } from 'rxjs/operators';
 @Injectable({
   providedIn: 'root'
 })
-export class LimitGuardGuard implements CanActivate {
+export class LimitGuardGuard {
 
   constructor(private usuarioService: UsuarioService, private router: Router) {}
 

@@ -2,7 +2,8 @@
   <div *ngFor="let atividade of atividades; let i = index">
     <div style="display: flex">
       <div class="atividade" (click)="mandarJanelas(i)"
-           [ngClass]="{'changeColor': index == i}">{{atividade.nome}}</div>
+           [ngClass]="{'changeColor': index == i}">{{atividade.nome}}
+      </div>
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">

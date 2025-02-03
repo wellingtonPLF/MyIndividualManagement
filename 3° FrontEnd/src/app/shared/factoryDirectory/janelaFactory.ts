@@ -12,7 +12,6 @@ export class JanelaFactory{
     for (let i = 0; i< template.janela_c.subareas.length; i++){
       janela.subareas.push(SubareaFactory.criarSubarea(template, i));
     }
-
-    return janela;
+    return {...janela};
   }
 }

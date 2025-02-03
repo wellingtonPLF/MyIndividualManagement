@@ -9,7 +9,6 @@ import {forkJoin} from "rxjs";
 import {SubareaService} from "../../shared/service/subarea.service";
 import {Subarea} from "../../shared/model/subarea";
 
-
 @Component({
   selector: 'app-edit-dialog',
   templateUrl: './edit-dialog.component.html',
@@ -28,36 +27,60 @@ export class EditDialogComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    const datakey = this.data.datakey;
     if(this.data.type == "atividade") {
       // Using serachById to solve TypeError: Converting circular structure to JSON
-      this.atividadeService.pesquisarPorId(this.data.datakey).subscribe(
-        it => {
-          this.atividade = it;
-          this.object = it;
+      this.atividadeService.pesquisarPorId(datakey).subscribe(
+        {
+          next: it => {
+            this.atividade = it;
+            this.object = it;
+          },
+          error: _ => {
+            this.atividade = {...this.data.key.atividades[datakey]};
+            this.object = {...this.data.key.atividades[datakey]};
+          }
         }
       )
     }
     if(this.data.type == "janela"){
-      this.janelaService.pesquisarPorId(this.data.datakey).subscribe(
-        it => {
-          this.janela = it;
-          if(this.janela.nome == ". . ."){
-            this.janela.nome = "";
+      this.janelaService.pesquisarPorId(datakey).subscribe(
+        {
+          next: it => {
+            this.janela = it;
+            if(this.janela.nome == ". . ."){
+              this.janela.nome = "";
+            }
+            this.object = it;
+          },
+          error: _ => {
+            this.janela = {...this.data.key.janelas[datakey]};
+            if(this.janela.nome == ". . ."){
+              this.janela.nome = "";
+            }
+            this.object = {...this.data.key.janelas[datakey]};
           }
-          this.object = it;
-        }
+        }        
       )
     }
     if(this.data.type == "subarea"){
-      this.subareaService.pesquisarPorId(this.data.datakey).subscribe(
-        it => {
-          this.subarea = it;
-          if(this.subarea.nome == ". . ."){
-            this.subarea.nome = "";
+      this.subareaService.pesquisarPorId(datakey).subscribe(
+        {
+          next: it => {
+            this.subarea = it;
+            if(this.subarea.nome == ". . ."){
+              this.subarea.nome = "";
+            }
+            this.object = it;
+          },
+          error: _ => {
+            this.subarea = {...this.data.key.subareas[datakey]};
+            if(this.subarea.nome == ". . ."){
+              this.subarea.nome = "";
+            }
+            this.object = {...this.data.key.subareas[datakey]};
           }
-          this.object = it;
-        }
-      )
+      })
     }
   }
 
@@ -71,27 +94,37 @@ export class EditDialogComponent implements OnInit {
         lista_template_by_janela.push(getTemplateObservable);
       }
       forkJoin(lista_template_by_janela).subscribe(
-        response => {
-          const result = this.atividade.janelas.map(
-            (janela, index) => {
-              janela['template'] = response[index];
-              return janela;
-            }
-          )
-          this.atividadeService.atualizar(this.atividade).subscribe(
-            it => this.submitClicked.emit(it)
-          )
+        {
+          next: response => {
+            this.atividade.janelas.map(
+              (janela, index) => {
+                janela['template'] = response[index];
+                return janela;
+              }
+            )
+            this.atividadeService.atualizar(this.atividade).subscribe(
+              it => this.submitClicked.emit(it)
+            )
+          },
+          error: _ => {
+            this.submitClicked.emit(this.object)
+          }
         }
       )
     }
     if(this.data.type == "janela"){
       this.janela.atividade = this.data.key;
       this.janelaService.pesquisarTemplateByIdJanela(this.janela.idjanela).subscribe(
-        templat => {
-          this.janela.template = templat
-          this.janelaService.atualizar(this.janela).subscribe(
-            it => this.submitClicked.emit(it)
-          )
+        {
+          next: templat => {
+            this.janela.template = templat
+            this.janelaService.atualizar(this.janela).subscribe(
+              it => this.submitClicked.emit(it)
+            )
+          },
+          error: _ => {
+            this.submitClicked.emit(this.object)
+          }
         }
       )
     }
