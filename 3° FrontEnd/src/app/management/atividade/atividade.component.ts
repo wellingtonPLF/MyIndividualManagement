@@ -34,6 +34,7 @@ export class AtividadeComponent implements OnInit {
     this.atividades = OrdemDependency.ordenar(this.usuario.atividades)   
     this.activity$.subscribe(
       it => {
+        
         this.atividades = OrdemDependency.ordenar([...it.list])
       }
     )
@@ -62,9 +63,8 @@ export class AtividadeComponent implements OnInit {
               it => {
                 atv = AtividadeFactory.criarAtividade(it, ordem);
                 atv.nome = "New";
-                atv.usuario = this.usuario;
                 this.atividades.push({...atv})
-
+                this.usuario.atividades = [...this.atividades];
                 this.registry.dispatcher('activity', [...this.atividades])
               }
             )
@@ -88,7 +88,7 @@ export class AtividadeComponent implements OnInit {
       {
         next: (result: any) => {
           this.atividades.splice(index, 1, result)
-          this.store.dispatch({type: 'activity', payload: { position: index, list: [...this.atividades] }})
+          this.store.dispatch({type: 'activity', payload: { list: [...this.atividades] }})
         },
         error: (_: any) => {
           console.log("ERROR SUBMIT HERE")
@@ -121,7 +121,8 @@ export class AtividadeComponent implements OnInit {
   }
 
   mandarJanelas(index: number): void{
-    this.store.dispatch({type: 'window', payload: { list: [...this.atividades[index].janelas] }})
+    this.store.dispatch({type: 'activity', payload: { list: [...this.atividades], position: index }})
+    this.store.dispatch({type: 'window', payload: { list: [...this.atividades[index].janelas], parent: this.atividades[index] }})
     this.index = index;
   }
 }

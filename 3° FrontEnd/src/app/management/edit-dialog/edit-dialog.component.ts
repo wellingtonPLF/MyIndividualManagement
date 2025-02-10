@@ -37,6 +37,7 @@ export class EditDialogComponent implements OnInit {
             this.object = it;
           },
           error: _ => {
+            
             this.atividade = {...this.data.key.atividades[datakey]};
             this.object = {...this.data.key.atividades[datakey]};
           }

@@ -24,10 +24,10 @@ export const activityReducer = (state = INITIAL_ACTIVITY_STATE, action: any) => 
                 return state;
             }
             if (action.payload.position == undefined) {
-                return { ...state, list: action.payload.list};
+                return { ...state, parent: action.payload.parent, list: action.payload.list};
             }
             if (action.payload.list == undefined) {
-                return { ...state, position: action.payload.position};
+                return { ...state, parent: action.payload.parent, position: action.payload.position};
             }
             return action.payload;
         default:
@@ -42,10 +42,10 @@ export const windowReducer = (state = INITIAL_WINDOW_STATE, action: any) => {
                 return state;
             }
             if (action.payload.position == undefined) {
-                return { ...state, list: action.payload.list};
+                return { ...state, parent: action.payload.parent, list: action.payload.list};
             }
             if (action.payload.list == undefined) {
-                return { ...state, position: action.payload.position};
+                return { ...state, parent: action.payload.parent, position: action.payload.position};
             }
             return action.payload;
         default:
@@ -60,10 +60,10 @@ export const subareaReducer = (state = INITIAL_SUBAREA_STATE, action: any) => {
                 return state;
             }
             if (action.payload.position == undefined) {
-                return { ...state, list: action.payload.list};
+                return { ...state, parent: action.payload.parent, list: action.payload.list};
             }
             if (action.payload.list == undefined) {
-                return { ...state, position: action.payload.position};
+                return { ...state, parent: action.payload.parent, position: action.payload.position};
             }
             return action.payload;
         default:
@@ -78,10 +78,10 @@ export const ocupationReducer = (state = INITIAL_OCUPATION_STATE, action: any) =
                 return state;
             }
             if (action.payload.position == undefined) {
-                return { ...state, list: action.payload.list};
+                return { ...state, parent: action.payload.parent, list: action.payload.list};
             }
             if (action.payload.list == undefined) {
-                return { ...state, position: action.payload.position};
+                return { ...state, parent: action.payload.parent, position: action.payload.position};
             }
             return action.payload;
         default:
@@ -96,10 +96,10 @@ export const classReducer = (state = INITIAL_CLASS_STATE, action: any) => {
                 return state;
             }
             if (action.payload.position == undefined) {
-                return { ...state, list: action.payload.list};
+                return { ...state, parent: action.payload.parent, list: action.payload.list};
             }
             if (action.payload.list == undefined) {
-                return { ...state, position: action.payload.position};
+                return { ...state, parent: action.payload.parent, position: action.payload.position};
             }
             return action.payload;
         default:

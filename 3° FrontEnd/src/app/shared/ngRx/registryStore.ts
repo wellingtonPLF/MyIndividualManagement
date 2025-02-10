@@ -24,7 +24,6 @@ export class RegistryStore {
     }
 
     async dispatcher(type: string, payload: Array<any>): Promise<void> { 
-      // const user = await this.getInfo(this.userReducer$);
       const { list, position: activityPosition }: ObjStructure = await this.getInfo(this.activityReducer$);
       const { position: windowPosition }: ObjStructure = await this.getInfo(this.windowReducer$);
       const { position: subareaPosition }: ObjStructure = await this.getInfo(this.subareaReducer$);
@@ -32,11 +31,12 @@ export class RegistryStore {
 
       let activityList;
       if (type == "activity") {
-        activityList = JSON.parse(this.safeStringify(payload));
+        activityList = JSON.parse(JSON.stringify(payload));
       }
-      else {
-        activityList = JSON.parse(this.safeStringify(list));
+      else {        
+        activityList = JSON.parse(JSON.stringify(list));
         const window = activityList[activityPosition!].janelas[windowPosition!];
+
         if (type == "window") {
           activityList[activityPosition!].janelas = payload
         }

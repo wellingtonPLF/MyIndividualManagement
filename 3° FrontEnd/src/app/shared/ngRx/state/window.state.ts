@@ -2,7 +2,7 @@ import { INITIAL_SUBAREA_STATE } from "./subarea.state";
 
 export const INITIAL_WINDOW_STATE: any = {
     position: 0,
-    parent: undefined,
+    parent: { id: 0 },
     list: [{
     "idjanela": 0,
     "nome": "Janela",

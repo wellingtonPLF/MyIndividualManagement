@@ -24,6 +24,7 @@ export class TelaManagementComponent implements OnInit{
   maxWidthScreen: number = ScreenWidthSize.maxWidth;
   windowBool: boolean = window.innerWidth > 642
   isLoggedIn: string | null = null
+  activity$!: Observable<any>;
 
   constructor(private accountService: SessionStorageService,
               private fshare: FuncShareService, 
@@ -32,6 +33,7 @@ export class TelaManagementComponent implements OnInit{
     this.atividade = new Atividade('');
     this.usuario = new Usuario();
     this.user$ = this.store.select('userReducer');
+    this.activity$ = this.store.select('activityReducer');
     this.isLoggedIn = this.accountService.getToken();
   }
 
@@ -69,5 +71,13 @@ export class TelaManagementComponent implements OnInit{
     this.hide = !this.hide
     this.fshare.sendClickEvent(this.hide);
     this.store.dispatch({type: 'hideLeftSide', payload: this.hide})
+  }
+
+  seeValue() {
+    this.activity$.subscribe(
+      it => {
+        console.log(it.list, `Position: ${it.position}`)
+      }
+    )
   }
 }

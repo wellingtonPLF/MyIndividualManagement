@@ -2,7 +2,7 @@ import { INITIAL_OCUPATION_STATE } from "./ocupation.state";
 
 export const INITIAL_SUBAREA_STATE: any = {
     position: 0,
-    parent: undefined,
+    parent: { id: 0 },
     list: [{
     "idsubarea": 0,
     "nome": "Main",

@@ -2,7 +2,7 @@ import { INITIAL_WINDOW_STATE } from "./window.state";
 
 export const INITIAL_ACTIVITY_STATE: any = {
     position: 0,
-    parent: undefined,
+    parent: { id: 0 },
     list: [{
         "idatividade": 0,
         "ordem": 0,

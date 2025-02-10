@@ -52,9 +52,10 @@ export class WorkspaceComponent implements OnInit  {
     this.index = 0;
     this.window$.subscribe(
       it => {
+        this.atividade = it.parent;
         if (it.list.length != 0) {
           this.index = 0;
-          this.atividadeService.pesquisarPorId(it.parent).subscribe({
+          this.atividadeService.pesquisarPorId(it.parent.id).subscribe({
             next: result => {
               this.windows = OrdemDependency.ordenar(result.janelas);
               this.janela = this.windows[0];
@@ -129,8 +130,6 @@ export class WorkspaceComponent implements OnInit  {
                 window.nome = '. . .';
                 window.atividade = this.atividade;
                 this.windows.push({...window})
-                this.atividade.janelas = this.windows
-                
                 await this.registry.dispatcher('window', [...this.windows]);
               }
             )

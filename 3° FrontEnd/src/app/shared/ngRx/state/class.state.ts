@@ -1,7 +1,7 @@
 
 export const INITIAL_CLASS_STATE: any = {
     position: 0,
-    parent: undefined,
+    parent: { id: 0 },
     list: [{
         "idclasse": 0,
         "nome": "All",
