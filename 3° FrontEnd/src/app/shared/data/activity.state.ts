@@ -1,4 +1,4 @@
-import { Activity_Type } from "../../types/system";
+import { Activity_Type } from "../types/system";
 import { INITIAL_WINDOW_STATE } from "./window.state";
 
 export const INITIAL_ACTIVITY_STATE: Activity_Type = {

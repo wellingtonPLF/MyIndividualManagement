@@ -1,6 +1,7 @@
 import { Activity_Type } from "./system"
 
-export type Window_RX_Type = {
+export type RX_Type = {
+    local: boolean,
     position: number,
     parent: Activity_Type,
     list: Array<any>

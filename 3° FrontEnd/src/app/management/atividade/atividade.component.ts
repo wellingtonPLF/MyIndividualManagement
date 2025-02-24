@@ -31,18 +31,22 @@ export class AtividadeComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.atividades = OrdemDependency.ordenar(this.usuario.atividades)   
+    this.index = 0;
     this.activity$.subscribe(
       it => {
-        
-        this.atividades = OrdemDependency.ordenar([...it.list])
+        if (!it.local) {
+          this.atividades = OrdemDependency.ordenar([...it.list])
+        }
+        if (this.index != it.position) {
+          this.index = it.position;
+          this.store.dispatch({type: 'window', payload: { list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position] }})
+        }
       }
     )
-    this.index = 0;
   }
 
   addAtividade(): void{
-    if(this.atividades.length < 10){
+    if(this.atividades.length < 10) {
       let atv!: Atividade;
       const ordem = this.atividades[this.atividades.length - 1].ordem + 1;
 
@@ -65,7 +69,8 @@ export class AtividadeComponent implements OnInit {
                 atv.nome = "New";
                 this.atividades.push({...atv})
                 this.usuario.atividades = [...this.atividades];
-                this.registry.dispatcher('activity', [...this.atividades])
+                this.store.dispatch({type: 'activity', payload: { list: [...this.atividades], local: true }})
+                // this.registry.dispatcher('activity', [...this.atividades])
               }
             )
           }
@@ -88,7 +93,7 @@ export class AtividadeComponent implements OnInit {
       {
         next: (result: any) => {
           this.atividades.splice(index, 1, result)
-          this.store.dispatch({type: 'activity', payload: { list: [...this.atividades] }})
+          this.store.dispatch({type: 'activity', payload: { list: [...this.atividades], local: true }})
         },
         error: (_: any) => {
           console.log("ERROR SUBMIT HERE")
@@ -110,7 +115,7 @@ export class AtividadeComponent implements OnInit {
             {
               next: _ => {
                 this.atividades.splice(index, 1)
-                this.store.dispatch({type: 'activity', payload: { position: this.index, list: [...this.atividades] }})
+                this.store.dispatch({type: 'activity', payload: { position: this.index, list: [...this.atividades], local: true }})
               },
               error: _ => this.atividades.splice(index, 1)
             }
@@ -120,9 +125,7 @@ export class AtividadeComponent implements OnInit {
     }
   }
 
-  mandarJanelas(index: number): void{
-    this.store.dispatch({type: 'activity', payload: { list: [...this.atividades], position: index }})
-    this.store.dispatch({type: 'window', payload: { list: [...this.atividades[index].janelas], parent: this.atividades[index] }})
-    this.index = index;
+  mandarAtividades(index: number): void{
+    this.store.dispatch({type: 'activity', payload: { list: [...this.atividades], position: index, local: true}})
   }
 }

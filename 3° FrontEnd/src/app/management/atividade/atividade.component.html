@@ -1,7 +1,7 @@
 <div>
   <div *ngFor="let atividade of atividades; let i = index">
     <div style="display: flex">
-      <div class="atividade" (click)="mandarJanelas(i)"
+      <div class="atividade" (click)="mandarAtividades(i)"
            [ngClass]="{'changeColor': index == i}">{{atividade.nome}}
       </div>
       <div class="row">
