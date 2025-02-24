@@ -12,7 +12,7 @@
       <div class="password">
         <input (keyup.enter)="onEnter()" [type]="password" [(ngModel)]="usuario.senha" autocomplete="new-password">
         <div (click)="showpassword()">
-          <i [ngClass]="{'fas fa-eye': !show, 'far fa-eye-slash': show}"></i>
+          <i [attr.aria-hidden]="'false'" [ngClass]="{'fas fa-eye': !show, 'far fa-eye-slash': show}"></i>
         </div>
       </div>
       <div [ngClass]="{'invalide': senhaInv,  'alreadyOn': signOn, 'incorrectPassw': !senhaInv}">

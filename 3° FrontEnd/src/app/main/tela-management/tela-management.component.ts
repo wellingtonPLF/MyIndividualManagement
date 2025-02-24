@@ -76,8 +76,12 @@ export class TelaManagementComponent implements OnInit{
   seeValue() {
     this.activity$.subscribe(
       it => {
-        console.log(it.list, `Position: ${it.position}`)
+        console.log(`Position: ${it.position}`)
+        for (let x of it.list) {
+          console.log(x)
+        }
       }
     )
   }
 }
+ 

@@ -1,11 +1,11 @@
-import { INITIAL_ACTIVITY_STATE } from "../state/activity.state";
-import { INITIAL_CLASS_STATE } from "../state/class.state";
-import { INITIAL_OCUPATION_STATE } from "../state/ocupation.state";
-import { INITIAL_SUBAREA_STATE } from "../state/subarea.state";
-import { INITIAL_USER_STATE } from "../state/user.state";
-import { INITIAL_WINDOW_STATE } from "../state/window.state";
+import { INITIAL_RX_ACTIVITY_STATE } from "../state/ngRx_state/activity_ngRx.state";
+import { INITIAL_RX_CLASS_STATE } from "../state/ngRx_state/class_ngRx.state";
+import { INITIAL_RX_OCUPATION_STATE } from "../state/ngRx_state/ocupation_ngRx.state";
+import { INITIAL_RX_SUBAREA_STATE } from "../state/ngRx_state/subarea_ngRx.state";
+import { INITIAL_RX_USER_STATE } from "../state/ngRx_state/user_ngRx.state";
+import { INITIAL_RX_WINDOW_STATE } from "../state/ngRx_state/window_ngRx.state";
 
-export const userReducer = (state = INITIAL_USER_STATE, action: any) => {
+export const userReducer = (state = INITIAL_RX_USER_STATE, action: any) => {
     switch(action.type){
         case 'user':
             if (action.payload == undefined){
@@ -17,91 +17,96 @@ export const userReducer = (state = INITIAL_USER_STATE, action: any) => {
     }
 }
 
-export const activityReducer = (state = INITIAL_ACTIVITY_STATE, action: any) => {
+export const activityReducer = (state = INITIAL_RX_ACTIVITY_STATE, action: any) => {
     switch(action.type){
         case 'activity':
             if (action.payload == undefined){
                 return state;
             }
-            if (action.payload.position == undefined) {
-                return { ...state, parent: action.payload.parent, list: action.payload.list};
-            }
-            if (action.payload.list == undefined) {
-                return { ...state, parent: action.payload.parent, position: action.payload.position};
-            }
-            return action.payload;
+            let result = action.payload.parent != undefined? 
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list } : 
+            {...state, position: action.payload.position, list: action.payload.list }
+            result = result.position != undefined?
+            { ...result } : {...state, parent: result.parent, list: result.list }
+            result = result.list != undefined? 
+            { ...result } : {...state, parent: result.parent, position: result.position}
+            return result
         default:
             return state
     }
 }
 
-export const windowReducer = (state = INITIAL_WINDOW_STATE, action: any) => {
+export const windowReducer = (state = INITIAL_RX_WINDOW_STATE, action: any) => {
     switch(action.type){
         case 'window':
             if (action.payload == undefined){
                 return state;
             }
-            if (action.payload.position == undefined) {
-                return { ...state, parent: action.payload.parent, list: action.payload.list};
-            }
-            if (action.payload.list == undefined) {
-                return { ...state, parent: action.payload.parent, position: action.payload.position};
-            }
-            return action.payload;
+            let result = action.payload.parent != undefined? 
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list } : 
+            {...state, position: action.payload.position, list: action.payload.list }
+            result = result.position != undefined?
+            { ...result } : {...state, parent: result.parent, list: result.list }
+            result = result.list != undefined? 
+            { ...result } : {...state, parent: result.parent, position: result.position}
+            return result
         default:
             return state
     }
 }
 
-export const subareaReducer = (state = INITIAL_SUBAREA_STATE, action: any) => {
+export const subareaReducer = (state = INITIAL_RX_SUBAREA_STATE, action: any) => {
     switch(action.type){
         case 'subarea':
             if (action.payload == undefined){
                 return state;
             }
-            if (action.payload.position == undefined) {
-                return { ...state, parent: action.payload.parent, list: action.payload.list};
-            }
-            if (action.payload.list == undefined) {
-                return { ...state, parent: action.payload.parent, position: action.payload.position};
-            }
-            return action.payload;
+            let result = action.payload.parent != undefined? 
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list } : 
+            {...state, position: action.payload.position, list: action.payload.list }
+            result = result.position != undefined?
+            { ...result } : {...state, parent: result.parent, list: result.list }
+            result = result.list != undefined? 
+            { ...result } : {...state, parent: result.parent, position: result.position}
+            return result
         default:
             return state
     }
 }
 
-export const ocupationReducer = (state = INITIAL_OCUPATION_STATE, action: any) => {
+export const ocupationReducer = (state = INITIAL_RX_OCUPATION_STATE, action: any) => {
     switch(action.type){
         case 'ocupation':
             if (action.payload == undefined){
                 return state;
             }
-            if (action.payload.position == undefined) {
-                return { ...state, parent: action.payload.parent, list: action.payload.list};
-            }
-            if (action.payload.list == undefined) {
-                return { ...state, parent: action.payload.parent, position: action.payload.position};
-            }
-            return action.payload;
+            let result = action.payload.parent != undefined? 
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list } : 
+            {...state, position: action.payload.position, list: action.payload.list }
+            result = result.position != undefined?
+            { ...result } : {...state, parent: result.parent, list: result.list }
+            result = result.list != undefined? 
+            { ...result } : {...state, parent: result.parent, position: result.position}
+            return result
         default:
             return state
     }
 }
 
-export const classReducer = (state = INITIAL_CLASS_STATE, action: any) => {
+export const classReducer = (state = INITIAL_RX_CLASS_STATE, action: any) => {
     switch(action.type){
         case 'class':
             if (action.payload == undefined){
                 return state;
             }
-            if (action.payload.position == undefined) {
-                return { ...state, parent: action.payload.parent, list: action.payload.list};
-            }
-            if (action.payload.list == undefined) {
-                return { ...state, parent: action.payload.parent, position: action.payload.position};
-            }
-            return action.payload;
+            let result = action.payload.parent != undefined? 
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list } : 
+            {...state, position: action.payload.position, list: action.payload.list }
+            result = result.position != undefined?
+            { ...result } : {...state, parent: result.parent, list: result.list }
+            result = result.list != undefined? 
+            { ...result } : {...state, parent: result.parent, position: result.position}
+            return result
         default:
             return state
     }

@@ -7,7 +7,7 @@
                (click)="inputEnable(gettingFocus)"
                (keyup)="saveEdit($event, 'nothing')">
         <button mat-button  (click)="removerTask()" id="removeBtn">
-          <i  class="fas fa-trash"></i>
+          <i [attr.aria-hidden]="'false'"  class="fas fa-trash"></i>
         </button>
       </div>
       <div style="display: flex">

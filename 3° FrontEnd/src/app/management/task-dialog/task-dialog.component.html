@@ -4,7 +4,7 @@
       <input [(ngModel)]="task.nome"  maxlength="12" size="11" (focus)="inputDisable(gettingFocus)"
              (keyup)="saveEdit($event)" spellcheck="false" #gettingFocus (click)="inputEnable(gettingFocus)">
       <button mat-button  (click)="removerTask()" class="deleteTask">
-        <i  class="fas fa-trash"></i>
+        <i [attr.aria-hidden]="'false'"  class="fas fa-trash"></i>
       </button>
     </div>
   </div>

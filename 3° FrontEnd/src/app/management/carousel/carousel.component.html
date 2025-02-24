@@ -1,7 +1,7 @@
 <div id="myCarousel">
   <!-- Left Button-->
   <button mat-icon-button (click)="left()">
-    <i class="fas fa-caret-left"></i>
+    <i [attr.aria-hidden]="'false'" class="fas fa-caret-left"></i>
   </button>
   <!--carousel body -->
   <div class="containerItens" *ngIf="lista != undefined">
@@ -46,6 +46,6 @@
   </div>
  <!-- Right Button-->
   <button mat-icon-button (click)="right()">
-    <i class="fas fa-caret-right"></i>
+    <i [attr.aria-hidden]="'false'" class="fas fa-caret-right"></i>
   </button>
 </div>

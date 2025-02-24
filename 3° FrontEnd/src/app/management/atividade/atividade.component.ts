@@ -77,11 +77,11 @@ export class AtividadeComponent implements OnInit {
   atualizarNome(index: number): void{
     const activity = this.atividades[index];
     let dialogRef = this.dialog.open(EditDialogComponent, {
-        data:{
-            type: ("atividade"),
-            datakey: (activity.idatividade ? activity.idatividade: activity.ordem).toString(),
-            key: this.usuario
-        }
+      data:{
+          type: ("atividade"),
+          datakey: (activity.idatividade ? activity.idatividade: activity.ordem).toString(),
+          key: this.usuario
+      }
     });
 
     dialogRef.componentInstance.submitClicked.subscribe(

@@ -7,14 +7,14 @@
         <div class="col">
           <div ngbDropdown class="d-inline-block">
             <button class="btn btn-outline-primary" id="dropdownBasic1" ngbDropdownToggle>
-              <i style="margin-left: 4px" class="fas fa-angle-double-down"></i>
+              <i [attr.aria-hidden]="'false'" style="margin-left: 4px" class="fas fa-angle-double-down"></i>
             </button>
             <div ngbDropdownMenu aria-labelledby="dropdownBasic1">
               <button ngbDropdownItem (click)="editarJanela(i)">
-                <i style="margin-left: 4px; margin-bottom: 2px" class="fas fa-edit"></i>
+                <i [attr.aria-hidden]="'false'" style="margin-left: 4px; margin-bottom: 2px" class="fas fa-edit"></i>
               </button>
               <button ngbDropdownItem (click)="removerJanela(i)">
-                <i class="fas fa-trash"></i>
+                <i [attr.aria-hidden]="'false'" class="fas fa-trash"></i>
               </button>
             </div>
           </div>
@@ -29,16 +29,16 @@
 
     <div style="display: flex; margin-right: 20px; align-items: center">
       <div id="template" (click)="openTemplates()">
-        <i class="fas fa-cubes"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-cubes"></i>
       </div>
       <div id="regras" (click)="openInfo()">
-        <i class="fas fa-info-circle"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-info-circle"></i>
       </div>
       <div id="terminal" (click)="openChangeSubarea()">
-        <i class="fas fa-th-large"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-th-large"></i>
       </div>
       <div id="code" (click)="openVisualStudio()">
-        <i class="fas fa-code"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-code"></i>
       </div>
     </div>
   </div>

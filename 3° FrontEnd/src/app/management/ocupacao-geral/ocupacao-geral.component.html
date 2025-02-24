@@ -2,7 +2,7 @@
   <div *ngFor="let ocupacao of ocupacoes; let i = index" #myDiv>
     <div class="ocupacao">
       <div style="display:flex;">
-        <div class="icon" (click)="showClasse(i)"><i class="fas fa-angle-down"></i></div>
+        <div class="icon" (click)="showClasse(i)"><i [attr.aria-hidden]="'false'" class="fas fa-angle-down"></i></div>
         <div class="ocupacaoNome">
           <b>-</b>&nbsp;&nbsp;&nbsp;
           <input [(ngModel)]="ocupacao.nome"  maxlength="12" size="11"
@@ -11,7 +11,7 @@
         </div>
       </div>
       <div class="close">
-        <i class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-times deleteOcupacao" (click)="removerOcupacao(i)"></i>
       </div>
     </div>
     <div [hidden]="show != i" style="background-color: #efefef">

@@ -13,7 +13,7 @@
           <label class="boldertext">Username:</label>
           <div [ngClass]="{'doubt': true, 'displayNone': !invalid.includes('username'),
           'invalidToolTip': invalid.includes('atleastfive'), 'inUse': invalid.includes('nameInUse')}">
-            <i class="fas fa-question-circle" data-tooltip="Name already used!"
+            <i [attr.aria-hidden]="'false'" class="fas fa-question-circle" data-tooltip="Name already used!"
                invalid-tooltip="At least 5 characters!"></i>
           </div>
         </div>
@@ -45,7 +45,7 @@
           <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password"
                  formControlName="password">
           <div (click)="showpassword('password')" class="eye">
-            <i [ngClass]="{'fas fa-eye': !showPassword, 'far fa-eye-slash': showPassword}"></i>
+            <i [attr.aria-hidden]="'false'" [ngClass]="{'fas fa-eye': !showPassword, 'far fa-eye-slash': showPassword}"></i>
           </div>
         </div>
       </div>
@@ -55,7 +55,7 @@
         <div class="changingeye">
           <input [type]="repeatpassword" autocomplete="new-password" formControlName="confirmPassword">
           <div (click)="showpassword('confirmPassword')" class="eye">
-            <i [ngClass]="{'fas fa-eye': !showConfirmPassword, 'far fa-eye-slash': showConfirmPassword}"></i>
+            <i [attr.aria-hidden]="'false'" [ngClass]="{'fas fa-eye': !showConfirmPassword, 'far fa-eye-slash': showConfirmPassword}"></i>
           </div>
         </div>
       </div>
@@ -65,7 +65,7 @@
           <label class="boldertext">Email:</label>
           <div [ngClass]="{'doubt': true, 'displayNone': !invalid.includes('email'),
           'invalidToolTip': invalid.includes('fakeMail'), 'inUse': invalid.includes('emailInUse')}">
-            <i class="fas fa-question-circle"
+            <i [attr.aria-hidden]="'false'" class="fas fa-question-circle"
                data-tooltip="E-mail already in use!" invalid-tooltip="Email inexistente!"></i>
           </div>
         </div>

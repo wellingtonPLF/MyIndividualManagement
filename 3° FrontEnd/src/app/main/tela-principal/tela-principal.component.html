@@ -12,7 +12,7 @@
     />
 
     <button class="buttonStyle" style="width: 75px; height: 70px;" (click)="search()">
-      <mat-icon style="width: fit-content;">search</mat-icon>
+      <mat-icon [attr.aria-hidden]="'false'" style="width: fit-content;">search</mat-icon>
     </button>
 
   </div>
@@ -24,7 +24,7 @@
 
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
       <button class="buttonStyle" style="width: 50px; height: 50px;" [routerLink]="['/management', usuario.idusuario]">
-        <mat-icon>account_circle</mat-icon></button>
+        <mat-icon [attr.aria-hidden]="'false'">account_circle</mat-icon></button>
     </div>
 
     <div [ngClass]="{'sign': !conta, 'displayNone': conta}">

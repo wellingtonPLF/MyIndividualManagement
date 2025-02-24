@@ -5,24 +5,24 @@
       (click)="unsubscribeImplementation('cancel')">cancelar</button>
     <div id="timeButtons" [ngClass]="{'displayNone': status == 'cancel'}">
       <button (click)="unsubscribeImplementation('reset')">
-        <i class="fas fa-retweet"></i>
+        <i [attr.aria-hidden]="'false'" class="fas fa-retweet"></i>
       </button>
       <div id="flexTemplates">
         <button (click)="twentyFiveMinutes()">
-          <i class="far fa-dot-circle"></i>
+          <i [attr.aria-hidden]="'false'" class="far fa-dot-circle"></i>
         </button>
         <button (click)="fiveMinutes()" >
-          <i class="far fa-dot-circle"></i>
+          <i [attr.aria-hidden]="'false'" class="far fa-dot-circle"></i>
         </button>
       </div>
       <div id="flexButtons">
         <button (click)="playTime()"
                 [ngClass]="{'displayNone': status == 'running'}">
-          <i class="fas fa-play-circle"></i>
+          <i [attr.aria-hidden]="'false'" class="fas fa-play-circle"></i>
         </button>
         <button style="color: black;" (click)="unsubscribeImplementation('stop')"
                 [ngClass]="{'displayNone': status == 'stopped'}">
-          <i class="far fa-stop-circle"></i>
+          <i [attr.aria-hidden]="'false'" class="far fa-stop-circle"></i>
         </button>
       </div>
     </div>

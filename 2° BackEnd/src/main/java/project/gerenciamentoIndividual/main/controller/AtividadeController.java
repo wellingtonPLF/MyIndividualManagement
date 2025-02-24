@@ -49,7 +49,7 @@ public class AtividadeController {
    }
 
    @DeleteMapping("/atividade/{idatividade}")
-   public void apagarUsuario(@PathVariable("idatividade") Long idatividade) {
+   public void apagarAtividade(@PathVariable("idatividade") Long idatividade) {
        this.atividadeService.apagar(idatividade);
    }
 }

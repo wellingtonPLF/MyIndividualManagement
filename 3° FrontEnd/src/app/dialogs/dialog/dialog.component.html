@@ -1,7 +1,7 @@
 <div id="main" *ngIf="objeto != undefined">
   <div id="info">
     <div style="margin: 5px">Informações:</div>
-    <i class="fas fa-times" mat-dialog-close></i>
+    <i [attr.aria-hidden]="'false'" class="fas fa-times" mat-dialog-close></i>
   </div>
   <textarea [(ngModel)]="objeto.info" spellcheck="false"
             (keyup)="saveEdit($event)"></textarea>

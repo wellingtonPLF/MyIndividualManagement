@@ -1,7 +1,7 @@
 <div style="background-color: white">
   <div id="closeBtn">
     <button mat-dialog-close class="closeButton">
-      <i class="fas fa-times"></i>
+      <i [attr.aria-hidden]="'false'" class="fas fa-times"></i>
     </button>
   </div>
   <div cdkDropListGroup class="example-boundary">
@@ -27,7 +27,7 @@
                cdkDrag cdkDragBoundary=".example-boundary" cdkDragLockAxis="y" cdkDragBoundary="#locking">
               {{item.nome}}
             <button class="closeButton" (click)="removeBox(i)">
-              <i class="fas fa-times"></i>
+              <i [attr.aria-hidden]="'false'" class="fas fa-times"></i>
             </button>
           </div>
         </div>

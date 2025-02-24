@@ -1,6 +1,6 @@
 <div id="options" style="padding: 15px; background-color: #efefef">
   <div id="closeBtn">
-    <i class="fas fa-times" mat-dialog-close></i>
+    <i [attr.aria-hidden]="'false'" class="fas fa-times" mat-dialog-close></i>
   </div>
   <div *ngIf="janela != undefined">
     <div id="listaDeSubarea">

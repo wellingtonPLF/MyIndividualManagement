@@ -16,7 +16,7 @@
     </div>
   
     <div id="hideLeft" [ngStyle]="{'left': (hide)? '0': '200px', 'border-left': (hide || windowBool)? '#1976d2 solid 3px': 'unset'}" (click)="hideLeft()">
-      <mat-icon>compare_arrows</mat-icon>
+      <mat-icon [attr.aria-hidden]="'false'">compare_arrows</mat-icon>
     </div>
   
     <!-- ---------------------------------Right------------------------------------------- -->
@@ -25,15 +25,15 @@
         <div>
           <button mat-icon-button style="color:#1976d2"
                   [routerLink]="['']" [queryParams] = "{id: usuario.idusuario}">
-            <mat-icon color="white">home</mat-icon>
+            <mat-icon [attr.aria-hidden]="'false'" color="white">home</mat-icon>
           </button>
           <button id="exitButton" (click)="signOut()" [routerLink]="['']">
-            <i class="fas fa-door-open"></i>
+            <i [attr.aria-hidden]="'false'" class="fas fa-door-open"></i>
           </button>
         </div>
         <app-stopwatch *ngIf="windowBool; else iconTimer"></app-stopwatch>
         <ng-template #iconTimer>
-          <mat-icon id="timerIcon">av_timer</mat-icon>
+          <mat-icon [attr.aria-hidden]="'false'" id="timerIcon">av_timer</mat-icon>
         </ng-template>
       </div>
     

@@ -55,7 +55,7 @@ export class WorkspaceComponent implements OnInit  {
         this.atividade = it.parent;
         if (it.list.length != 0) {
           this.index = 0;
-          this.atividadeService.pesquisarPorId(it.parent.id).subscribe({
+          this.atividadeService.pesquisarPorId(it.parent.idatividade).subscribe({
             next: result => {
               this.windows = OrdemDependency.ordenar(result.janelas);
               this.janela = this.windows[0];
@@ -68,42 +68,6 @@ export class WorkspaceComponent implements OnInit  {
         }
       }
     )
-  }
-
-  editarJanela(index: number): void {
-    let dialogRef = this.dialog.open(EditDialogComponent, {
-      data:{
-          type: ("janela"),
-          datakey: ((this.windows[index].idjanela? this.windows[index].idjanela:this.windows[index].ordem).toString()),
-          key: this.atividade
-      }
-    });
-
-    dialogRef.componentInstance.submitClicked.subscribe(
-      result => {
-        this.windows.splice(index, 1, result)
-      }
-    );
-  }
-
-  removerJanela(index: number): void {
-    if(index != 0){
-      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
-      dialogRef.componentInstance.deleteClick.subscribe(
-          it =>{
-            if (this.index == index) {
-              this.janela = this.windows[index - 1];
-              this.index = index - 1;
-            }
-            this.janelaService.remover(this.windows[index].idjanela).subscribe(
-              {
-                next: _ => this.windows.splice(index, 1),
-                error: _ => this.windows.splice(index, 1)
-              }
-            )  
-        }
-      );
-    }
   }
 
   addJanela(): void{
@@ -128,7 +92,6 @@ export class WorkspaceComponent implements OnInit  {
               async it => {
                 window = JanelaFactory.criarJanela(it, ordem);
                 window.nome = '. . .';
-                window.atividade = this.atividade;
                 this.windows.push({...window})
                 await this.registry.dispatcher('window', [...this.windows]);
               }
@@ -138,6 +101,55 @@ export class WorkspaceComponent implements OnInit  {
       )
     }
   }
+
+  editarJanela(index: number): void {
+    const window = this.windows[index];
+    let dialogRef = this.dialog.open(EditDialogComponent, {
+      data:{
+          type: ("janela"),
+          datakey: ((window.idjanela? window.idjanela : window.ordem).toString()),
+          key: this.atividade
+      }
+    });
+
+    dialogRef.componentInstance.submitClicked.subscribe(
+      {
+        next: async (result: any) => {
+          this.windows.splice(index, 1, result)
+          await this.registry.dispatcher('window', [...this.windows]);
+        },
+        error: (_: any) => {
+          console.log("ERROR SUBMIT HERE")
+        }
+      }
+    );
+  }
+
+  removerJanela(index: number): void {
+    if(index != 0){
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+          it =>{
+            if (this.index == index) {
+              this.janela = this.windows[index - 1];
+              this.index = index - 1;
+            }
+            this.janelaService.remover(this.windows[index].idjanela).subscribe(
+              {
+                next: async _ => {
+                  this.windows.splice(index, 1),
+                  await this.registry.dispatcher('window', [...this.windows]);
+                },
+                error: async _ => {
+                  this.windows.splice(index, 1)
+                  await this.registry.dispatcher('window', [...this.windows]);
+                }
+              }
+            )  
+        }
+      );
+    }
+  } 
 
   enviarJanela(index: number): void{
     this.janela = this.windows[index];
@@ -187,13 +199,6 @@ export class WorkspaceComponent implements OnInit  {
   async openVisualStudio(): Promise<void>{
     //var child_process = require('child_process');
     //child_process.exec("start cmd.exe /K cd..");
-
-    this.user$.subscribe(
-      it => {
-        console.log(it)
-      }
-    )
-
     this.dialog.open(IndisponivelComponent)
   }
 }
