@@ -12,6 +12,7 @@ import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-scr
 import { Observable } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-those-subareas',
@@ -19,20 +20,19 @@ import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
   styleUrls: ['./those-subareas.component.scss']
 })
 export class ThoseSubareasComponent implements OnInit {
-  templateName!: String;
-  subareas!: Array<Subarea>;
-  selectedSubarea!: Subarea;
   index!: number;
-  subareas_limit: number = 3;
-  // @Output() subareaEmitter = new EventEmitter<Subarea>();
-  // @Input() janela!: Janela;
-
-  subarea$!: Observable<any>;
-  subarea!: Subarea;
   janela!: Janela;
 
+  subareas!: Array<Subarea>;
+  subarea$!: Observable<any>;
+  subareas_limit: number = 5;
+  
+  subarea!: Subarea;
+  templateName!: String;
+  selectedSubarea!: Subarea;
+
   constructor(public janelaService: JanelaService, private store: Store<any>, private registry: RegistryStore,
-              public templateService: TemplateService, public dialog: MatDialog,
+              public templateService: TemplateService, public dialog: MatDialog, private dataService: DataService,
               public subareaService: SubareaService) {
     this.subarea$ = this.store.select('subareaReducer');
   }
@@ -41,9 +41,9 @@ export class ThoseSubareasComponent implements OnInit {
     this.index = 0;
     this.subarea$.subscribe(
       it => {
-        this.janela = it.parent;
+        this.janela = {...it.parent};
         if (it.list.length != 0) {
-          this.index = 0;
+          this.index = it.position
           this.janelaService.pesquisarPorId(it.parent.idatividade).subscribe({
             next: result => {
               this.subareas = OrdemDependency.ordenar(result.subareas);
@@ -70,68 +70,91 @@ export class ThoseSubareasComponent implements OnInit {
   }
 
   addSubarea(): void{
-    // if(this.subareas.length < this.subareas_limit){
-    //   let subarea!: Subarea;
-    //   const ordem = this.subareas[this.subareas.length - 1].ordem + 1;
+    if(this.subareas.length < this.subareas_limit){
+      let subarea!: Subarea;
+      const ordem = this.subareas[this.subareas.length - 1].ordem + 1;
 
-    //   this.templateService.pesquisarPorId(1).subscribe(
-    //     result => {
-    //       subarea = SubareaFactory.criarSubarea(result, ordem);
-    //       subarea.nome = '. . .';
-    //       subarea.janela = this.janela;
-
-    //       this.subareaService.inserir(subarea).subscribe(
-    //         it => {
-    //           this.subareas.push(it)
-    //         }
-    //       )
-    //     }
-    //   )
-    // }
-  }
-
-  enviarSubarea(index?: number): void {
-    // const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
-    // this.subareaEmitter.emit(this.subareas[value]);
-    // this.index = value;
+      this.templateService.pesquisarPorId(1).subscribe(
+        {
+          next: result => {
+          subarea = SubareaFactory.criarSubarea(result, ordem);
+          subarea.nome = '. . .';
+          subarea.janela = this.janela;
+          this.subareaService.inserir(subarea).subscribe(
+            it => {
+              this.subareas.push(it)
+            }
+          )
+        },
+        error: (_) => {
+          this.dataService.getData('null_object', 'first_template').subscribe(
+            async it => {
+              subarea = SubareaFactory.criarSubarea(it, ordem);
+              subarea.nome = '. . .';
+              this.subareas.push({...subarea})
+              this.janela.subareas = [...this.subareas];
+              await this.registry.dispatcher('subarea', [...this.subareas]);
+            }
+          )
+        }
+      })
+    }
   }
 
   editarSubarea(index?: number): void{
-    // const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
-    // let dialogRef = this.dialog.open(EditDialogComponent, {
-    //   data:{
-    //     type: ("subarea"),
-    //     datakey: (this.subareas[value].idsubarea).toString(),
-    //     key: this.janela
-    //   }
-    // });
+    const value = (index == undefined) ? this.subareas.indexOf(this.subarea) : index;
+    const subarea = this.subareas[value];
+    let dialogRef = this.dialog.open(EditDialogComponent, {
+      data:{
+        type: ("subarea"),
+        datakey: (subarea.idsubarea? subarea.idsubarea: subarea.ordem).toString(),
+        key: this.janela
+      }
+    });
 
-    // dialogRef.componentInstance.submitClicked.subscribe(
-    //   result => {
-    //     this.subareas.splice(value, 1, result)
-    //   }
-    // );
+    dialogRef.componentInstance.submitClicked.subscribe(
+      {
+        next: async (result: any) => {
+          this.subareas.splice(value, 1, result)
+          await this.registry.dispatcher('subarea', [...this.subareas]);
+        },
+        error: (_: any) => {
+          console.log("ERROR EDIT SUBAREA!")
+        }
+      }
+    );
   }
 
   deleteSubarea(index?: number): void{
-    // const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
-    // if(value != 0) {
-    //   let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
-    //   dialogRef.componentInstance.deleteClick.subscribe(
-    //     _ => {
-    //       if (this.index == value){
-    //         this.subareaEmitter.emit(this.subareas[value - 1]);
-    //         this.index = value - 1;
-    //       }
+    const value = (index == undefined) ? this.subareas.indexOf(this.subarea) : index;
+    if(value != 0) {
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        _ => {
+          if (this.index == value){
+            this.subarea = this.subareas[value - 1];
+            this.index = value - 1;
+          }
 
-    //       this.subareaService.remover((this.subareas[value].idsubarea).toString()).subscribe(
-    //         _ => {
-    //           this.subareas.splice(value, 1)
-    //           this.selectedSubarea = this.subareas[0]
-    //         }
-    //       )
-    //     }
-    //   )
-    // }
+          this.subareaService.remover(this.subareas[value].idsubarea).subscribe(
+            {
+              next: async _ => {
+              this.subareas.splice(value, 1)
+              await this.registry.dispatcher('subarea', [...this.subareas]);
+            },
+            error: async _ => {
+              this.subareas.splice(value, 1)
+              await this.registry.dispatcher('subarea', [...this.subareas]);
+            }
+          })
+        }
+      )
+    }
+  }
+
+  enviarSubarea(index?: number): void {
+    const value = (index == undefined) ? this.subareas.indexOf(this.selectedSubarea) : index;
+    this.store.dispatch({type: 'subarea', payload: { list: [...this.subareas], position: value, local: true }})
+    this.index = value;
   }
 }

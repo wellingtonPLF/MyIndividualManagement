@@ -1,8 +1,8 @@
 <div *ngIf="windows">
   <div style="display: flex; border-bottom: 3px solid #1372d6">
-    <div *ngFor="let janela of windows; let i = index" style="display: flex; margin-right: 10px;">
+    <div *ngFor="let window of windows; let i = index" style="display: flex; margin-right: 10px;">
       <div class="janela" [ngClass]="{'changeColor': index == i}"
-           (click)="enviarJanela(i)">{{janela.nome}}</div>
+           (click)="enviarJanelas(i)">{{window.nome}}</div>
       <div class="row">
         <div class="col">
           <div ngbDropdown class="d-inline-block">

@@ -32,7 +32,7 @@ export class SubareaService {
     );
   }
 
-  remover(id: string): Observable<object> {
+  remover(id: number): Observable<object> {
     return this.httpClient.delete(`${this.URL_SUBAREA}/${id}`).pipe(
       catchError((error) => {
         return throwError(() => new Error(error));

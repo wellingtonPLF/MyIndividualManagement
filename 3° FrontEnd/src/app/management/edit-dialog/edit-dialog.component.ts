@@ -37,9 +37,8 @@ export class EditDialogComponent implements OnInit {
             this.object = it;
           },
           error: _ => {
-            
             this.atividade = {...this.data.key.atividades[datakey]};
-            this.object = {...this.data.key.atividades[datakey]};
+            this.object = {...this.atividade};
           }
         }
       )
@@ -52,14 +51,14 @@ export class EditDialogComponent implements OnInit {
             if(this.janela.nome == ". . ."){
               this.janela.nome = "";
             }
-            this.object = it;
+            this.object = {...this.janela};
           },
           error: _ => {
             this.janela = {...this.data.key.janelas[datakey]};
             if(this.janela.nome == ". . ."){
               this.janela.nome = "";
             }
-            this.object = {...this.data.key.janelas[datakey]};
+            this.object = {...this.janela};
           }
         }        
       )
@@ -72,14 +71,14 @@ export class EditDialogComponent implements OnInit {
             if(this.subarea.nome == ". . ."){
               this.subarea.nome = "";
             }
-            this.object = it;
+            this.object = {...this.subarea};
           },
           error: _ => {
             this.subarea = {...this.data.key.subareas[datakey]};
             if(this.subarea.nome == ". . ."){
               this.subarea.nome = "";
             }
-            this.object = {...this.data.key.subareas[datakey]};
+            this.object = {...this.subarea};
           }
       })
     }
@@ -132,7 +131,12 @@ export class EditDialogComponent implements OnInit {
     if(this.data.type == "subarea"){
       this.subarea.janela = this.data.key;
       this.subareaService.atualizar(this.subarea).subscribe(
-        it => this.submitClicked.emit(it)
+        {
+          next: it => this.submitClicked.emit(it),
+          error: _ => {
+            this.submitClicked.emit(this.object)
+          }
+        }
       )
     }
   }

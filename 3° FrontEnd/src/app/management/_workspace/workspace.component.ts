@@ -5,7 +5,6 @@ import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {JanelaService} from "../../shared/service/janela.service";
 import {TemplateService} from "../../shared/service/template.service";
-import {Subarea} from "../../shared/model/subarea";
 import {AtividadeService} from "../../shared/service/atividade.service";
 import {JanelaFactory} from "../../shared/factoryDirectory/janelaFactory";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
@@ -26,45 +25,44 @@ import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
   styleUrls: ['./workspace.component.scss']
 })
 export class WorkspaceComponent implements OnInit  {
-  windows!: Array<Janela>;
-  janela!: Janela;
-  subarea!: Subarea;
   index!: number;
   atividade!: Atividade;
+  
+  windows!: Array<Janela>;
+  window$!: Observable<any>;
   windows_limit: number = 5;
 
-  activity_position: number = 0;
-
-  user$!: Observable<any>;
-  activity$!: Observable<any>;
-  window$!: Observable<any>;
-  subarea$!: Observable<any>;
+  window!: Janela;
   
   constructor(private dialog: MatDialog, private janelaService: JanelaService,  private store: Store<any>, private registry: RegistryStore,
     private dataService: DataService, private templateService: TemplateService, private atividadeService: AtividadeService) {
-    this.user$ = this.store.select('userReducer');
-    this.activity$ = this.store.select('activityReducer');
     this.window$ = this.store.select('windowReducer');
-    this.subarea$ = this.store.select('subareaReducer');
   }
 
   ngOnInit(): void {
     this.index = 0;
     this.window$.subscribe(
       it => {
-        this.atividade = it.parent;
-        if (it.list.length != 0) {
-          this.index = 0;
-          this.atividadeService.pesquisarPorId(it.parent.idatividade).subscribe({
-            next: result => {
-              this.windows = OrdemDependency.ordenar(result.janelas);
-              this.janela = this.windows[0];
-            },
-            error: (_) => {
-              this.windows = OrdemDependency.ordenar([...it.list]);
-              this.janela = this.windows[0];
-            }
-          })
+        if (!it.local) {
+          this.atividade = {...it.parent};
+          if (it.list.length != 0) {
+            this.index = it.position
+            this.atividadeService.pesquisarPorId(it.parent.idatividade).subscribe({
+              next: result => {
+                this.windows = OrdemDependency.ordenar(result.janelas);
+                this.window = this.windows[0];
+                this.store.dispatch({type: 'subarea', payload: { list: [...this.windows[it.position].subareas], parent: this.windows[it.position] }})
+              },
+              error: (_) => {
+                this.windows = OrdemDependency.ordenar([...it.list]);
+                this.window = this.windows[0];
+                this.store.dispatch({type: 'subarea', payload: { list: [...this.windows[it.position].subareas], parent: this.windows[it.position] }})
+              }
+            })
+          }
+        }
+        if (this.index != it.position) {
+          this.store.dispatch({type: 'subarea', payload: { list: [...this.windows[it.position].subareas], parent: this.windows[it.position] }})
         }
       }
     )
@@ -88,11 +86,12 @@ export class WorkspaceComponent implements OnInit  {
             )
           },
           error: (_) => {
-            this.dataService.getData('nullObject', 'third_template').subscribe(
+            this.dataService.getData('null_object', 'first_template').subscribe(
               async it => {
                 window = JanelaFactory.criarJanela(it, ordem);
                 window.nome = '. . .';
                 this.windows.push({...window})
+                this.atividade.janelas = [...this.windows];
                 await this.registry.dispatcher('window', [...this.windows]);
               }
             )
@@ -119,7 +118,7 @@ export class WorkspaceComponent implements OnInit  {
           await this.registry.dispatcher('window', [...this.windows]);
         },
         error: (_: any) => {
-          console.log("ERROR SUBMIT HERE")
+          console.log("ERROR EDIT WINDOW!")
         }
       }
     );
@@ -129,9 +128,9 @@ export class WorkspaceComponent implements OnInit  {
     if(index != 0){
       let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
       dialogRef.componentInstance.deleteClick.subscribe(
-          it =>{
+          _ =>{
             if (this.index == index) {
-              this.janela = this.windows[index - 1];
+              this.window = this.windows[index - 1];
               this.index = index - 1;
             }
             this.janelaService.remover(this.windows[index].idjanela).subscribe(
@@ -151,13 +150,9 @@ export class WorkspaceComponent implements OnInit  {
     }
   } 
 
-  enviarJanela(index: number): void{
-    this.janela = this.windows[index];
+  enviarJanelas(index: number): void {
+    this.store.dispatch({type: 'window', payload: { list: [...this.windows], position: index, local: true }})
     this.index = index;
-  }
-
-  throwSubarea(subarea: Subarea): void{
-    this.subarea = subarea;
   }
 
   // ------------------------------------------------------------------------------------------------------------
@@ -165,7 +160,7 @@ export class WorkspaceComponent implements OnInit  {
   openChangeSubarea(): void{
     this.dialog.open(SubareaTemplateComponent, {
       panelClass: 'dialogPadding',
-      data: this.janela
+      data: this.window
     })
   }
 
@@ -180,8 +175,8 @@ export class WorkspaceComponent implements OnInit  {
         for (let i = 0; i < this.windows.length; i++){
           if (this.windows[i].idjanela == result.idjanela){
             this.windows.splice(i, 1, result)
-            if(result.idjanela == this.janela.idjanela){
-              this.janela = this.windows[i];
+            if(result.idjanela == this.window.idjanela){
+              this.window = this.windows[i];
             }
           }
         }
@@ -191,7 +186,7 @@ export class WorkspaceComponent implements OnInit  {
 
   openInfo(): void{
     this.dialog.open(DialogComponent, {
-      data: this.janela,
+      data: this.window,
       panelClass: 'dialogPadding'
     });
   }
