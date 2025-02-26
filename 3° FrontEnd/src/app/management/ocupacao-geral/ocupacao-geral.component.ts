@@ -12,6 +12,8 @@ import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
+import { DataService } from 'src/app/shared/service/data.service';
 
 @Component({
   selector: 'app-ocupacao-geral',
@@ -20,20 +22,25 @@ import { Observable } from 'rxjs';
 })
 export class OcupacaoGeralComponent implements OnInit {
   show: number | undefined = 0;
-  @Input() subarea!: Subarea;
+  subarea!: Subarea
+  
   ocupacoes!: Array<Ocupacao>;
-  timeout: any = null;
+  ocupation$!:Observable<any>;
+  ocupations_limit: number = 7;
 
-  qntItens: number = 2;
   logicExecuted = false;
   leftSide = false;
-
+  timeout: any = null;
+  qntItens: number = 2;
   variable$!: Observable<any>;
 
   @ViewChild('myDiv', { static: false }) myDiv!: ElementRef;
 
-  constructor(private ocupacaoService: OcupacaoService, private dialog: MatDialog, private fshare: FuncShareService,
-              private templateService: TemplateService, private subareaService: SubareaService, private store: Store<any>) {
+  constructor(private ocupacaoService: OcupacaoService, private dialog: MatDialog, 
+      private fshare: FuncShareService, private registry: RegistryStore,
+      private templateService: TemplateService, private subareaService: SubareaService, 
+      private dataService: DataService, private store: Store<any>) {
+    this.ocupation$ = this.store.select('ocupationReducer');
     this.variable$ = this.store.select('leftSideReducer');
     this.fshare.getClickEvent().subscribe(
       it => {
@@ -46,21 +53,6 @@ export class OcupacaoGeralComponent implements OnInit {
     )
   }
 
-  ngOnInit(): void {
-    this.variable$.subscribe(
-      it => {
-        this.leftSide = it
-      }
-    )
-    
-    if (window.innerWidth < 582) {
-      this.leftSide = true
-    }
-    window.addEventListener('resize', () => {
-      this.calcQntItens(this.leftSide)
-    });
-  }
-
   ngDoCheck() {
     if (!this.logicExecuted) {
       if (this.myDiv) {
@@ -70,15 +62,125 @@ export class OcupacaoGeralComponent implements OnInit {
     }
   }
 
-  ngOnChanges(): void{
-    if(this.subarea != undefined){
-      this.subareaService.pesquisarPorId(this.subarea.idsubarea).subscribe(
-        it => {
-          this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
+  ngOnInit(): void {
+    this.variable$.subscribe(
+      it => {
+        this.leftSide = it
+      }
+    )
+    if (window.innerWidth < 582) {
+      this.leftSide = true
+    }
+    window.addEventListener('resize', () => {
+      this.calcQntItens(this.leftSide)
+    });
+    // ------------------------------------------------------------------------------------------------------------
+
+    this.ocupation$.subscribe(
+      it => {
+        if (!it.local) {
+          this.subarea = {...it.parent};
+          if (it.list.length != 0) {
+            this.subareaService.pesquisarPorId(it.parent.idsubarea).subscribe({
+              next: result => {
+                this.ocupacoes = OrdemDependency.ordenar(result.ocupacoes);
+                this.store.dispatch({type: 'class', payload: { list: [...this.ocupacoes[it.position].classes], parent: this.ocupacoes[it.position] }})
+              },
+              error: (_) => {
+                this.ocupacoes = [...OrdemDependency.ordenar([...it.list])];
+                this.store.dispatch({type: 'class', payload: { list: [...this.ocupacoes[it.position].classes], parent: this.ocupacoes[it.position] }})
+              }
+            })
+          }
+        }
+      }
+    )
+  }
+
+  addOcupacao(): void{
+    if(this.ocupacoes.length < this.ocupations_limit) {
+      let ocupation!: Ocupacao;
+      const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
+
+      this.templateService.pesquisarPorId(1).subscribe(
+        {
+          next: result => {
+          ocupation = OcupacaoFactory.criarOcupacao(result.janela_c.subareas[0], ordem);
+          ocupation.nome = "New";
+          ocupation.subarea = this.subarea;
+          this.ocupacaoService.inserir(ocupation).subscribe(
+            it => {
+              this.ocupacoes.push(it)
+            }
+          )
+        },
+        error: (_) => {
+          this.dataService.getData('null_object', 'first_template').subscribe(
+            async it => {
+              ocupation = OcupacaoFactory.criarOcupacao(it.janela_c.subareas[0], ordem);
+              ocupation.nome = 'New';
+              this.ocupacoes.push({...ocupation})
+              this.subarea.ocupacoes = [...this.ocupacoes];
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            }
+          )
+        }
+      })
+    }
+  }
+
+  saveEdit(event: any, i: number) {
+    clearTimeout(this.timeout);
+    var $this = this;
+    this.timeout = setTimeout(function () {
+      if (event.keyCode != 13) {
+        $this.executeListing(event.target.value, i);
+      }
+    }, 1500);
+  }
+
+  private executeListing(value: string, index: number) {
+    if(value != ''){
+      const ocupation = {...this.ocupacoes[index]}
+      ocupation.nome = value      
+      ocupation.subarea = {...this.subarea};
+
+      this.ocupacaoService.atualizar(ocupation).subscribe(
+        {
+          next: async _ => {
+            this.ocupacoes.splice(index, 1, ocupation)
+            await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+          },
+          error: async _ => {
+            this.ocupacoes.splice(index, 1, ocupation)
+            await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+          }
         }
       )
     }
   }
+
+  removerOcupacao(index: number): void{
+    if(index != 0){
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        _ =>{
+          this.ocupacaoService.remover(this.ocupacoes[index].idocupacao).subscribe(
+          {
+            next: async _ => {
+              this.ocupacoes.splice(index, 1)
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            },
+            error: async _ => {
+              this.ocupacoes.splice(index, 1)
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            }
+          })
+        })
+    }
+  }
+
+  // ------------------------------------------------------------------------------------------------------------
 
   calcQntItens(value: boolean): void {
     const windowWidth = (window.innerWidth >= ScreenWidthSize.maxWidth) ? ScreenWidthSize.maxWidth : window.innerWidth
@@ -104,68 +206,6 @@ export class OcupacaoGeralComponent implements OnInit {
     }
     else{
       this.show = index;
-    }
-  }
-
-  saveEdit(event: any, i: number) {
-    clearTimeout(this.timeout);
-    var $this = this;
-    this.timeout = setTimeout(function () {
-      if (event.keyCode != 13) {
-        $this.executeListing(event.target.value, i);
-      }
-    }, 2000);
-  }
-
-  private executeListing(value: string, index: number) {
-    if(value != ''){
-      this.ocupacaoService.pesquisarPorId(this.ocupacoes[index].idocupacao).subscribe(
-        response => {
-          response.nome = value;
-          this.ocupacaoService.pesquisarSubareaPorIdOcupacao(response.idocupacao).subscribe(
-            it => {
-              response.subarea = it;
-              this.ocupacaoService.atualizar(response).subscribe(
-                result => {}
-              )
-            }
-          )
-        }
-      )
-    }
-  }
-
-  removerOcupacao(index: number): void{
-    if(index != 0){
-      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
-      dialogRef.componentInstance.deleteClick.subscribe(
-        result =>{
-          this.ocupacaoService.remover((this.ocupacoes[index].idocupacao).toString()).subscribe(
-            it => this.ocupacoes.splice(index, 1)
-          )
-        })
-    }
-  }
-
-  addOcupacao(): void{
-    if(this.ocupacoes.length < 7){
-      let ocupacao!: Ocupacao;
-      const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
-
-      this.templateService.pesquisarPorId(1).subscribe(
-        result => {
-          ocupacao = OcupacaoFactory.criarOcupacao(result.janela_c.subareas[0], ordem);
-          //ocupacao.nome = "Digite Aqui!";
-          ocupacao.nome = "New";
-          ocupacao.subarea = this.subarea;
-
-          this.ocupacaoService.inserir(ocupacao).subscribe(
-            it => {
-              this.ocupacoes.push(it)
-            }
-          )
-        }
-      )
     }
   }
 }

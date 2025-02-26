@@ -18,6 +18,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
+import { Subarea } from 'src/app/shared/model/subarea';
 
 @Component({
   selector: 'app-workspace',
@@ -33,6 +34,8 @@ export class WorkspaceComponent implements OnInit  {
   windows_limit: number = 5;
 
   window!: Janela;
+
+  subarea!: Subarea;
   
   constructor(private dialog: MatDialog, private janelaService: JanelaService,  private store: Store<any>, private registry: RegistryStore,
     private dataService: DataService, private templateService: TemplateService, private atividadeService: AtividadeService) {
@@ -153,6 +156,10 @@ export class WorkspaceComponent implements OnInit  {
   enviarJanelas(index: number): void {
     this.store.dispatch({type: 'window', payload: { list: [...this.windows], position: index, local: true }})
     this.index = index;
+  }
+
+  throwSubarea(subarea: Subarea): void{
+    this.subarea = subarea;
   }
 
   // ------------------------------------------------------------------------------------------------------------

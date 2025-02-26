@@ -32,7 +32,7 @@ export class OcupacaoService {
     );
   }
 
-  remover(id: string): Observable<object> {
+  remover(id: number): Observable<object> {
     return this.httpClient.delete(`${this.URL_OCUPACAO}/${id}`).pipe(
       catchError((error) => {
         return throwError(() => new Error(error));

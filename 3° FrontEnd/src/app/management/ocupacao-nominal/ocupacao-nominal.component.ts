@@ -136,7 +136,7 @@ export class OcupacaoNominalComponent implements OnInit {
       let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
       dialogRef.componentInstance.deleteClick.subscribe(
         result =>{
-          this.ocupacaoService.remover((this.ocupacoes[index].idocupacao).toString()).subscribe(
+          this.ocupacaoService.remover(this.ocupacoes[index].idocupacao).subscribe(
             it => this.ocupacoes.splice(index, 1)
           )
         })

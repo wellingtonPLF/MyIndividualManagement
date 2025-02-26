@@ -8,7 +8,8 @@
 }
 
 .containerItens{
-  display: flex;
+  // display: flex;
+  width: 100%;
 }
 
 .counteiner-item{
@@ -18,7 +19,7 @@
   justify-content: center;
   align-items: center;
   background-color: white;
-  width: 120px;
+  width: 100%; //width: 120px;
   margin-left: 7.5px;
   margin-right: 7.5px;
   height: 70px;
@@ -46,7 +47,7 @@
 
 .displayWrap{
   display: flex;
-  flex-wrap: wrap
+  // flex-wrap: wrap
 }
 
 .displayNone{

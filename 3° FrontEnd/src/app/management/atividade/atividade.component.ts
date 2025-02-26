@@ -27,7 +27,7 @@ export class AtividadeComponent implements OnInit {
   activity$!: Observable<any>;
   activity_limit: number = 10;
 
-  constructor(private dataService: DataService, private templateService: TemplateService, private store: Store<any>, private registry: RegistryStore,
+  constructor(private dataService: DataService, private templateService: TemplateService, private store: Store<any>,
     private atividadeService: AtividadeService, public dialog: MatDialog) {
       this.activity$ = this.store.select('activityReducer');
   }
@@ -39,7 +39,7 @@ export class AtividadeComponent implements OnInit {
         if (!it.local) {
           this.atividades = OrdemDependency.ordenar([...it.list])
           this.index = it.position;
-          this.store.dispatch({type: 'window', payload: { list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position] }})
+          this.store.dispatch({type: 'window', payload: { list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position]}})
         }
         if (this.index != it.position) {
           this.index = it.position;

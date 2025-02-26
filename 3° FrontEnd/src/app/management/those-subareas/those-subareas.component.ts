@@ -31,6 +31,8 @@ export class ThoseSubareasComponent implements OnInit {
   templateName!: String;
   selectedSubarea!: Subarea;
 
+  @Output() subareaEmitter = new EventEmitter<Subarea>();
+
   constructor(public janelaService: JanelaService, private store: Store<any>, private registry: RegistryStore,
               public templateService: TemplateService, public dialog: MatDialog, private dataService: DataService,
               public subareaService: SubareaService) {
@@ -41,29 +43,38 @@ export class ThoseSubareasComponent implements OnInit {
     this.index = 0;
     this.subarea$.subscribe(
       it => {
-        this.janela = {...it.parent};
-        if (it.list.length != 0) {
-          this.index = it.position
-          this.janelaService.pesquisarPorId(it.parent.idatividade).subscribe({
-            next: result => {
-              this.subareas = OrdemDependency.ordenar(result.subareas);
-              this.subarea = this.subareas[0];
-            },
-            error: (_) => {
-              this.subareas = OrdemDependency.ordenar([...it.list]);
-              this.subarea = this.subareas[0];
-            }
-          })
-          this.janelaService.pesquisarTemplateByIdJanela(this.janela.idjanela).subscribe({
-            next: result => {
-              if(result != null){
-                this.templateName = result.nome;
+        if (!it.local) {
+          this.janela = {...it.parent};
+          if (it.list.length != 0) {
+            this.index = it.position
+            this.janelaService.pesquisarPorId(it.parent.idjanela).subscribe({
+              next: result => {
+                this.subareas = OrdemDependency.ordenar(result.subareas);
+                this.subarea = this.subareas[0];
+                this.subareaEmitter.emit(this.subareas[0]);
+                this.store.dispatch({type: 'ocupation', payload: { list: [...this.subareas[it.position].ocupacoes], parent: this.subareas[it.position] }})
+              },
+              error: (_) => {
+                this.subareas = OrdemDependency.ordenar([...it.list]);
+                this.subarea = this.subareas[0];
+                this.subareaEmitter.emit(this.subareas[0]);
+                this.store.dispatch({type: 'ocupation', payload: { list: [...this.subareas[it.position].ocupacoes], parent: this.subareas[it.position] }})
               }
-            },
-            error: (_) => {
-              this.templateName = "Default";
-            }
-          })
+            })
+            this.janelaService.pesquisarTemplateByIdJanela(this.janela.idjanela).subscribe({
+              next: result => {
+                if(result != null){
+                  this.templateName = result.nome;
+                }
+              },
+              error: (_) => {
+                this.templateName = "Default";
+              }
+            })
+          }
+        }
+        if (this.index != it.position) {
+          this.store.dispatch({type: 'ocupation', payload: { list: [...this.subareas[it.position].ocupacoes], parent: this.subareas[it.position] }})
         }
       }
     )
@@ -133,6 +144,7 @@ export class ThoseSubareasComponent implements OnInit {
         _ => {
           if (this.index == value){
             this.subarea = this.subareas[value - 1];
+            this.subareaEmitter.emit(this.subareas[value - 1]);
             this.index = value - 1;
           }
 

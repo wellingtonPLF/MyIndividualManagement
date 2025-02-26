@@ -25,7 +25,7 @@
   </div>
   <div id="abaixoDaJanela">
 
-    <app-those-subareas></app-those-subareas>
+    <app-those-subareas (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
 
     <!-- <div style="display: flex; margin-right: 20px; align-items: center">
       <div id="template" (click)="openTemplates()">
@@ -42,11 +42,11 @@
       </div>
     </div> -->
   </div>
-  <!-- <div id="ocupation">
+  <div id="ocupation">
       <div *ngIf="subarea != undefined" style="min-width: 350px;">
         <app-ocupacao-list *ngIf="subarea.estilo == 3" [subarea]="subarea"></app-ocupacao-list>
-        <app-ocupacao-geral *ngIf="subarea.estilo == 1" [subarea]="subarea"></app-ocupacao-geral>
+        <app-ocupacao-geral *ngIf="subarea.estilo == 1"></app-ocupacao-geral>
         <app-ocupacao-nominal *ngIf="subarea.estilo == 2" [subarea]="subarea"></app-ocupacao-nominal>
       </div>
-  </div> -->
+  </div>
 </div>

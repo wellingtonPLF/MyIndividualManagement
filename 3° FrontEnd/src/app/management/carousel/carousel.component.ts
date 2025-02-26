@@ -1,7 +1,6 @@
 import {Component, Input, OnInit, SimpleChanges} from '@angular/core';
 import {Classe} from "../../shared/model/classe";
 import {Task} from "../../shared/model/task";
-import {Ocupacao} from "../../shared/model/ocupacao";
 import {ClasseService} from "../../shared/service/classe.service";
 import {Router} from "@angular/router";
 import {TemplateService} from "../../shared/service/template.service";
@@ -72,67 +71,14 @@ export class CarouselComponent implements OnInit {
     }
   }
 
-  borderDate(lista: any): boolean{
-    const today = new Date()
-    const year = today.getFullYear()
-    let month: String | number = today.getMonth() + 1
-    let day: String | number = today.getDate()
-    if(month < 10){
-      month = `0${month}`
-    }
-    if(day < 10){
-      day = `0${day}`
-    }
-    const date = `${year}-${month}-${day}`
-    const myDate = lista.data
-    return date == myDate
-  }
-
-  left(): void{
-    if(this.escolhido != 0){
-      this.escolhido -= 1;
-    }
-  }
-
-  right(): void{
-    if(this.lista != undefined){
-      if(this.resto == 0 && this.dificuldade == 'any' && this.lista.length != 0){
-        if(this.escolhido != this.calc() - 1){
-          this.escolhido += 1;
-        }
-      }
-      else if(this.escolhido != this.calc()){
-        this.escolhido += 1;
+  refatorarLista(list: Array<Task>): Array<Task>{
+    let novaLista = new Array<Task>();
+    for(let i of list){
+      if(i.dificuldade == this.dificuldade && i.etiqueta != 'success'){
+        novaLista.push(i)
       }
     }
-  }
-
-  calc(): number{
-    const result = (this.lista.length/this.qntItens);
-    return Math.floor(result);
-  }
-
-  paginas(): void{
-    if(this.lista != undefined){
-      this.pages = this.calc();
-    }
-  }
-
-  multiplo(): number{
-    return this.calc() * this.qntItens
-  }
-
-  counter(qnt: number) {
-    return new Array(qnt);
-  }
-
-  show(index: any): void{
-    if(this.objeto.objectType == 'Ocupacao'){
-      this.openClassDialog(index)
-    }
-    else{
-      this.openTaskDialog(index, this.lista[index])
-    }
+    return novaLista;
   }
 
   add(): void{
@@ -203,16 +149,6 @@ export class CarouselComponent implements OnInit {
         }
       )
     }
-  }
-
-  refatorarLista(list: Array<Task>): Array<Task>{
-    let novaLista = new Array<Task>();
-    for(let i of list){
-      if(i.dificuldade == this.dificuldade && i.etiqueta != 'success'){
-        novaLista.push(i)
-      }
-    }
-    return novaLista;
   }
 
   openTaskDialog(index: number, task: Task): void{
@@ -303,5 +239,70 @@ export class CarouselComponent implements OnInit {
         this.paginas()
       }
     )
+  }
+
+  // ---------------------------------------------------------------------------------------------------
+
+  borderDate(lista: any): boolean{
+    const today = new Date()
+    const year = today.getFullYear()
+    let month: String | number = today.getMonth() + 1
+    let day: String | number = today.getDate()
+    if(month < 10){
+      month = `0${month}`
+    }
+    if(day < 10){
+      day = `0${day}`
+    }
+    const date = `${year}-${month}-${day}`
+    const myDate = lista.data
+    return date == myDate
+  }
+
+  left(): void{
+    if(this.escolhido != 0){
+      this.escolhido -= 1;
+    }
+  }
+
+  right(): void{
+    if(this.lista != undefined){
+      if(this.resto == 0 && this.dificuldade == 'any' && this.lista.length != 0){
+        if(this.escolhido != this.calc() - 1){
+          this.escolhido += 1;
+        }
+      }
+      else if(this.escolhido != this.calc()){
+        this.escolhido += 1;
+      }
+    }
+  }
+
+  calc(): number{
+    const result = (this.lista.length/this.qntItens);
+    return Math.floor(result);
+  }
+
+  paginas(): void{
+    if(this.lista != undefined){
+      this.pages = this.calc();
+    }
+  }
+
+  multiplo(): number{
+    return this.calc() * this.qntItens
+  }
+
+  counter(qnt: number) {
+    return new Array(qnt);
+  }
+
+  show(index: any): void{
+    if(this.objeto.objectType == 'Ocupacao'){
+      this.openClassDialog(index)
+    }
+    else{
+      this.openTaskDialog(index, this.lista[index])
+    }
   }
 }
