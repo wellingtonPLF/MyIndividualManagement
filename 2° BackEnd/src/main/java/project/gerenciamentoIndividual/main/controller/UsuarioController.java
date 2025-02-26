@@ -43,6 +43,11 @@ public class UsuarioController {
    public Usuario getUsuarioByNomeAndSenha(@PathVariable("nome") String nome) {
        return usuarioService.getUsuarioByNome(nome);
    }
+   
+   @GetMapping("/usuario/getAuthenticated")
+   public Usuario getAuthenticated() {
+       return usuarioService.getAuthenticated();
+   }
 
    @PostMapping("/usuario")
    public Usuario inserirUsuario(@RequestBody Usuario usuario){

@@ -33,6 +33,10 @@ public class UsuarioService {
 	   return this.usuarioRepository.findUsuarioByNome(nome);
    }
    
+   public Usuario getAuthenticated() {
+	   return this.usuarioRepository.findUsuarioByNome("wellington");
+   }
+   
    public Boolean checkLimit() {
 	   int qnt = this.usuarioRepository.findAll().size();
 	   if (qnt >= this.userLimit) {
