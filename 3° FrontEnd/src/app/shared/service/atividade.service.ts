@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Usuario} from "../model/usuario";
 import {Atividade} from "../model/atividade";
 
@@ -42,6 +42,12 @@ export class AtividadeService {
 
   pesquisarPorId(id: number): Observable<Atividade> {
     return this.httpClient.get<Atividade>(`${this.URL_ATIVIDADE}/${id}`).pipe(
+      map((data: Atividade | null) => {
+        if (!data) {
+          throw new Error('Atividade not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

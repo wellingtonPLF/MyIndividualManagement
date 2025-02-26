@@ -42,6 +42,12 @@ export class UsuarioService {
 
   pesquisarPorId(id: number): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`).pipe(
+      map((data: Usuario | null) => {
+        if (!data) {
+          throw new Error('Usuario not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })
@@ -58,6 +64,14 @@ export class UsuarioService {
 
   getUsuarioByNome(nome: String): Observable<Usuario>{
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/myuser/${nome}`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
+  }
+
+  getAuthenticatedUser(): Observable<Usuario>{
+    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/getAuthenticated`).pipe(
       catchError((error) => {
         return throwError(() => new Error(error));
       })

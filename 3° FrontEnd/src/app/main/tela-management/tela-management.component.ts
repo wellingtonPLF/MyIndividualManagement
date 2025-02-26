@@ -7,6 +7,7 @@ import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { UsuarioService } from 'src/app/shared/service/usuario.service';
 
 @Component({
   selector: 'app-tela-management',
@@ -28,7 +29,7 @@ export class TelaManagementComponent implements OnInit{
 
   constructor(private accountService: SessionStorageService,
               private fshare: FuncShareService, 
-              private store: Store<any>,
+              private store: Store<any>, private userService: UsuarioService,
               private accountServiceLocal: LocalStorageService) {
     this.atividade = new Atividade('');
     this.usuario = new Usuario();
@@ -49,6 +50,13 @@ export class TelaManagementComponent implements OnInit{
     this.user$.subscribe(
       it => {
         this.usuario = {...it}
+        this.userService.getAuthenticatedUser().subscribe({
+          next: result => {
+            this.usuario = {...result}
+            this.store.dispatch({type: 'activity', payload: { position: 0, list: this.usuario.atividades } })
+          },
+          error: (_) => {}
+        })
       }
     )
   }
@@ -74,14 +82,14 @@ export class TelaManagementComponent implements OnInit{
   }
 
   seeValue() {
-    this.activity$.subscribe(
-      it => {
-        console.log(`Position: ${it.position}`)
-        for (let x of it.list) {
-          console.log(x)
-        }
-      }
-    )
+    // this.activity$.subscribe(
+    //   it => {
+    //     console.log(`Position: ${it.position}`)
+    //     for (let x of it.list) {
+    //       console.log(x)
+    //     }
+    //   }
+    // )
   }
 }
  

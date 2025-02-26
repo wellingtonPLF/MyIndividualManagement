@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Projeto} from "../model/projeto";
 import {Classe} from "../model/classe";
 import {Task} from "../model/task";
@@ -51,6 +51,12 @@ export class ProjetoService {
 
   pesquisarPorId(id: number): Observable<Projeto> {
     return this.httpClient.get<Projeto>(`${this.URL_TASK}/${id}`).pipe(
+      map((data: Projeto | null) => {
+        if (!data) {
+          throw new Error('Projeto not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

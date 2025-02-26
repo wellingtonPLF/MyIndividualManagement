@@ -118,21 +118,25 @@ export class EditDialogComponent implements OnInit {
         {
           next: templat => {
             this.janela.template = templat
+            this.janela.nome = `${this.object.nome}`;
             this.janelaService.atualizar(this.janela).subscribe(
               it => this.submitClicked.emit(it)
             )
           },
           error: _ => {
-            this.submitClicked.emit(this.object)
+            this.submitClicked.emit(this.janela)
           }
         }
       )
     }
     if(this.data.type == "subarea"){
       this.subarea.janela = this.data.key;
+      this.subarea.nome = `${this.object.nome}`;
       this.subareaService.atualizar(this.subarea).subscribe(
         {
-          next: it => this.submitClicked.emit(it),
+          next: it => {
+            this.submitClicked.emit(it)
+          },
           error: _ => {
             this.submitClicked.emit(this.object)
           }

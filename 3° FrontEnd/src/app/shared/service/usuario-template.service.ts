@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {UsuarioTemplate} from "../model/usuarioTemplate";
 
 import { environment } from '../../../environments/environment';
@@ -41,6 +41,12 @@ export class UsuarioTemplateService {
 
   pesquisarPorId(id: number): Observable<UsuarioTemplate> {
     return this.httpClient.get<UsuarioTemplate>(`${this.URL_USUARIOS_TEMPLATE}/${id}`).pipe(
+      map((data: UsuarioTemplate | null) => {
+        if (!data) {
+          throw new Error('usuarioTemplate not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

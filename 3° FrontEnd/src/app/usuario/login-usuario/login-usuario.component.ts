@@ -4,6 +4,7 @@ import {UsuarioService} from "../../shared/service/usuario.service";
 import {Router} from "@angular/router";
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-login-usuario',
@@ -30,7 +31,7 @@ export class LoginUsuarioComponent implements OnInit {
   //CheckButton
   check!: boolean;
 
-  constructor(private usuarioService: UsuarioService,
+  constructor(private usuarioService: UsuarioService, private store: Store<any>,
               private router: Router,
               private accountService: SessionStorageService,
               private accountServiceLocal: LocalStorageService) {

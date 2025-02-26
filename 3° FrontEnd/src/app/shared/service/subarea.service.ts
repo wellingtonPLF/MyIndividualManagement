@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Subarea} from "../model/subarea";
 import {Janela} from "../model/janela";
 
@@ -42,6 +42,12 @@ export class SubareaService {
 
   pesquisarPorId(id: number): Observable<Subarea> {
     return this.httpClient.get<Subarea>(`${this.URL_SUBAREA}/${id}`).pipe(
+      map((data: Subarea | null) => {
+        if (!data) {
+          throw new Error('Subarea not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

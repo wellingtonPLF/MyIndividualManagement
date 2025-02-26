@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Template} from "../model/template"
 
 import { environment } from '../../../environments/environment';
@@ -41,6 +41,12 @@ export class TemplateService {
 
   pesquisarPorId(id: number): Observable<Template> {
     return this.httpClient.get<Template>(`${this.URL_TEMPLATE}/${id}`).pipe(
+      map((data: Template | null) => {
+        if (!data) {
+          throw new Error('Template not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

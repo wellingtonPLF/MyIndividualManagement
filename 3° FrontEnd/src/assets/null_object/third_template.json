@@ -1,16 +1,16 @@
 {
-    "idtemplate": 1,
-    "nome": "Default",
+    "idtemplate": 2,
+    "nome": "To Do List",
     "objectType": "Template",
     "janela_c": {
-        "idjanela": 1,
+        "idjanela": 2,
         "nome": "Janela",
         "ordem": 0,
         "objectType": "0",
-        "info": "MySpace",
+        "info": "Planning",
         "subareas": [
             {
-                "idsubarea": 1,
+                "idsubarea": 2,
                 "nome": "Main",
                 "tipo": "casual",
                 "estilo": 1,
@@ -18,14 +18,14 @@
                 "objectType": "Subarea",
                 "ocupacoes": [
                     {
-                        "idocupacao": 1,
-                        "nome": "Gerais",
+                        "idocupacao": 2,
+                        "nome": "Ocupation",
                         "ordem": 0,
                         "objectType": "Ocupacao",
                         "classes": [
                             {
-                                "idclasse": 1,
-                                "nome": "All",
+                                "idclasse": 2,
+                                "nome": "Anything",
                                 "ordem": 0,
                                 "padrao": null,
                                 "quando": null,
@@ -40,7 +40,242 @@
                         ]
                     }
                 ]
+            },
+            {
+                "idsubarea": 3,
+                "nome": "Diarias",
+                "tipo": "casual",
+                "estilo": 2,
+                "ordem": 0,
+                "objectType": "Subarea",
+                "ocupacoes": [
+                    {
+                        "idocupacao": 3,
+                        "nome": "Ocupation",
+                        "ordem": 0,
+                        "objectType": "Ocupacao",
+                        "classes": [
+                            {
+                                "idclasse": 3,
+                                "nome": "Tarefas Diárias",
+                                "ordem": 0,
+                                "padrao": "easy",
+                                "quando": null,
+                                "info": null,
+                                "porque": null,
+                                "oque": null,
+                                "como": null,
+                                "objectType": "Classe",
+                                "casual": [],
+                                "projeto": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "idsubarea": 4,
+                "nome": "Lengthy",
+                "tipo": "projeto",
+                "estilo": 2,
+                "ordem": 0,
+                "objectType": "Subarea",
+                "ocupacoes": [
+                    {
+                        "idocupacao": 4,
+                        "nome": "Ocupation",
+                        "ordem": 0,
+                        "objectType": "Ocupacao",
+                        "classes": [
+                            {
+                                "idclasse": 4,
+                                "nome": "Tarefas Extremas",
+                                "ordem": 0,
+                                "padrao": "extreme",
+                                "quando": null,
+                                "info": null,
+                                "porque": null,
+                                "oque": null,
+                                "como": null,
+                                "objectType": "Classe",
+                                "casual": [],
+                                "projeto": []
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                "idsubarea": 5,
+                "nome": "Gerais",
+                "tipo": "casual",
+                "estilo": 2,
+                "ordem": 0,
+                "objectType": "Subarea",
+                "ocupacoes": [
+                    {
+                        "idocupacao": 5,
+                        "nome": "Ocupation",
+                        "ordem": 0,
+                        "objectType": "Ocupacao",
+                        "classes": [
+                            {
+                                "idclasse": 5,
+                                "nome": "Tarefas Gerais",
+                                "ordem": 0,
+                                "padrao": "easy",
+                                "quando": null,
+                                "info": null,
+                                "porque": null,
+                                "oque": null,
+                                "como": null,
+                                "objectType": "Classe",
+                                "casual": [],
+                                "projeto": []
+                            }
+                        ]
+                    }
+                ]
             }
         ]
-    }
+    },
+    "janelas": [
+        {
+            "idjanela": 9,
+            "nome": "dasd",
+            "ordem": 1,
+            "objectType": "Janela",
+            "info": null,
+            "subareas": [
+                {
+                    "idsubarea": 26,
+                    "nome": "Main",
+                    "tipo": "casual",
+                    "estilo": 1,
+                    "ordem": 0,
+                    "objectType": "Subarea",
+                    "ocupacoes": [
+                        {
+                            "idocupacao": 30,
+                            "nome": "Ocupation",
+                            "ordem": 0,
+                            "objectType": "Ocupacao",
+                            "classes": [
+                                {
+                                    "idclasse": 31,
+                                    "nome": "Anything",
+                                    "ordem": 0,
+                                    "padrao": "easy",
+                                    "quando": null,
+                                    "info": null,
+                                    "porque": null,
+                                    "oque": null,
+                                    "como": null,
+                                    "objectType": "Classe",
+                                    "casual": [],
+                                    "projeto": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "idsubarea": 27,
+                    "nome": "Diarias",
+                    "tipo": "casual",
+                    "estilo": 2,
+                    "ordem": 1,
+                    "objectType": "Subarea",
+                    "ocupacoes": [
+                        {
+                            "idocupacao": 31,
+                            "nome": "Ocupation",
+                            "ordem": 0,
+                            "objectType": "Ocupacao",
+                            "classes": [
+                                {
+                                    "idclasse": 32,
+                                    "nome": "Tarefas Diárias",
+                                    "ordem": 0,
+                                    "padrao": "easy",
+                                    "quando": null,
+                                    "info": null,
+                                    "porque": null,
+                                    "oque": null,
+                                    "como": null,
+                                    "objectType": "Classe",
+                                    "casual": [],
+                                    "projeto": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "idsubarea": 28,
+                    "nome": "Lengthy",
+                    "tipo": "projeto",
+                    "estilo": 2,
+                    "ordem": 2,
+                    "objectType": "Subarea",
+                    "ocupacoes": [
+                        {
+                            "idocupacao": 32,
+                            "nome": "Ocupation",
+                            "ordem": 0,
+                            "objectType": "Ocupacao",
+                            "classes": [
+                                {
+                                    "idclasse": 33,
+                                    "nome": "Tarefas Extremas",
+                                    "ordem": 0,
+                                    "padrao": "extreme",
+                                    "quando": null,
+                                    "info": null,
+                                    "porque": null,
+                                    "oque": null,
+                                    "como": null,
+                                    "objectType": "Classe",
+                                    "casual": [],
+                                    "projeto": []
+                                }
+                            ]
+                        }
+                    ]
+                },
+                {
+                    "idsubarea": 29,
+                    "nome": "Gerais",
+                    "tipo": "casual",
+                    "estilo": 2,
+                    "ordem": 3,
+                    "objectType": "Subarea",
+                    "ocupacoes": [
+                        {
+                            "idocupacao": 33,
+                            "nome": "Ocupation",
+                            "ordem": 0,
+                            "objectType": "Ocupacao",
+                            "classes": [
+                                {
+                                    "idclasse": 34,
+                                    "nome": "Tarefas Gerais",
+                                    "ordem": 0,
+                                    "padrao": "easy",
+                                    "quando": null,
+                                    "info": null,
+                                    "porque": null,
+                                    "oque": null,
+                                    "como": null,
+                                    "objectType": "Classe",
+                                    "casual": [],
+                                    "projeto": []
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
 }

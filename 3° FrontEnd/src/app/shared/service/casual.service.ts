@@ -4,7 +4,7 @@ import {Classe} from "../model/classe";
 import {Observable, throwError} from "rxjs";
 import {Casual} from "../model/casual";
 import {Task} from "../model/task";
-import { catchError } from 'rxjs/operators';
+import { catchError, map } from 'rxjs/operators';
 
 import { environment } from '../../../environments/environment';
 
@@ -52,6 +52,12 @@ export class CasualService {
 
   pesquisarPorId(id: number): Observable<Casual> {
     return this.httpClient.get<Casual>(`${this.URL_TASK}/${id}`).pipe(
+      map((data: Casual | null) => {
+        if (!data) {
+          throw new Error('Casual not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

@@ -45,6 +45,12 @@ export class JanelaService {
 
   pesquisarPorId(id: number): Observable<Janela> {
     return this.httpClient.get<Janela>(`${this.URL_JANELAS}/${id}`).pipe(
+      map((data: Janela | null) => {
+        if (!data) {
+          throw new Error('Janela not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })

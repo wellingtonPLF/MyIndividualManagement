@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {catchError, Observable, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {Classe} from "../model/classe";
 import {Ocupacao} from "../model/ocupacao";
 
@@ -42,6 +42,12 @@ export class ClasseService {
 
   pesquisarPorId(id: number): Observable<Classe> {
     return this.httpClient.get<Classe>(`${this.URL_CLASSE}/${id}`).pipe(
+      map((data: Classe | null) => {
+        if (!data) {
+          throw new Error('Classe not found');
+        }
+        return data;
+      }),
       catchError((error) => {
         return throwError(() => new Error(error));
       })
