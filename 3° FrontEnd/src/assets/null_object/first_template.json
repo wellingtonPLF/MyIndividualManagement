@@ -10,31 +10,41 @@
         "info": "MySpace",
         "subareas": [
             {
-                "idsubarea": 1,
-                "nome": "Main",
+                "idsubarea": 5,
+                "nome": "Gerais",
                 "tipo": "casual",
-                "estilo": 1,
+                "estilo": 2,
                 "ordem": 0,
                 "objectType": "Subarea",
                 "ocupacoes": [
                     {
-                        "idocupacao": 1,
-                        "nome": "Gerais",
+                        "idocupacao": 5,
+                        "nome": "Ocupation",
                         "ordem": 0,
                         "objectType": "Ocupacao",
                         "classes": [
                             {
-                                "idclasse": 1,
-                                "nome": "All",
+                                "idclasse": 5,
+                                "nome": "Tarefas Gerais",
                                 "ordem": 0,
-                                "padrao": null,
+                                "padrao": "easy",
                                 "quando": null,
                                 "info": null,
                                 "porque": null,
                                 "oque": null,
                                 "como": null,
                                 "objectType": "Classe",
-                                "casual": [],
+                                "casual": [
+                                    {
+                                        "idtask": 1,
+                                        "nome": "Task",
+                                        "ordem": 0,
+                                        "tempo": "01:00:00",
+                                        "etiqueta": "undone",
+                                        "dificuldade": "easy",
+                                        "objectType": "Task"
+                                    }
+                                ],
                                 "projeto": []
                             }
                         ]

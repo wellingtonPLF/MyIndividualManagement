@@ -1,0 +1,52 @@
+#access_user{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #1976d2;
+    height: 100%;
+    position: relative;
+}
+
+#getBack {
+    position: absolute;
+    color: white;
+    top: 6%;
+    left: 5%;
+    cursor: pointer;
+}
+
+h2 {
+    font-size: 40px;
+    text-align: center;
+    margin-bottom: 30px;
+    font-family: "ZCOOL KuaiLe", cursive;
+}
+
+.config {
+    width: 100%;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #11285b30;
+    font-weight: 600;
+    border: 2px solid white;
+    color: white;
+}
+
+#access {
+    padding-left: 5px; 
+    background-color: white;
+    border-color: #0000ff4d;
+}
+
+#access:focus {
+    outline: unset;
+    border-color: #20c4b6;
+}
+
+.config:focus {
+    outline: unset;
+}
+
+.config:hover {
+    border-color: #20c4b6
+}

@@ -39,6 +39,11 @@ public class UsuarioController {
        return this.usuarioService.checkLimit();
    }
    
+   @GetMapping("/usuario/isLoggedIn")
+   public Boolean isLoggedIn() {
+       return this.usuarioService.isLoggedIn();
+   }
+   
    @GetMapping("/usuario/myuser/{nome}")
    public Usuario getUsuarioByNomeAndSenha(@PathVariable("nome") String nome) {
        return usuarioService.getUsuarioByNome(nome);

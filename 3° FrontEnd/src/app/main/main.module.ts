@@ -13,14 +13,16 @@ import {MatTabsModule} from "@angular/material/tabs";
 import {ManagementModule} from "../management/management.module";
 import {FeaturesModule} from "../features/features.module";
 import { FormsModule } from '@angular/forms';
+import { AccessUserComponent } from './access-user/access-user.component';
 
 @NgModule({
     declarations: [
         TelaPrincipalComponent,
-        TelaManagementComponent
+        TelaManagementComponent,
+        AccessUserComponent
     ],
     exports: [
-        TelaPrincipalComponent
+        TelaPrincipalComponent,
     ],
     imports: [
         CommonModule,

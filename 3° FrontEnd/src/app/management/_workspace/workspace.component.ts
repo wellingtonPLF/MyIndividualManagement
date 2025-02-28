@@ -34,16 +34,23 @@ export class WorkspaceComponent implements OnInit  {
   windows_limit: number = 5;
 
   window!: Janela;
-
   subarea!: Subarea;
+
+  enable: boolean = true;
   
-  constructor(private dialog: MatDialog, private janelaService: JanelaService,  private store: Store<any>, private registry: RegistryStore,
-    private dataService: DataService, private templateService: TemplateService, private atividadeService: AtividadeService) {
+  constructor(private dialog: MatDialog, private janelaService: JanelaService,  
+    private store: Store<any>, 
+    private registry: RegistryStore, private dataService: DataService, 
+    private templateService: TemplateService, private atividadeService: AtividadeService) {
     this.window$ = this.store.select('windowReducer');
   }
 
   ngOnInit(): void {
     this.index = 0;
+    if (window.location.pathname == "/experience") {
+      this.enable = false;
+    }
+
     this.window$.subscribe(
       it => {
         if (!it.local) {

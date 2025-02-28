@@ -40,6 +40,14 @@ export class UsuarioService {
     );
   }
 
+  isLoggedIn(): Observable<boolean> {
+    return this.httpClient.get<boolean>(`${this.URL_USUARIOS}/isLoggedIn`).pipe(
+      catchError((error) => {
+        return throwError(() => new Error(error));
+      })
+    );
+  }
+
   pesquisarPorId(id: number): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/${id}`).pipe(
       map((data: Usuario | null) => {

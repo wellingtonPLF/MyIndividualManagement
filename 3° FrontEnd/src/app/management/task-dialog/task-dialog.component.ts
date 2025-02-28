@@ -5,6 +5,8 @@ import {Task} from "../../shared/model/task";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
 import {Casual} from "../../shared/model/casual";
 import {CasualService} from "../../shared/service/casual.service";
+import { DataService } from 'src/app/shared/service/data.service';
+import { TaskFactory } from 'src/app/shared/factoryDirectory/taskFactory';
 
 @Component({
   selector: 'app-task-dialog',
@@ -20,17 +22,27 @@ export class TaskDialogComponent implements OnInit {
   @Output() submitClicked = new EventEmitter<any>();
   @Output() removedClicked = new EventEmitter<any>();
 
-  constructor(private taskService: CasualService, private dialog: MatDialog,
+  constructor(private taskService: CasualService, private dialog: MatDialog, private dataService: DataService, 
               @Inject(MAT_DIALOG_DATA) public data: any) { }
 
   ngOnInit(): void {
-    this.taskService.pesquisarPorId(this.data.datakey).subscribe(
-      it => {
-        this.task = it;
-        if(it.data != null){
-          this.tempo = it.data.toString();
+    const task = this.data.key.casual[this.data.datakey]
+    this.taskService.pesquisarPorId(task.idtask).subscribe(
+      {
+        next: it => {
+          this.task = it;
+          if(it.data != null){
+            this.tempo = it.data.toString();
+          }
+          this.etiqueta = this.checkEtiqueta(it.etiqueta);
+      },
+        error: _ => {
+          this.task = {...task}
+          if(task.data != null){
+            this.tempo = task.data.toISOString().slice(0,10);
+          }
+          this.etiqueta = this.checkEtiqueta(task.etiqueta);
         }
-        this.etiqueta = this.checkEtiqueta(it.etiqueta);
       }
     )
   }
@@ -50,29 +62,40 @@ export class TaskDialogComponent implements OnInit {
       const task = this.task;
       task.nome = value;
       this.taskService.pesquisarClassePorIdTask(task.idtask).subscribe(
-        it => {
+        {
+          next: it => {
           task.classe = it;
           this.taskService.atualizar(task).subscribe(
             result => this.submitClicked.emit(result)
           )
+        },
+        error: _ => {
+          this.task = task;
         }
-      )
+      })
     }
   }
 
   removerTask(): void{
     let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
     dialogRef.componentInstance.deleteClick.subscribe(
-      result =>{
+      _ => {
         this.taskService.remover((this.task.idtask).toString()).subscribe(
-          it => this.removedClicked.emit()
-        )
-      })
+        {
+          next: (x: any) => {
+            this.removedClicked.emit()
+          }, error: (result: any) => {
+            this.removedClicked.emit()
+          }
+        }
+      )
+    })
   }
 
-  updateTask(): void{
+  updateTask(): void {
     this.taskService.pesquisarClassePorIdTask(this.task.idtask).subscribe(
-      it => {
+      {
+        next: it => {
         this.task.classe = it;
         this.taskService.getIfDiarias().subscribe(
           response => {
@@ -92,8 +115,13 @@ export class TaskDialogComponent implements OnInit {
             )
           }
         )
+      },
+      error: _ => {
+        const task = {...this.task}
+        task.data = new Date(this.tempo)
+        this.submitClicked.emit(task)
       }
-    )
+    })
   }
 
   inputDisable(elemento :HTMLElement): void{

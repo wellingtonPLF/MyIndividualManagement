@@ -27,16 +27,19 @@ export class TaskProjectComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.taskService.pesquisarPorId(this.data.datakey).subscribe(
-      it => {
+    const datakey = this.data.datakey;
+    this.taskService.pesquisarPorId(datakey).subscribe(
+      {
+        next: it => {
         this.task = it;
         this.atualizarLista(it);
         if(it.data != null){
           this.tempo = it.data.toString();
         }
         this.etiqueta = this.checkEtiqueta(it.etiqueta);
-      }
-    )
+      },
+      error: _ => {}
+    })
   }
 
   updateTask(): void{

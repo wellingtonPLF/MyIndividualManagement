@@ -124,7 +124,7 @@ export class EditDialogComponent implements OnInit {
             )
           },
           error: _ => {
-            this.submitClicked.emit(this.janela)
+            this.submitClicked.emit(this.object)
           }
         }
       )

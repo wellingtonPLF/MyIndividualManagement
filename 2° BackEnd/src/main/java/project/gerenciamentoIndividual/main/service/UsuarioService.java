@@ -45,6 +45,10 @@ public class UsuarioService {
 	   return false;
    }
    
+   public Boolean isLoggedIn() {
+	   return true;
+   }
+   
    public Usuario inserir(Usuario usuario) {
 	   int qnt = this.usuarioRepository.findAll().size();
 	   if (qnt >= this.userLimit) {

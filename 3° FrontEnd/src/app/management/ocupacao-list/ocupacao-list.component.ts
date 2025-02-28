@@ -58,6 +58,15 @@ export class OcupacaoListComponent implements OnInit {
     )
   }
 
+  ngDoCheck() {
+    if (!this.logicExecuted) {
+      if (this.myDiv) {
+        this.calcQntItens(this.leftSide)
+        this.logicExecuted = true;
+      }
+    }
+  }
+
   ngOnInit(): void {
     let usuarioID = this.accountService.getToken();
 
@@ -130,10 +139,6 @@ export class OcupacaoListComponent implements OnInit {
     )
   }
 
-  showme() {
-    console.log(this.lista)
-  }
-
   ngOnChanges(): void{
     if(this.subarea != undefined){
       this.subareaService.pesquisarPorId(this.subarea.idsubarea).subscribe(
@@ -141,15 +146,6 @@ export class OcupacaoListComponent implements OnInit {
           this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
         }
       )
-    }
-  }
-
-  ngDoCheck() {
-    if (!this.logicExecuted) {
-      if (this.myDiv) {
-        this.calcQntItens(this.leftSide)
-        this.logicExecuted = true;
-      }
     }
   }
 
@@ -178,5 +174,9 @@ export class OcupacaoListComponent implements OnInit {
     else{
       this.show = index;
     }
+  }
+
+  showme() {
+    console.log(this.lista)
   }
 }

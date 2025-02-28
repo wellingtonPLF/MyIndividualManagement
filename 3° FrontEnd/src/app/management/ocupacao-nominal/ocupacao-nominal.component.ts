@@ -15,6 +15,8 @@ import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { DataService } from 'src/app/shared/service/data.service';
+import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
 
 @Component({
   selector: 'app-ocupacao-nominal',
@@ -23,18 +25,22 @@ import { Observable } from 'rxjs';
 })
 export class OcupacaoNominalComponent implements OnInit {
   show: number | undefined = 0;
-  @Input() subarea!: Subarea;
+  subarea!: Subarea;
+
   ocupacoes!: Array<Ocupacao>;
+  ocupation$!:Observable<any>;
+  ocupations_limit: number = 7;
+
   difficult!: string;
   timeout: any = null;
-
   qntItens: number = 2;
   leftSide = false;
   variable$!: Observable<any>;
 
-  constructor(private ocupacaoService: OcupacaoService,
-              private dialog: MatDialog, private classService: ClasseService, private fshare: FuncShareService,
-              private templateService: TemplateService, private subareaService: SubareaService, private store: Store<any>) {
+  constructor(private ocupacaoService: OcupacaoService, private registry: RegistryStore,
+    private dialog: MatDialog, private classService: ClasseService, private fshare: FuncShareService, private dataService: DataService,
+    private templateService: TemplateService, private subareaService: SubareaService, private store: Store<any>) {
+    this.ocupation$ = this.store.select('ocupationReducer');
     this.variable$ = this.store.select('leftSideReducer');
     this.fshare.getClickEvent().subscribe(
       it => {
@@ -53,32 +59,136 @@ export class OcupacaoNominalComponent implements OnInit {
         this.leftSide = it
       }
     )
-
     this.calcQntItens(this.leftSide)
-
     if (window.innerWidth < 582) {
       this.leftSide = true
     }
     window.addEventListener('resize', () => {
       this.calcQntItens(this.leftSide)
     });
+    // ------------------------------------------------------------------------------------------------------------------------------------------------  
+    this.ocupation$.subscribe(
+      it => {
+        if (!it.local) {
+          this.subarea = {...it.parent};
+          if (this.subarea.tipo == "casual"){
+            this.difficult = 'easy';
+          }
+          else if (this.subarea.tipo == "projeto"){
+            this.difficult = 'extreme';
+          }  
+          if (it.list.length != 0) {
+            this.subareaService.pesquisarPorId(it.parent.idsubarea).subscribe({
+              next: result => {
+                this.ocupacoes = OrdemDependency.ordenar(result.ocupacoes);
+                this.store.dispatch({type: 'class', payload: { list: [...this.ocupacoes[it.position].classes], parent: this.ocupacoes[it.position] }})
+              },
+              error: (_) => {
+                this.ocupacoes = [...OrdemDependency.ordenar([...it.list])];
+                this.store.dispatch({type: 'class', payload: { list: [...this.ocupacoes[it.position].classes], parent: this.ocupacoes[it.position] }})
+              }
+            })
+          }
+        }
+      }
+    )
+        
   }
 
-  ngOnChanges(): void{
-    if(this.subarea != undefined){
-      if (this.subarea.tipo == "projeto"){
-        this.difficult = 'extreme';
-      }
-      else if (this.subarea.tipo == "casual"){
-        this.difficult = 'easy';
-      }
-      this.subareaService.pesquisarPorId(this.subarea.idsubarea).subscribe(
-        it => {
-          this.ocupacoes =  OrdemDependency.ordenar(it.ocupacoes);
+  addOccupation(): void{
+    if(this.ocupacoes.length < this.ocupations_limit){
+      let ocupation!: Ocupacao;
+      const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
+
+      this.templateService.pesquisarPorId(1).subscribe(
+        {
+          next: result => {
+          ocupation = OcupacaoFactory.criarOcupacao(result.janela_c.subareas[0], ordem);
+          ocupation.nome = "Occupation";
+          ocupation.subarea = this.subarea;
+          this.ocupacaoService.inserir(ocupation).subscribe(
+            it => {
+              this.ocupacoes.push(it)
+            }
+          )
+        },
+        error: (_) => {
+          this.dataService.getData('null_object', 'first_template').subscribe(
+            async it => {
+              ocupation = OcupacaoFactory.criarOcupacao(it.janela_c.subareas[0], ordem);
+              ocupation.nome = 'New';
+              this.ocupacoes.push({...ocupation})
+              this.subarea.ocupacoes = [...this.ocupacoes];
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            }
+          )
         }
-      )
+      })
+    }
+  } 
+
+  saveEdit(event: any, i: number) {
+    clearTimeout(this.timeout);
+    var $this = this;
+    this.timeout = setTimeout(function () {
+      if (event.keyCode != 13) {
+        $this.execListing(event.target.value, i);
+      }
+    }, 500);
+  }
+
+  execListing(value: string, index: number) {
+    if(value != ''){      
+      this.classService.pesquisarPorId(this.ocupacoes[index].classes[0].idclasse).subscribe(
+        {
+          next: async it => {
+          it.ocupacao = this.ocupacoes[index];
+          it.nome = value;
+          this.classService.atualizar(it).subscribe(
+            _ => {}
+          )
+        },
+        error: async _ => {
+          const ocupations = JSON.parse(JSON.stringify(this.ocupacoes));
+          ocupations[index].classes[0].nome = value;
+          await this.registry.dispatcher('ocupation', [...ocupations]);
+        }
+      })
     }
   }
+
+  removerOccupation(index: number): void{
+    if(index != 0){
+      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+      dialogRef.componentInstance.deleteClick.subscribe(
+        _ =>{
+          this.ocupacaoService.remover(this.ocupacoes[index].idocupacao).subscribe(
+            {
+              next: async _ => {
+              this.ocupacoes.splice(index, 1)
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            },
+              error: async _ => {
+              this.ocupacoes.splice(index, 1)
+              await this.registry.dispatcher('ocupation', [...this.ocupacoes]);
+            } 
+          })
+        })
+    }
+  }
+  
+
+  showClasse(index: number): void{
+    if(this.show == index){
+      this.show = undefined;
+    }
+    else{
+      this.store.dispatch({type: 'ocupation', payload: { list: [...this.ocupacoes], position: index, local: true }})
+      this.show = index;
+    }
+  }
+
+  // ------------------------------------------------------------------------------------------------------------------------------------------------
 
   calcQntItens(value: boolean): void {
     const windowWidth = (window.innerWidth >= ScreenWidthSize.maxWidth) ? ScreenWidthSize.maxWidth : window.innerWidth
@@ -98,76 +208,18 @@ export class OcupacaoNominalComponent implements OnInit {
     }
   }
 
-  showClasse(index: number): void{
-    if(this.show == index){
-      this.show = undefined;
-    }
-    else{
-      this.show = index;
-    }
-  }
-
-  saveEdit(event: any, i: number) {
-    clearTimeout(this.timeout);
-    var $this = this;
-    this.timeout = setTimeout(function () {
-      if (event.keyCode != 13) {
-        $this.execListing(event.target.value, i);
-      }
-    }, 500);
-  }
-
-  private execListing(value: string, index: number) {
-    if(value != ''){
-      this.classService.pesquisarPorId(this.ocupacoes[index].classes[0].idclasse).subscribe(
-        it => {
-          it.ocupacao = this.ocupacoes[index];
-          it.nome = value;
-          this.classService.atualizar(it).subscribe(
-            result => {}
-          )
-        }
-      )
-    }
-  }
-
-  removerOccupation(index: number): void{
-    if(index != 0){
-      let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
-      dialogRef.componentInstance.deleteClick.subscribe(
-        result =>{
-          this.ocupacaoService.remover(this.ocupacoes[index].idocupacao).subscribe(
-            it => this.ocupacoes.splice(index, 1)
-          )
-        })
-    }
-  }
-
-  addOccupation(): void{
-    if(this.ocupacoes.length < 7){
-      let ocupacao!: Ocupacao;
-      const ordem = this.ocupacoes[this.ocupacoes.length - 1].ordem + 1;
-
-      this.templateService.pesquisarPorId(1).subscribe(
-        result => {
-          ocupacao = OcupacaoFactory.criarOcupacao(result.janela_c.subareas[0], ordem);
-          ocupacao.nome = "Occupation";
-          ocupacao.subarea = this.subarea;
-
-          this.ocupacaoService.inserir(ocupacao).subscribe(
-            it => {
-              this.ocupacoes.push(it)
-            }
-          )
-        }
-      )
-    }
-  }
-
   getInfo(index: number): void{
-    this.dialog.open(DialogComponent, {
+    const dialogRef = this.dialog.open(DialogComponent, {
       data: this.ocupacoes[index].classes[0],
       panelClass: 'dialogPadding'
     });
+
+    dialogRef.componentInstance.submitClicked.subscribe(
+      async result => {
+        const ocupations = JSON.parse(JSON.stringify(this.ocupacoes));
+        ocupations[index].classes = [result];
+        await this.registry.dispatcher('ocupation', [...ocupations]);
+      }
+    );
   }
 }

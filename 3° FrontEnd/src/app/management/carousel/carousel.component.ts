@@ -16,6 +16,9 @@ import {ProjetoService} from "../../shared/service/projeto.service";
 import {Projeto} from "../../shared/model/projeto";
 import {Casual} from "../../shared/model/casual";
 import {TaskProjectComponent} from "../task-project/task-project.component";
+import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
+import { DataService } from 'src/app/shared/service/data.service';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-carousel',
@@ -36,38 +39,44 @@ export class CarouselComponent implements OnInit {
   showAdd: number = 1;
 
   constructor(public classeService: ClasseService, private router: Router, private taskService: TaskService,
-              private dialog: MatDialog, public templateService: TemplateService,
-              private casualService: CasualService, private projetoService: ProjetoService) { }
+    private registry: RegistryStore, private dataService: DataService, 
+    private dialog: MatDialog, public templateService: TemplateService,
+    private casualService: CasualService, private projetoService: ProjetoService) {
+
+  }
 
   ngOnInit(): void {
     if (this.dificuldade == 'any'){
       this.showAdd = 0;
     }
     this.escolhido = 0;
-  }
 
-  ngOnChanges(): void {
-
-    if(this.objeto != undefined){
-      if(this.objeto.objectType == "Ocupacao"){
-        this.lista = OrdemDependency.ordenar(this.objeto.classes);
+    if(this.objeto.objectType == "Classe"){
+      if(this.subareaTipo == 'casual'){
+        const listaRef = this.refatorarLista(this.objeto.casual);
+        this.lista = OrdemDependency.ordenar(listaRef)
       }
-      else if(this.objeto.objectType == "Classe"){
-        if(this.subareaTipo == 'casual'){
-
-          const listaRef = this.refatorarLista(this.objeto.casual);
-          this.lista = OrdemDependency.ordenar(listaRef)
-        }
-        else if (this.subareaTipo == 'projeto'){
-          const listaRef = this.refatorarLista(this.objeto.projeto);
-          this.lista = OrdemDependency.ordenar(listaRef);
-        }
-      }
-      else{
-        this.lista = this.objeto;
+      else if (this.subareaTipo == 'projeto'){
+        const listaRef = this.refatorarLista(this.objeto.projeto);
+        this.lista = OrdemDependency.ordenar(listaRef);
       }
       this.paginas()
       this.resto = this.lista.length - this.multiplo();
+    }
+  }
+
+  ngOnChanges(): void {
+    if(this.objeto.objectType != "Classe"){
+      if(this.objeto != undefined){
+        if(this.objeto.objectType == "Ocupacao"){
+          this.lista = OrdemDependency.ordenar(this.objeto.classes);
+        }
+        else{
+          this.lista = this.objeto;
+        }
+        this.paginas()
+        this.resto = this.lista.length - this.multiplo();
+      }
     }
   }
 
@@ -87,7 +96,8 @@ export class CarouselComponent implements OnInit {
       const ordem = this.lista[this.lista.length - 1].ordem + 1;
 
       this.templateService.pesquisarPorId(1).subscribe(
-        result => {
+        {
+          next: result => {
           const subarea = result.janela_c.subareas[0]
           classe = ClasseFactory.criarClasse(subarea.ocupacoes[0], ordem, subarea.tipo);
           classe.nome = "New";
@@ -102,14 +112,16 @@ export class CarouselComponent implements OnInit {
               }
             }
           )
-        }
-      )
+        },
+        error: (_) => {}
+      })
     }
     else if (this.objeto.objectType == 'Classe'){
       let listTask!: Array<Task>;
       let ordem = 0;
       this.classeService.pesquisarPorId(this.objeto.idclasse).subscribe(
-        result => {
+        {
+          next: result => {
           if(this.subareaTipo == 'projeto'){
             if (result.projeto.length != 0){
               listTask = OrdemDependency.ordenar(result.projeto);
@@ -146,12 +158,34 @@ export class CarouselComponent implements OnInit {
               }
             )
           }
+        },
+        error: (_) => {
+          if(this.subareaTipo == 'casual'){
+            this.dataService.getData('null_object', 'first_template').subscribe(
+              async it => {
+                if (this.objeto.casual.length != 0){
+                  listTask = OrdemDependency.ordenar(this.objeto.casual);
+                  ordem = listTask[this.objeto.casual.length - 1].ordem + 1;
+                }
+                let task!: Casual;
+                const classe = it.janela_c.subareas[0].ocupacoes[0].classes[0]
+                task = TaskFactory.criarCasualTask(this.dificuldade, ordem, classe);
+                
+                this.lista.push({...task});
+                const saveClass: Classe = {...this.objeto};
+                saveClass.casual = [...this.lista];
+
+                await this.registry.dispatcher('class', [saveClass]);
+              }
+            )
+          }
+          else if(this.subareaTipo == 'projeto'){}
         }
-      )
+      })
     }
   }
 
-  openTaskDialog(index: number, task: Task): void{
+  openTaskDialog(index: number, task: Task): void {
     if (this.subareaTipo == 'projeto' || task.dificuldade == 'extreme'){
       let dialogRef = this.dialog.open(TaskProjectComponent, {
         data:{
@@ -187,31 +221,41 @@ export class CarouselComponent implements OnInit {
       (task.dificuldade == 'easy' || task.dificuldade == 'medium' || task.dificuldade == 'hard')){
       let dialogRef = this.dialog.open(TaskDialogComponent, {
         data:{
-          datakey: (task.idtask),
+          datakey: index,
           key: this.objeto
         },
         panelClass: 'taskFile'
       });
 
       dialogRef.componentInstance.submitClicked.subscribe(
-        result => {
+        async result => {
           if(result.etiqueta == 'success' || (result.data == null && this.dificuldade == 'any')){
             this.lista.splice(index, 1)
             this.resto = this.lista.length - this.multiplo();
             this.paginas()
           }
           else{
-            this.lista.splice(index, 1, result)
+            if (isNaN(result.data)) {
+              result.data = undefined;
+            }
+            this.lista.splice(index, 1, result)            
           }
+          const saveClass: Classe = {...this.objeto};
+          saveClass.casual = [...this.lista];
+          await this.registry.dispatcher('class', [saveClass]);
         }
       );
 
       dialogRef.componentInstance.removedClicked.subscribe(
-        it => {
+        async _ => {
           dialogRef.close()
           this.lista.splice(index, 1)
           this.resto = this.lista.length - this.multiplo();
           this.paginas()
+
+          const saveClass: Classe = {...this.objeto};
+          saveClass.casual = [...this.lista];
+          await this.registry.dispatcher('class', [saveClass]);
         }
       )
     }

@@ -1,11 +1,16 @@
 <div class="toolbar">
   <div class="nav-left" [ngStyle]="{'display': searchUser.status  ? 'none' : ''}">
-    <button style="border: none; background-color: transparent" [routerLink]="['']">
+    <button style="border: none; background-color: transparent" [routerLink]="['/access_user']">
       <mat-label>MyM</mat-label>
     </button>
   </div>
 
-  <div class="nav-fill" style="z-index: 10000;">
+  <div *ngIf="!isOnline" class="nav-fill" style="z-index: 10000;">
+    <div id="experience"
+    [routerLink]="['/experience']">Experience</div>
+  </div>
+
+  <div *ngIf="isOnline" class="nav-fill" style="z-index: 10000;">
     <input id="searchButton" [ngClass]="{'search_animation': searchUser.status}" [(ngModel)]="searchUser.value"
     [ngStyle]="{ 'width': searchUser.status ? '100%' : '0', 'margin-left': searchUser.status ? '5.4vw' : '0', 
     'padding': searchUser.status ? '0 10px' : '0', 'border': searchUser.status ? '2px solid #69A6E2': '' }"
@@ -19,7 +24,7 @@
 
   <app-user-list *ngIf="searchUser.status"></app-user-list>
 
-  <div class="nav-right" [ngClass]="{'nav-right-change': !searchUser.status && !widthScreen && !conta}"
+  <div *ngIf="isOnline" class="nav-right" [ngClass]="{'nav-right-change': !searchUser.status && !widthScreen && !conta}"
   [ngStyle]="{'display': searchUser.status && !widthScreen  ? 'none' : '', 'width': !conta ? '190px': '125px'}">
 
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
@@ -36,7 +41,12 @@
 </div>
 
 <div class="screen">
-  <img src="assets/tasks.png">
+  <div>
+    <div style="position: relative;">
+      <img src="assets/tasks.png">
+      <div id="access">TASKS</div>
+    </div>
+  </div>
   <div>
     <h1>My Individual <br>Management</h1>
   </div>

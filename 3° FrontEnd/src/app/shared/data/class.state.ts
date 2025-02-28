@@ -1,7 +1,8 @@
+import { INITIAL_TASK_STATE } from "./task.state";
 
 export const INITIAL_CLASS_STATE: any = {
     "idclasse": 0,
-    "nome": "All",
+    "nome": "Tarefas Gerais",
     "ordem": 0,
     "padrao": "easy",
     "quando": null,
@@ -10,6 +11,8 @@ export const INITIAL_CLASS_STATE: any = {
     "oque": null,
     "como": null,
     "objectType": "Classe",
-    "casual": [],
+    "casual": [
+        INITIAL_TASK_STATE
+    ],
     "projeto": []
 }

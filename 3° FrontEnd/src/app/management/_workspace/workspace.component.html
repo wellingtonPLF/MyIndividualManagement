@@ -27,7 +27,7 @@
 
     <app-those-subareas (subareaEmitter)="throwSubarea($event)"></app-those-subareas>
 
-    <!-- <div style="display: flex; margin-right: 20px; align-items: center">
+    <div *ngIf="enable" style="display: flex; margin-right: 20px; align-items: center">
       <div id="template" (click)="openTemplates()">
         <i [attr.aria-hidden]="'false'" class="fas fa-cubes"></i>
       </div>
@@ -40,13 +40,13 @@
       <div id="code" (click)="openVisualStudio()">
         <i [attr.aria-hidden]="'false'" class="fas fa-code"></i>
       </div>
-    </div> -->
+    </div>
   </div>
   <div id="ocupation">
-      <div *ngIf="subarea != undefined" style="min-width: 350px;">
+      <div *ngIf="subarea != undefined" style="min-width: 350px;" [ngClass]="{'noPaddingTop': subarea.estilo == 2}">
         <app-ocupacao-list *ngIf="subarea.estilo == 3" [subarea]="subarea"></app-ocupacao-list>
         <app-ocupacao-geral *ngIf="subarea.estilo == 1"></app-ocupacao-geral>
-        <app-ocupacao-nominal *ngIf="subarea.estilo == 2" [subarea]="subarea"></app-ocupacao-nominal>
+        <app-ocupacao-nominal *ngIf="subarea.estilo == 2"></app-ocupacao-nominal>
       </div>
   </div>
 </div>

@@ -20,6 +20,8 @@ export class TelaPrincipalComponent implements OnInit {
   user$!: Observable<any>;
   usuario!: Usuario;
 
+  isOnline: boolean = false;
+
   constructor(private accountService: SessionStorageService, private usuarioService: UsuarioService,
               private store: Store<any>, private accountServiceLocal: LocalStorageService) {
     this.user$ = this.store.select('userReducer');
@@ -27,6 +29,15 @@ export class TelaPrincipalComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.usuarioService.isLoggedIn().subscribe(
+      {
+        next: _ => {
+          this.isOnline = true;
+        },
+        error: () => {}
+      }
+    )
+
     window.addEventListener('resize', () => {
       this.widthScreen = window.innerWidth >= 500
     });

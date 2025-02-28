@@ -1,3 +1,30 @@
+#access {
+  position: absolute; 
+  bottom: 15%; 
+  right: 15%;
+  color: white;
+  font-size: 45px;
+  font-weight: 600;
+  cursor: default;
+}
+
+#experience {
+  border: 3px solid white !important;
+  background-color: white;
+  color: #30618a;
+  padding: 8px 20px;
+  border: unset;
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 800;
+  cursor: pointer;
+}
+
+#experience:hover {
+  background-color: transparent;
+  color: white;
+}
+
 .toolbar {
   display: flex;
   height: 100px;
@@ -14,7 +41,7 @@
 
 .nav-left{
   left: 30px;
-  position: absolute;
+  margin-left: 50px;
 }
 
 .nav-left button mat-label{
@@ -128,10 +155,13 @@
 
   $imgWidth: 50vh;
 
+  > :first-child {
+    margin-right: 10vh;
+  }
+
   img {
     width: calc($imgWidth + 150px);
     height: $imgWidth;
-    margin-right: 10vh;
   }
 }
 
