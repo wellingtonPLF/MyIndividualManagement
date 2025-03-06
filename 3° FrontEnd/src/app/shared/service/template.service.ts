@@ -18,7 +18,7 @@ export class TemplateService {
   listar(): Observable<Template []>{
     return this.httpClient.get<Template []>(this.URL_TEMPLATE).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -26,7 +26,7 @@ export class TemplateService {
   inserir(template: Template): Observable<Template>{
     return this.httpClient.post<Template>(this.URL_TEMPLATE, template).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -34,7 +34,7 @@ export class TemplateService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_TEMPLATE}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -48,7 +48,8 @@ export class TemplateService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        console.log(error)
+        return throwError(() => error);
       })
     );
   }
@@ -56,7 +57,7 @@ export class TemplateService {
   atualizar(template: Template): Observable<Template> {
     return this.httpClient.put<Template>(`${this.URL_TEMPLATE}/${template.idtemplate}`, template).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

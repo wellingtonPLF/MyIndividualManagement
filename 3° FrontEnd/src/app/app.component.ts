@@ -1,5 +1,6 @@
 import {Component} from '@angular/core';
 import { UsuarioService } from './shared/service/usuario.service';
+import { AuthService } from './shared/service/auth/auth.service';
 
 @Component({
   selector: 'app-root',
@@ -9,9 +10,6 @@ import { UsuarioService } from './shared/service/usuario.service';
 export class AppComponent {
   title = 'myIndividualManagement';
 
-  constructor(public userService: UsuarioService){
-
-  }
-
+  constructor(public authService: AuthService){}
   ngOnInit(): void{}
 }

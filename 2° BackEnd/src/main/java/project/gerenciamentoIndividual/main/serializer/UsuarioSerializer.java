@@ -25,9 +25,6 @@ public class UsuarioSerializer extends JsonSerializer<Usuario> {
         // Encode image to Base64
         String base64Image = encodeImageToBase64(user.getImg());
         jsonGenerator.writeStringField("img", base64Image);
-        
-        jsonGenerator.writeStringField("senha", user.getSenha());
-        jsonGenerator.writeStringField("token", user.getToken());
         jsonGenerator.writeStringField("objectType", user.getObjectType());
         
         // Serialize the list of Atividades

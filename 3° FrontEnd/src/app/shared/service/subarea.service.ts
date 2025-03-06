@@ -19,7 +19,7 @@ export class SubareaService {
   listar(): Observable<Subarea []>{
     return this.httpClient.get<Subarea []>(this.URL_SUBAREA).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -27,7 +27,7 @@ export class SubareaService {
   inserir(subarea: Subarea): Observable<Subarea>{
     return this.httpClient.post<Subarea>(this.URL_SUBAREA, subarea).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -35,7 +35,7 @@ export class SubareaService {
   remover(id: number): Observable<object> {
     return this.httpClient.delete(`${this.URL_SUBAREA}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -49,7 +49,7 @@ export class SubareaService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -57,7 +57,7 @@ export class SubareaService {
   pesquisarJanelaPorIdSubarea(id: number): Observable<Janela> {
     return this.httpClient.get<Janela>(`${this.URL_SUBAREA}/mySubarea/janela/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -65,7 +65,7 @@ export class SubareaService {
   atualizar(subarea: Subarea): Observable<Subarea> {
     return this.httpClient.put<Subarea>(`${this.URL_SUBAREA}/${subarea.idsubarea}`, subarea).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

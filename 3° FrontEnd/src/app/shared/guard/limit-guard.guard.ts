@@ -16,11 +16,16 @@ export class LimitGuardGuard {
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
 
     return this.usuarioService.checkLimit().pipe(
-      map(_ => {
-        return true;
+      map( it => {
+        if (it) {
+          return true
+        }
+        else {
+          this.router.navigate(['outlimit']);
+          return false
+        }
       }),
       catchError(_ => {
-        console.log("OK")
         this.router.navigate(['outlimit']);
         return of(false);
       })

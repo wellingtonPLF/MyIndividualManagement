@@ -5,13 +5,16 @@ import {HttpClient} from "@angular/common/http";
 import {catchError, map} from "rxjs/operators";
 
 import { environment } from '../../../environments/environment';
+import { StatusResult } from '../interfaces/I_StatusResult';
+import { UserResponse } from '../types/system';
+import { Auth } from '../model/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UsuarioService {
 
-  URL_USUARIOS = `${environment.apiUrl}/usuario`;
+  URL_USUARIOS = `${environment.apiUrl}/usuarios`;
 
   constructor(private httpClient: HttpClient) {
   }
@@ -19,7 +22,7 @@ export class UsuarioService {
   listar(): Observable<Usuario []>{
     return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -27,7 +30,7 @@ export class UsuarioService {
   inserir(usuario: Usuario): Observable<Usuario>{
     return this.httpClient.post<Usuario>(this.URL_USUARIOS, usuario).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -35,15 +38,7 @@ export class UsuarioService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_USUARIOS}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
-      })
-    );
-  }
-
-  isLoggedIn(): Observable<boolean> {
-    return this.httpClient.get<boolean>(`${this.URL_USUARIOS}/isLoggedIn`).pipe(
-      catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -57,7 +52,7 @@ export class UsuarioService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -65,7 +60,7 @@ export class UsuarioService {
   checkLimit(): Observable<Usuario> {
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/checkLimit`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -73,28 +68,23 @@ export class UsuarioService {
   getUsuarioByNome(nome: String): Observable<Usuario>{
     return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/myuser/${nome}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
 
-  getAuthenticatedUser(): Observable<Usuario>{
-    return this.httpClient.get<Usuario>(`${this.URL_USUARIOS}/getAuthenticated`).pipe(
+  getAuthenticatedUser(): Observable<StatusResult<UserResponse>>{
+    return this.httpClient.get<StatusResult<UserResponse>>(`${this.URL_USUARIOS}/getUser`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
-  }
-
-  pesquisarPorValidacao(usuario: Usuario): Observable<Usuario []>{
-    return this.httpClient.get<Usuario []>(this.URL_USUARIOS).pipe(
-      map(users=> users.filter(u => u.email == usuario.email || u.nome == usuario.nome)));
   }
 
   atualizar(usuario: Usuario): Observable<Usuario> {
     return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.idusuario}`, usuario).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

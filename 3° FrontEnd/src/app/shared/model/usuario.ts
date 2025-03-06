@@ -1,17 +1,28 @@
 import {Atividade} from "./atividade";
-import {Template} from "./template";
+import { Auth } from "./auth";
 import {UsuarioTemplate} from "./usuarioTemplate";
 
 export class Usuario{
   idusuario!: number;
   nome!: string;
   email!: string;
-  senha!: string;
   img!: string;
-  token!: string;
   objectType!: string;
   atividades: Array<Atividade> = new Array<Atividade>();
-  usuarioTemplates: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
+  usuarioTemplates?: Array<UsuarioTemplate> = new Array<UsuarioTemplate>();
+
+  constructor() {}
+}
+
+
+export class Authentication{
+  idusuario!: number;
+  nome!: string;
+  email!: string;
+  img!: string;
+  objectType!: string;
+  password!: string;
+  atividades: Array<Atividade> = new Array<Atividade>();
 
   constructor() {}
 }

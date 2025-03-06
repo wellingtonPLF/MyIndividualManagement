@@ -19,7 +19,7 @@ export class OcupacaoService {
   listar(): Observable<Ocupacao []>{
     return this.httpClient.get<Ocupacao []>(this.URL_OCUPACAO).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -27,7 +27,7 @@ export class OcupacaoService {
   inserir(ocupacao: Ocupacao): Observable<Ocupacao>{
     return this.httpClient.post<Ocupacao>(this.URL_OCUPACAO, ocupacao).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -35,7 +35,7 @@ export class OcupacaoService {
   remover(id: number): Observable<object> {
     return this.httpClient.delete(`${this.URL_OCUPACAO}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -49,7 +49,7 @@ export class OcupacaoService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -57,7 +57,7 @@ export class OcupacaoService {
   pesquisarSubareaPorIdOcupacao(id: number): Observable<Subarea>{
     return this.httpClient.get<Subarea>(`${this.URL_OCUPACAO}/subareaByOcupation/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -65,7 +65,7 @@ export class OcupacaoService {
   atualizar(ocupacao: Ocupacao): Observable<Ocupacao> {
     return this.httpClient.put<Ocupacao>(`${this.URL_OCUPACAO}/${ocupacao.idocupacao}`, ocupacao).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

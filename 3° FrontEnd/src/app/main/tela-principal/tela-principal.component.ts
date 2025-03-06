@@ -5,6 +5,8 @@ import {Usuario} from "../../shared/model/usuario";
 import {UsuarioService} from "../../shared/service/usuario.service";
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
+import { AuthService } from 'src/app/shared/service/auth/auth.service';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-tela-principal',
@@ -18,61 +20,34 @@ export class TelaPrincipalComponent implements OnInit {
   searchUser: any = { value: '', status: false};
 
   user$!: Observable<any>;
-  usuario!: Usuario;
 
   isOnline: boolean = false;
 
-  constructor(private accountService: SessionStorageService, private usuarioService: UsuarioService,
-              private store: Store<any>, private accountServiceLocal: LocalStorageService) {
+  constructor(private usuarioService: UsuarioService, private store: Store<any>, private authService: AuthService) {
     this.user$ = this.store.select('userReducer');
-    this.usuario = new Usuario();
   }
 
   ngOnInit(): void {
-    this.usuarioService.isLoggedIn().subscribe(
-      {
-        next: _ => {
-          this.isOnline = true;
-        },
-        error: () => {}
-      }
-    )
-
     window.addEventListener('resize', () => {
       this.widthScreen = window.innerWidth >= 500
     });
 
-    if(this.accountService.getToken() || this.accountServiceLocal.getToken()){
-      let usuarioID = this.accountService.getToken();
-
-      if (usuarioID == null){
-        usuarioID = this.accountServiceLocal.getToken();
-
-        if(usuarioID == null){
-          usuarioID = "0";
+    this.usuarioService.getAuthenticatedUser().subscribe(
+      {
+        next: it => {
+          if (parseInt(it.status) == HttpStatusCode.Unauthorized) {
+            this.isOnline = true; 
+          }
+          else {
+            this.conta = true;
+            this.store.dispatch({type: 'user', payload: it.data})
+          }
+        },
+        error: (e) => {
+          this.isOnline = false;
         }
       }
-
-      this.usuarioService.pesquisarPorId(parseInt(usuarioID)).subscribe(
-        {
-          next: it => {
-            this.usuario = it;
-            this.store.dispatch({type: 'user', payload: it})
-          },
-          error: () => {
-            this.user$.subscribe(
-              it => {
-                this.usuario = {...it}
-              }
-            )
-          }
-        }
-      );
-      this.conta = true;
-    }
-    else {
-      this.conta = false;
-    }
+    );
   }
 
   search(): void{

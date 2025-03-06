@@ -19,7 +19,7 @@ export class ClasseService {
   listar(): Observable<Classe []>{
     return this.httpClient.get<Classe []>(this.URL_CLASSE).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -27,7 +27,7 @@ export class ClasseService {
   inserir(classe: Classe): Observable<Classe>{
     return this.httpClient.post<Classe>(this.URL_CLASSE, classe).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -35,7 +35,7 @@ export class ClasseService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_CLASSE}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -49,7 +49,7 @@ export class ClasseService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -57,7 +57,7 @@ export class ClasseService {
   pesquisarOcupacaoPorIdClasse(id: number): Observable<Ocupacao> {
     return this.httpClient.get<Ocupacao>(`${this.URL_CLASSE}/myClasse/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -65,7 +65,7 @@ export class ClasseService {
   pesquisarTipoPorIdClasse(id: number): Observable<string> {
     return this.httpClient.get<string>(`${this.URL_CLASSE}/myTipo/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -73,7 +73,7 @@ export class ClasseService {
   atualizar(classe: Classe): Observable<Classe> {
     return this.httpClient.put<Classe>(`${this.URL_CLASSE}/${classe.idclasse}`, classe).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

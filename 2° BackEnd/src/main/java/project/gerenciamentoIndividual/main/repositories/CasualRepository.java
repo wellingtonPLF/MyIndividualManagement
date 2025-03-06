@@ -13,37 +13,35 @@ public interface CasualRepository extends JpaRepository<Casual, Long> {
 	
 	public List<Casual> findByNome(String nome);
 	
-	public String queryBased = "Select t from Casual t "
-			+ "where idclasse in (select idclasse from Classe "
-			+ "where idocupacao in (select idocupacao from Ocupacao "
-			+ "where idsubarea in (select idsubarea from Subarea where idjanela in (select idjanela from Janela "
-			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) ";
+	public String queryBased = "SELECT t FROM Casual t "
+	        + "WHERE t.classe.idclasse IN (SELECT c.idclasse FROM Classe c "
+	        + "WHERE c.ocupacao.idocupacao IN (SELECT o.idocupacao FROM Ocupacao o "
+	        + "WHERE o.subarea.idsubarea IN (SELECT s.idsubarea FROM Subarea s "
+	        + "WHERE s.janela.idjanela IN (SELECT j.idjanela FROM Janela j "
+	        + "WHERE j.atividade.idatividade IN (SELECT a.idatividade FROM Atividade a "
+	        + "WHERE a.usuario.idusuario = ?1)))))";
 	
 	@Query("SELECT c.classe FROM Casual c WHERE c.idtask = ?1")
 	Classe getClasseByIdTask(Long id);
-	
-	@Query ("select idtask from Casual as c "
-			+ "where idclasse in (select idclasse from Classe " 
-			+ "where idocupacao in (select idocupacao from Ocupacao " 
-			+ "where idsubarea in (select idsubarea from Subarea where nome = 'Diarias')))")
+
+	@Query ("select t.idtask from Casual as t "
+			+ "where t.classe.idclasse in (select c.idclasse from Classe c " 
+			+ "where c.ocupacao.idocupacao in (select o.idocupacao from Ocupacao o " 
+			+ "where o.subarea.idsubarea in (select s.idsubarea from Subarea s where s.nome = 'Diarias')))")
 	List<Long> getIfDiarias();
-	
-	@Query ("select c from Casual as c "
-			+ "where c.data < current_date and idclasse in (select idclasse from Classe " 
-			+ "where idocupacao in (select idocupacao from Ocupacao " 
-			+ "where idsubarea in (select idsubarea from Subarea where nome = 'Diarias')))")
+
+	@Query ("select t from Casual as t "
+			+ "where t.data < current_date and t.classe.idclasse in (select c.idclasse from Classe c " 
+			+ "where c.ocupacao.idocupacao in (select o.idocupacao from Ocupacao o " 
+			+ "where o.subarea.idsubarea in (select s.idsubarea from Subarea s where s.nome = 'Diarias')))")
 	List<Casual> getIfDiariasPendente();
-	
+
 	@Query ("select t from Casual t "
-			+ "where idclasse in (select idclasse from Classe "
-			+ "where idocupacao in (select idocupacao from Ocupacao "
-			+ "where idsubarea in (select idsubarea from Subarea s "
-			+ "where s.tipo = 'casual' and "
-			+ "idjanela in (select idjanela from Janela "
-			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) "
-			+ "and (t.data - current_date) < 7 and (t.data - current_date) > -1 "
-			+ "and etiqueta in ('undone', 'problem') "
-			+ "order by data, tempo")
+			+ "where t.classe.idclasse in (select c.idclasse from Classe c " 
+			+ "where c.ocupacao.idocupacao in (select o.idocupacao from Ocupacao o " 
+			+ "where o.subarea.idsubarea in (select s.idsubarea from Subarea s "
+			+ "where s.tipo = 'casual' and s.janela.idjanela in (select j.idjanela FROM Janela j "
+			+ "where j.atividade.idatividade in (select a.idatividade FROM Atividade a where a.usuario.idusuario = ?1)))))")
 	List<Casual> requestCasualTask(Long iduser);
 	
 	@Query (queryBased + "and t.data < current_date "

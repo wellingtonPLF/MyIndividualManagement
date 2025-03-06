@@ -8,6 +8,7 @@ import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { UsuarioService } from 'src/app/shared/service/usuario.service';
+import { AuthService } from 'src/app/shared/service/auth/auth.service';
 
 @Component({
   selector: 'app-tela-management',
@@ -24,18 +25,17 @@ export class TelaManagementComponent implements OnInit{
   stopCheck: boolean = false;
   maxWidthScreen: number = ScreenWidthSize.maxWidth;
   windowBool: boolean = window.innerWidth > 642
-  isLoggedIn: string | null = null
+  isLoggedIn: boolean = false;
   activity$!: Observable<any>;
 
   constructor(private accountService: SessionStorageService,
-              private fshare: FuncShareService, 
+              private fshare: FuncShareService, private authService: AuthService,
               private store: Store<any>, private userService: UsuarioService,
               private accountServiceLocal: LocalStorageService) {
     this.atividade = new Atividade('');
     this.usuario = new Usuario();
     this.user$ = this.store.select('userReducer');
     this.activity$ = this.store.select('activityReducer');
-    this.isLoggedIn = this.accountService.getToken();
   }
 
   ngOnInit(): void {
@@ -50,13 +50,8 @@ export class TelaManagementComponent implements OnInit{
     this.user$.subscribe(
       it => {
         this.usuario = {...it}
-        this.userService.getAuthenticatedUser().subscribe({
-          next: result => {
-            this.usuario = {...result}
-            this.store.dispatch({type: 'activity', payload: { position: 0, list: this.usuario.atividades } })
-          },
-          error: (_) => {}
-        })
+        this.isLoggedIn = true;
+        this.store.dispatch({type: 'activity', payload: { position: 0, list: this.usuario.atividades } })
       }
     )
   }

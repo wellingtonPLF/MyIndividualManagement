@@ -18,7 +18,7 @@ export class UsuarioTemplateService {
   listar(): Observable<UsuarioTemplate []>{
     return this.httpClient.get<UsuarioTemplate []>(this.URL_USUARIOS_TEMPLATE).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -26,7 +26,7 @@ export class UsuarioTemplateService {
   inserir(usuarioTemplate: UsuarioTemplate): Observable<UsuarioTemplate>{
     return this.httpClient.post<UsuarioTemplate>(this.URL_USUARIOS_TEMPLATE, usuarioTemplate).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -34,7 +34,7 @@ export class UsuarioTemplateService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_USUARIOS_TEMPLATE}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -48,7 +48,7 @@ export class UsuarioTemplateService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -56,7 +56,7 @@ export class UsuarioTemplateService {
   atualizar(usuarioTemplate: UsuarioTemplate): Observable<UsuarioTemplate> {
     return this.httpClient.put<UsuarioTemplate>(`${this.URL_USUARIOS_TEMPLATE}/${usuarioTemplate.idusuarioTemplate}`, usuarioTemplate).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

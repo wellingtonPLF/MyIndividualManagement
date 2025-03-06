@@ -17,7 +17,7 @@
                invalid-tooltip="At least 5 characters!"></i>
           </div>
         </div>
-        <input [(ngModel)]='usuario.nome' formControlName="username">
+        <input [(ngModel)]='auth.username' formControlName="username">
       </div>
       <!-- Password Validation -->
       <div [ngClass]="{'red': invalid.includes('password')}">
@@ -42,7 +42,7 @@
           </div>
         </div>
         <div class="changingeye">
-          <input [(ngModel)]='usuario.senha' [type]="password" autocomplete="new-password"
+          <input [(ngModel)]='auth.password' [type]="password" autocomplete="new-password"
                  formControlName="password">
           <div (click)="showpassword('password')" class="eye">
             <i [attr.aria-hidden]="'false'" [ngClass]="{'fas fa-eye': !showPassword, 'far fa-eye-slash': showPassword}"></i>
@@ -69,7 +69,7 @@
                data-tooltip="E-mail already in use!" invalid-tooltip="Email inexistente!"></i>
           </div>
         </div>
-        <input placeholder="Ex: my_email@example.com" [(ngModel)]='usuario.email' formControlName="email">
+        <input placeholder="Ex: my_email@example.com" [(ngModel)]='auth.email' formControlName="email">
       </div>
       <!-- Submit Point -->
       <div class="buttonAuth">

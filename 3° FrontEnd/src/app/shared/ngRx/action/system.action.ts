@@ -1,7 +1,8 @@
 import { Usuario } from "../../model/usuario";
 import { ObjStructure } from "../../types/general";
+import { UserResponse } from "../../types/system";
 
-export function UserAction (value?: Usuario){
+export function userAction (value?: UserResponse){
     return {
         type: 'user',
         payload: value

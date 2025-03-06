@@ -33,3 +33,43 @@ insert into classe values (7, null, null, 'Pendentes', 'Classe', null, 0, null, 
 insert into ocupacao values (8, 'Ocupation', 'Ocupacao', 2, 6);
 insert into classe values (8, null, null, 'Indefinidos', 'Classe', null, 0, null, null, null, 8);
 insert into template values (3, 'Do List', 'Template', 3);
+
+
+INSERT INTO roles(role_id, role_name)
+VALUES (1, 'ROLE_ADMIN');
+		
+INSERT INTO roles(role_id, role_name)
+VALUES (2, 'ROLE_USER');	
+
+INSERT INTO usuario(user_id, nickname, borndate)
+VALUES (1, 'Wellington', 'well@gmail.com', '2023-01-01');	
+		
+INSERT INTO usuario(user_id, nickname, borndate)
+VALUES (2, 'Larissa', 'lara@gmail.com', '2022-03-18');
+	
+INSERT INTO usuario(user_id, nickname, borndate)
+VALUES (3, 'John Wick', 'john@gmail.com', '2020-06-25');
+
+INSERT INTO auth(auth_id, email, username, password, user_id)
+VALUES (1, 'well', 
+'{bcrypt}$2a$10$dQWjpRaxiORPCqh4hEQVW.Ka.FkRLdzEvoSPJ26pQ6I7Fqo4wrDzG', 1);	
+
+INSERT INTO auth(auth_id, email, username, password, user_id)
+VALUES (2, 'lara', 
+'{bcrypt}$2a$10$dQWjpRaxiORPCqh4hEQVW.Ka.FkRLdzEvoSPJ26pQ6I7Fqo4wrDzG', 2);
+
+INSERT INTO auth(auth_id, email, username, password, user_id)
+VALUES (3, 'john', 
+'{bcrypt}$2a$10$dQWjpRaxiORPCqh4hEQVW.Ka.FkRLdzEvoSPJ26pQ6I7Fqo4wrDzG', 3);	
+
+INSERT INTO user_roles(user_id, role_id)
+VALUES (1, 1);
+		
+INSERT INTO user_roles(user_id, role_id)
+VALUES (2, 2);
+		
+INSERT INTO user_roles(user_id, role_id)
+VALUES (3, 2);
+
+
+

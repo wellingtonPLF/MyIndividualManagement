@@ -6,11 +6,10 @@ import javax.sound.sampled.Clip;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 
-@SpringBootApplication//(exclude = {SecurityAutoConfiguration.class})
+@SpringBootApplication
 public class GerenciamentoIndividualApplication {
 
 	public static void main(String[] args) {
@@ -29,7 +28,7 @@ public class GerenciamentoIndividualApplication {
 	        clip.open(inputStream);
 	        clip.start(); 
 	      } catch (Exception e) {
-	        System.err.println(e.getMessage());
+	        System.err.println("disable beep: " + e.getMessage());
 	      }
 	    }
 	  }).start();

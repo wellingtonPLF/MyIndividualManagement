@@ -30,7 +30,3 @@ export class CorsInterceptorService implements HttpInterceptor {
     return next.handle(modifiedRequest);
   }
 }
-
-export const authInterceptorProviders = [
-  { provide: HTTP_INTERCEPTORS, useClass: CorsInterceptorService, multi: true }
-];

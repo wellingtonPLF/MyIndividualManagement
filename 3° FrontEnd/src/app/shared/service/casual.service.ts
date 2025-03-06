@@ -21,7 +21,7 @@ export class CasualService {
   listar(): Observable<Casual []>{
     return this.httpClient.get<Casual []>(this.URL_TASK).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -37,7 +37,7 @@ export class CasualService {
   atualizar(task: Casual): Observable<Casual> {
     return this.httpClient.put<Casual>(`${this.URL_TASK}/${task.idtask}`, task).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -45,7 +45,7 @@ export class CasualService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_TASK}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -59,7 +59,7 @@ export class CasualService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -67,7 +67,7 @@ export class CasualService {
   pesquisarClassePorIdTask(id: number): Observable<Classe> {
     return this.httpClient.get<Classe>(`${this.URL_TASK}/myTask/classe/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -75,7 +75,7 @@ export class CasualService {
   getIfDiarias(): Observable<number []> {
     return this.httpClient.get<number []>(`${this.URL_TASK}/getIfDiarias`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -83,7 +83,7 @@ export class CasualService {
   getIfDiariasPendente(): Observable<Task []> {
     return this.httpClient.get<Casual []>(`${this.URL_TASK}/getIfDiariasPendente`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -91,7 +91,7 @@ export class CasualService {
   getRequestCasualTask(usuarioID: string): Observable<Task []>{
     return this.httpClient.get<Task []>(`${this.URL_TASK}/requestCasualTask/${usuarioID}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -99,7 +99,7 @@ export class CasualService {
   getRequestLate(usuarioID: string | null): Observable<Task []>{
     return this.httpClient.get<Task []>(`${this.URL_TASK}/requestLate/${usuarioID}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -107,7 +107,7 @@ export class CasualService {
   getRequestUndefined(usuarioID: string): Observable<Task []>{
     return this.httpClient.get<Task []>(`${this.URL_TASK}/requestUndefined/${usuarioID}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

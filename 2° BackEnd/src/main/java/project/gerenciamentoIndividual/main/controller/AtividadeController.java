@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,31 +26,37 @@ public class AtividadeController {
    @Autowired
    private AtividadeService atividadeService;
 
+   @PreAuthorize("permitAll()")
    @GetMapping("/atividade")
    public List<Atividade> getAtividades() {
        return this.atividadeService.getAtividades();
    }
    
+   @PreAuthorize("permitAll()")
    @GetMapping("/atividade/{idatividade}")
    public Atividade getAtividadePorId(@PathVariable("idatividade") Long idatividade) {
        return this.atividadeService.getAtividadePorId(idatividade);
    }
    
+   @PreAuthorize("permitAll()")
    @GetMapping("/atividade/myActivity/{idatividade}")
    public Usuario getUsuarioByIdAtividade(@PathVariable("idatividade") Long idatividade) {
        return this.atividadeService.getUsuarioByIdAtividade(idatividade);
    }
 
+   @PreAuthorize("permitAll()")
    @PostMapping("/atividade")
    public Atividade inserirAtividade(@RequestBody Atividade atividade){
        return this.atividadeService.inserirOuAtualizar(atividade);
    }
    
+   @PreAuthorize("permitAll()")
    @PutMapping("/atividade/{idatividade}")
    public Atividade atualizarAtividade(@RequestBody Atividade atividade){
        return this.atividadeService.inserirOuAtualizar(atividade);
    }
 
+   @PreAuthorize("permitAll()")
    @DeleteMapping("/atividade/{idatividade}")
    public void apagarAtividade(@PathVariable("idatividade") Long idatividade) {
        this.atividadeService.apagar(idatividade);

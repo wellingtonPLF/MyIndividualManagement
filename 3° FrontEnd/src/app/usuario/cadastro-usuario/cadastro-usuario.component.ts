@@ -1,13 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import {UsuarioService} from "../../shared/service/usuario.service";
-import {Usuario} from "../../shared/model/usuario";
+import {Authentication, Usuario} from "../../shared/model/usuario";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {SignupvalidationService} from "../../shared/service/signupvalidation.service";
 import {MensagemService} from "../../shared/service/mensagem.service";
 import {TemplateService} from "../../shared/service/template.service";
-import {SubareaService} from "../../shared/service/subarea.service";
 import {UsuarioFactory} from "../../shared/factoryDirectory/usuarioFactory";
+import { Auth } from 'src/app/shared/model/auth';
+import { AuthService } from 'src/app/shared/service/auth/auth.service';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -15,7 +16,8 @@ import {UsuarioFactory} from "../../shared/factoryDirectory/usuarioFactory";
   styleUrls: ['./cadastro-usuario.component.scss']
 })
 export class CadastroUsuarioComponent implements OnInit {
-  usuario: Usuario;
+  auth!: Auth;
+  usuario!: Usuario;
 
   //ShowPassword
   password: string = 'password';
@@ -27,10 +29,10 @@ export class CadastroUsuarioComponent implements OnInit {
   reactiveForm!: FormGroup;
   invalid: Array<string> = [];
 
-  constructor(private usuarioService: UsuarioService, private templateService: TemplateService,
+  constructor(private authService: AuthService, private templateService: TemplateService,
               private router: Router, private validate : SignupvalidationService,
-              private subareaService: SubareaService,
-              private snackResult : MensagemService) {
+              private snackResult : MensagemService, private usuarioService: UsuarioService) {
+    this.auth = new Auth();
     this.usuario = new Usuario();
     this.reactiveForm = this.validate.createSignupForm();
   }
@@ -44,36 +46,47 @@ export class CadastroUsuarioComponent implements OnInit {
   validateSignUp(): void{
     this.invalid = []
 
-    if(!this.reactiveForm.invalid){
-      this.usuarioService.pesquisarPorValidacao(this.usuario).subscribe(
-        validar => {
-          if (validar.length == 0){
-            this.templateService.pesquisarPorId(1).subscribe(
-              result => {
-                UsuarioFactory.criarUsuario(result, this.usuario)
-                this.usuarioService.inserir(this.usuario).subscribe({
-                    next: _ => {
-                      this.snackResult.success("Cadastro realizado com sucesso!")
-                      this.router.navigate(['management'])
-                    },
-                    error: (_) => {
-                      console.log("Limit Users")
-                    }
-                  }
-                )
-              }
-            )
-          }
-          else {
-            if(validar[0].nome == this.usuario.nome){
-              this.invalid.push('username')
-              this.invalid.push('nameInUse')
-            }
-            if(validar[0].email == this.usuario.email){
-              this.invalid.push('email')
-              this.invalid.push('emailInUse')
-            }
-          }
+    if(true){ //if(!this.reactiveForm.invalid){
+
+      const auth: Auth = {
+        id: 0,
+        roles: [],
+        username: "acordar1243",
+        password: "123!@#qweQWE",
+        email: "faaaaaaaaaaaaaag@email.com"
+      }
+
+      this.templateService.pesquisarPorId(1).subscribe(
+        result => {
+          UsuarioFactory.criarUsuario(result, this.usuario);
+
+          const user: Authentication = {...this.usuario, 
+            password: auth.password ?? '',
+            nome: auth.username ?? '',
+            email: auth.email ?? ''
+          };
+
+          console.log(user)
+
+          // this.usuarioService.inserir(user).subscribe({
+          //     next: _ => {
+          //       this.snackResult.success("Cadastro realizado com sucesso!")
+          //       // this.router.navigate(['management'])
+          //     },
+          //     error: e => {
+          //       console.log(e);
+          //       // if(validar[0].nome == this.auth.username){
+          //       //   this.invalid.push('username')
+          //       //   this.invalid.push('nameInUse')
+          //       // }
+          //       // if(validar[0].nome == this.auth.username){
+          //       //   this.invalid.push('email')
+          //       //   this.invalid.push('emailInUse')
+          //       // }
+                
+          //     }
+          //   }
+          // )
         }
       )
     }

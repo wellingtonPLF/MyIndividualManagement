@@ -8,9 +8,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import project.gerenciamentoIndividual.main.model.Casual;
 import project.gerenciamentoIndividual.main.model.Classe;
-import project.gerenciamentoIndividual.main.model.Task;
 import project.gerenciamentoIndividual.main.repositories.CasualRepository;
-import project.gerenciamentoIndividual.main.repositories.TaskRepository;
 
 @Service
 public class CasualService {

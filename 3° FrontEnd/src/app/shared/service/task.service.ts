@@ -19,7 +19,7 @@ export class TaskService {
   listar(): Observable<Task []>{
     return this.httpClient.get<Task []>(this.URL_TASK).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -27,7 +27,7 @@ export class TaskService {
   inserir(task: Task): Observable<Task>{
     return this.httpClient.post<Task>(this.URL_TASK, task).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -35,7 +35,7 @@ export class TaskService {
   atualizar(task: Task): Observable<Task> {
     return this.httpClient.put<Task>(`${this.URL_TASK}/${task.idtask}`, task).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -43,7 +43,7 @@ export class TaskService {
   remover(id: string): Observable<object> {
     return this.httpClient.delete(`${this.URL_TASK}/${id}`).pipe(
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }
@@ -57,7 +57,7 @@ export class TaskService {
         return data;
       }),
       catchError((error) => {
-        return throwError(() => new Error(error));
+        return throwError(() => error);
       })
     );
   }

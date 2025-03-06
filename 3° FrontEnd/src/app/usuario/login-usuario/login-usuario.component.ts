@@ -5,6 +5,9 @@ import {Router} from "@angular/router";
 import {SessionStorageService} from "../../shared/service/session-storage.service";
 import {LocalStorageService} from "../../shared/service/local-storage.service";
 import { Store } from '@ngrx/store';
+import { AuthService } from 'src/app/shared/service/auth/auth.service';
+import { Auth } from 'src/app/shared/model/auth';
+import { userAction } from 'src/app/shared/ngRx/action/system.action';
 
 @Component({
   selector: 'app-login-usuario',
@@ -12,14 +15,14 @@ import { Store } from '@ngrx/store';
   styleUrls: ['./login-usuario.component.scss']
 })
 export class LoginUsuarioComponent implements OnInit {
-  usuario!: Usuario;
+  auth!: Auth;
 
   //Show Passowrd
   show: boolean = false;
   password: string = 'password';
 
   //Invalid User
-  menssage!: string;
+  message!: string;
   senhaInv: boolean = false
 
   //Numero de Tentativas
@@ -31,53 +34,44 @@ export class LoginUsuarioComponent implements OnInit {
   //CheckButton
   check!: boolean;
 
-  constructor(private usuarioService: UsuarioService, private store: Store<any>,
-              private router: Router,
-              private accountService: SessionStorageService,
-              private accountServiceLocal: LocalStorageService) {
-    this.usuario = new Usuario();
+  constructor(private userService: UsuarioService, private authService: AuthService,
+    private store: Store<any>, private router: Router) {
+    this.auth = new Auth();
   }
 
   onEnter(){
     this.validateUser()
   }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
-  validateUser(): void{
-    if (this.usuario.nome!= null && this.usuario.senha!= null &&
-      this.usuario.nome!= "" && this.usuario.senha!= ""){
-      this.usuarioService.getUsuarioByNome(this.usuario.nome).subscribe(
-          it => {
-            if(it != undefined || it != null){
-              if(it.senha == this.usuario.senha){
-                if(this.accountServiceLocal.getToken() || this.accountService.getToken()){
-                  this.menssage = "An user is already sign in!";
-                  this.senhaInv = true;
-                  this.signOn = true;
-                }
-                else {
-                  this.senhaInv = false
-                  this.count = 0;
-                  if (this.check){
-                    this.accountServiceLocal.setToken(`${it.idusuario}`);
-                  }
-                  else {
-                    this.accountService.setToken(`${it.idusuario}`);
-                  }
-                  this.router.navigate(['/management', it.idusuario])
-                }
-              }
-              else{
-                this.usuarioInvalido();
+  validateUser(): void {
+    if (this.auth.username != null && this.auth.password!= null &&
+      this.auth.username != "" && this.auth.password!= "") {
+
+      if (this.auth.password.length < 7) {
+        this.usuarioInvalido('Invalide User - Please try again!');
+        return;
+      }
+
+      this.authService.authentication(this.auth).subscribe({
+        next: _ => {
+          this.userService.getAuthenticatedUser().subscribe(
+            {
+              next: it => {
+                this.store.dispatch(userAction(it.data))
+                this.router.navigate(['/management'])
+              },
+              error: _ => {
+                this.usuarioInvalido('Invalide User - Please try again!');
               }
             }
-            else{
-              this.usuarioInvalido();
-            }
-          }
-      );
+          )
+        },
+        error: msg => {
+          this.usuarioInvalido(msg.error);
+        }
+      })
     }
   }
 
@@ -91,11 +85,11 @@ export class LoginUsuarioComponent implements OnInit {
       }
   }
 
-  usuarioInvalido(): void{
+  usuarioInvalido(msg: string): void{
     this.senhaInv = true
-    this.usuario.nome = '';
-    this.usuario.senha = this.usuario.nome;
+    this.auth.username = '';
+    this.auth.password = '';
     this.count += 1;
-    this.menssage = 'Invalide User - Please try again!';
+    this.message = msg;
   }
 }

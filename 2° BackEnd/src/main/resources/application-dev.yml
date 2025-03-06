@@ -1,10 +1,10 @@
 spring:
   datasource:
-    username: postgres
-    password: w10ell10
-    #url: jdbc:postgresql://localhost:5432/individualmanagement
-    url: jdbc:postgresql://localhost:5432/testindividualmanagement
-    driver-class-name: org.postgresql.Driver 
+   username: postgres #${USERNAME}
+   password: w10ell10 #${PASSWORD}
+   url: jdbc:postgresql://localhost:5432/testindividualmanagement
+  database:
+    driverClassName: org.postgresql.Driver 
   sql:
     init:
       data-locations: classpath:data.sql
@@ -31,9 +31,4 @@ management:
     metrics:
       enabled: true
 
-#Cors Url
-config:
-  cors:
-    url: https://myindividualmanagement.netlify.app/
-    #url: http://localhost:4200/
     

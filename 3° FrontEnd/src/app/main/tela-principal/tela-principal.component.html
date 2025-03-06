@@ -5,12 +5,13 @@
     </button>
   </div>
 
-  <div *ngIf="!isOnline" class="nav-fill" style="z-index: 10000;">
-    <div id="experience"
+  <div class="nav-fill" style="z-index: 10000;">
+    <div *ngIf="isOnline" style="width: 30px; height: 30px;"></div>
+    <div *ngIf="!isOnline" id="experience"
     [routerLink]="['/experience']">Experience</div>
   </div>
 
-  <div *ngIf="isOnline" class="nav-fill" style="z-index: 10000;">
+  <div *ngIf="false" class="nav-fill" style="z-index: 10000;">
     <input id="searchButton" [ngClass]="{'search_animation': searchUser.status}" [(ngModel)]="searchUser.value"
     [ngStyle]="{ 'width': searchUser.status ? '100%' : '0', 'margin-left': searchUser.status ? '5.4vw' : '0', 
     'padding': searchUser.status ? '0 10px' : '0', 'border': searchUser.status ? '2px solid #69A6E2': '' }"
@@ -28,7 +29,7 @@
   [ngStyle]="{'display': searchUser.status && !widthScreen  ? 'none' : '', 'width': !conta ? '190px': '125px'}">
 
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
-      <button class="buttonStyle" style="width: 50px; height: 50px;" [routerLink]="['/management', usuario.idusuario]">
+      <button class="buttonStyle" style="width: 50px; height: 50px;" [routerLink]="['/management']">
         <mat-icon [attr.aria-hidden]="'false'">account_circle</mat-icon></button>
     </div>
 
@@ -43,7 +44,7 @@
 <div class="screen">
   <div>
     <div style="position: relative;">
-      <img src="assets/tasks.png">
+      <img  src="assets/tasks.png">
       <div id="access">TASKS</div>
     </div>
   </div>

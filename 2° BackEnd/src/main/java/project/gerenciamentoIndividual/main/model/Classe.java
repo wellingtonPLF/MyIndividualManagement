@@ -3,18 +3,6 @@ package project.gerenciamentoIndividual.main.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
@@ -22,6 +10,18 @@ import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
 import project.gerenciamentoIndividual.main.serializer.ClasseSerializer;
 
 @Entity
@@ -58,11 +58,11 @@ public class Classe {
 	@JsonBackReference(value="ocupacao_Classe")
 	private Ocupacao ocupacao;
 	
-	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
 	@JsonManagedReference(value="classe_Casual")
 	private List<Casual> casual = new ArrayList<Casual>();
 	
-	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY)
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
 	@JsonManagedReference(value="classe_Projeto")
 	private List<Projeto> projeto = new ArrayList<Projeto>();
 	

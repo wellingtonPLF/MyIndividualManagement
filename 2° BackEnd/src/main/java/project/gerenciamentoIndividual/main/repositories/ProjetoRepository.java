@@ -13,25 +13,29 @@ public interface ProjetoRepository extends JpaRepository<Projeto, Long>{
 	
 	public List<Projeto> findByNome(String nome);
 	
-	public String queryBased = "Select t from Projeto t "
-			+ "where idclasse in (select idclasse from Classe "
-			+ "where idocupacao in (select idocupacao from Ocupacao "
-			+ "where idsubarea in (select idsubarea from Subarea where idjanela in (select idjanela from Janela "
-			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) ";
-	
+	public String queryBased = "SELECT t FROM Projeto t "
+	        + "WHERE t.classe.idclasse IN (SELECT c.idclasse FROM Classe c "
+	        + "WHERE c.ocupacao.idocupacao IN (SELECT o.idocupacao FROM Ocupacao o "
+	        + "WHERE o.subarea.idsubarea IN (SELECT s.idsubarea FROM Subarea s "
+	        + "WHERE s.janela.idjanela IN (SELECT j.idjanela FROM Janela j "
+	        + "WHERE j.atividade.idatividade IN (SELECT a.idatividade FROM Atividade a "
+	        + "WHERE a.usuario.idusuario = ?1)))))";
+
 	@Query("SELECT p.classe FROM Projeto p WHERE p.idtask = ?1")
 	Classe getClasseByIdTask(Long id);
 	
-	@Query ("Select t from Projeto t "
-			+ "where idclasse in (select idclasse from Classe "
-			+ "where idocupacao in (select idocupacao from Ocupacao "
-			+ "where idsubarea in (select idsubarea from Subarea s "
-			+ "where s.tipo = 'projeto' and "
-			+ "idjanela in (select idjanela from Janela "
-			+ "where idatividade in (select idatividade from Atividade where idusuario = ?1))))) "
-			+ "and (t.data - current_date) < 14 and (t.data - current_date) > -1 "
-			+ "and etiqueta in ('undone', 'problem') "
-			+ "order by data, tempo")
+	@Query("SELECT t FROM Projeto t "
+		       + "WHERE t.classe.idclasse IN (SELECT c.idclasse FROM Classe c "
+		       + "WHERE c.ocupacao.idocupacao IN (SELECT o.idocupacao FROM Ocupacao o "
+		       + "WHERE o.subarea.idsubarea IN (SELECT s.idsubarea FROM Subarea s "
+		       + "WHERE s.tipo = 'projeto' AND "
+		       + "s.janela.idjanela IN (SELECT j.idjanela FROM Janela j "
+		       + "WHERE j.atividade.idatividade IN (SELECT a.idatividade FROM Atividade a "
+		       + "WHERE a.usuario.idusuario = ?1))))) "
+		       + "AND (t.data - current_date) < 14 "
+		       + "AND (t.data - current_date) > -1 "
+		       + "AND t.etiqueta IN ('undone', 'problem') "
+		       + "ORDER BY t.data, t.tempo")
 	List<Task> requestProjectTask(Long iduser);
 	
 	@Query (queryBased + "and (t.data - current_date) < 0 "

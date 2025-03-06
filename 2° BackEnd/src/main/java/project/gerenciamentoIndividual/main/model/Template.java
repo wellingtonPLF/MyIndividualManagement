@@ -3,16 +3,18 @@ package project.gerenciamentoIndividual.main.model;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.SequenceGenerator;
-import javax.persistence.Table;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
+import jakarta.persistence.SequenceGenerator;
+import jakarta.persistence.Table;
+
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
@@ -39,7 +41,7 @@ public class Template{
 	@JsonManagedReference(value="template_Janela_Compoe")
 	private Janela janela_c;
 	
-	@OneToMany(mappedBy="template", cascade= {CascadeType.PERSIST})
+	@OneToMany(mappedBy="template", cascade= {CascadeType.PERSIST}, fetch=FetchType.EAGER) //HERE
 	@JsonManagedReference(value="template_Janela")
 	private List<Janela> janelas = new ArrayList<Janela>();
 	
@@ -91,5 +93,12 @@ public class Template{
 
 	public void setObjectType(String objectType) {
 		this.objectType = objectType;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Id:%d\n"
+				+ "Name:%s\n"
+				+ "ObjectType:%s\n", this.idtemplate, this.nome, this.objectType);
 	}
 }

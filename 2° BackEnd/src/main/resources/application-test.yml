@@ -16,7 +16,3 @@ spring:
   sql:
     init:
       data-locations: classpath:feed.sql
-
-config:
-  cors:
-    url: http://localhost:4200/

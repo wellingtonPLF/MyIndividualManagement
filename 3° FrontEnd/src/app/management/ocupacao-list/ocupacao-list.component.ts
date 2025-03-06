@@ -36,6 +36,7 @@ export class OcupacaoListComponent implements OnInit {
   leftSide = false;
 
   variable$!: Observable<any>;
+  user$!: Observable<any>;
 
   @ViewChild('myDiv', { static: false }) myDiv!: ElementRef;
 
@@ -45,7 +46,8 @@ export class OcupacaoListComponent implements OnInit {
               private accountService: SessionStorageService,
               private accountServiceLocal: LocalStorageService,
               private templateService: TemplateService, private subareaService: SubareaService) {
-  
+    
+    this.user$ = this.store.select('userReducer');
     this.variable$ = this.store.select('leftSideReducer');
     this.fshare.getClickEvent().subscribe(
       it => {
@@ -68,71 +70,66 @@ export class OcupacaoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    let usuarioID = this.accountService.getToken();
-
-    if (usuarioID == null){
-      usuarioID = this.accountServiceLocal.getToken();
-
-      if(usuarioID == null){
-        usuarioID = "0";
-      }
-    }
-
-    this.casualService.getRequestCasualTask(usuarioID).subscribe(
+    this.user$.subscribe(
       it => {
-        this.projetoService.getRequestProjectTask(usuarioID).subscribe(
-          result => {
-            this.lista[0] = it.concat(result);
-          }
-        )
-      }
-    )
-    //===========================================================================
-
-    this.casualService.getIfDiariasPendente().subscribe(
-      response => {
-        this.casualService.getRequestLate(usuarioID).subscribe(
+        const usuarioID = it.idusuario
+        this.casualService.getRequestCasualTask(usuarioID).subscribe(
           it => {
-            for (let i of it){
-              for(let j of response){
-                if (i.idtask == j.idtask){
-                  it.splice(it.indexOf(i), 1)
-                }
-              }
-            }
-            this.projetoService.getRequestLate(usuarioID).subscribe(
+            this.projetoService.getRequestProjectTask(usuarioID).subscribe(
               result => {
-                this.lista[1] = it.concat(result);
+                this.lista[0] = it.concat(result);
               }
             )
           }
         )
-
-        for (let i of response){
-          this.casualService.pesquisarClassePorIdTask(i.idtask).subscribe(
-            classe => {
-              this.casualService.pesquisarPorId(i.idtask).subscribe(
-                casualTask => {
-                  casualTask.classe = classe;
-                  casualTask.data = new Date('');
-                  casualTask.etiqueta = 'undone';
-                  this.casualService.atualizar(casualTask).subscribe(
-                    atualizado => {}
+        //===========================================================================
+    
+        this.casualService.getIfDiariasPendente().subscribe(
+          response => {
+            this.casualService.getRequestLate(usuarioID).subscribe(
+              it => {
+                for (let i of it){
+                  for(let j of response){
+                    if (i.idtask == j.idtask){
+                      it.splice(it.indexOf(i), 1)
+                    }
+                  }
+                }
+                this.projetoService.getRequestLate(usuarioID).subscribe(
+                  result => {
+                    this.lista[1] = it.concat(result);
+                  }
+                )
+              }
+            )
+    
+            for (let i of response){
+              this.casualService.pesquisarClassePorIdTask(i.idtask).subscribe(
+                classe => {
+                  this.casualService.pesquisarPorId(i.idtask).subscribe(
+                    casualTask => {
+                      casualTask.classe = classe;
+                      casualTask.data = new Date('');
+                      casualTask.etiqueta = 'undone';
+                      this.casualService.atualizar(casualTask).subscribe(
+                        atualizado => {}
+                      )
+                    }
                   )
                 }
               )
             }
-          )
-        }
-      }
-    )
-    //===========================================================================
-
-    this.casualService.getRequestUndefined(usuarioID).subscribe(
-      it => {
-        this.projetoService.getRequestUndefined(usuarioID).subscribe(
-          result => {
-            this.lista[2] = it.concat(result);
+          }
+        )
+        //===========================================================================
+    
+        this.casualService.getRequestUndefined(usuarioID).subscribe(
+          it => {
+            this.projetoService.getRequestUndefined(usuarioID).subscribe(
+              result => {
+                this.lista[2] = it.concat(result);
+              }
+            )
           }
         )
       }
