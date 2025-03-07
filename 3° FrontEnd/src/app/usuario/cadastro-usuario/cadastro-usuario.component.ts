@@ -66,27 +66,25 @@ export class CadastroUsuarioComponent implements OnInit {
             email: auth.email ?? ''
           };
 
-          console.log(user)
-
-          // this.usuarioService.inserir(user).subscribe({
-          //     next: _ => {
-          //       this.snackResult.success("Cadastro realizado com sucesso!")
-          //       // this.router.navigate(['management'])
-          //     },
-          //     error: e => {
-          //       console.log(e);
-          //       // if(validar[0].nome == this.auth.username){
-          //       //   this.invalid.push('username')
-          //       //   this.invalid.push('nameInUse')
-          //       // }
-          //       // if(validar[0].nome == this.auth.username){
-          //       //   this.invalid.push('email')
-          //       //   this.invalid.push('emailInUse')
-          //       // }
+          this.usuarioService.inserir(user).subscribe({
+              next: _ => {
+                this.snackResult.success("Cadastro realizado com sucesso!")
+                // this.router.navigate(['management'])
+              },
+              error: e => {
+                console.log(e);
+                // if(validar[0].nome == this.auth.username){
+                //   this.invalid.push('username')
+                //   this.invalid.push('nameInUse')
+                // }
+                // if(validar[0].nome == this.auth.username){
+                //   this.invalid.push('email')
+                //   this.invalid.push('emailInUse')
+                // }
                 
-          //     }
-          //   }
-          // )
+              }
+            }
+          )
         }
       )
     }

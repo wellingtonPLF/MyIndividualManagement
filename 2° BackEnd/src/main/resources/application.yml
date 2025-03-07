@@ -21,7 +21,8 @@ spring:
   profiles:
     active: ${APP_PROFILE:dev}
   jpa:
-    open-in-view: false
+    open-in-view: true #In development or debugging
+#open-in-view: false #In production
     
 #Session server
 server:

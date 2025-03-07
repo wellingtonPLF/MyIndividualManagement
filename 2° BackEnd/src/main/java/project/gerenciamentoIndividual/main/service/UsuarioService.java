@@ -101,9 +101,7 @@ public class UsuarioService {
         }
     	
     	Usuario user = new Usuario(usuario);
-    	System.out.println(user.getAtividades());
 		Usuario userDB = this.usuarioRepository.save(user);
-		System.out.println(userDB);
 		AuthJPA authDB = new AuthJPA(usuario);
 		authDB.setUser(userDB);
 		this.authService.authInsert(authDB);
