@@ -45,7 +45,6 @@ BEGIN
 END
 '  LANGUAGE PLPGSQL;
 
-/*
 DO 
 '
 BEGIN
@@ -76,13 +75,13 @@ BEGIN
 	
 	IF NOT EXISTS (SELECT auth_id FROM auth WHERE auth_id = 1) THEN
 		INSERT INTO auth(auth_id, username, password, user_id)
-		VALUES (1, ''well'', 
+		VALUES (1, ''wellington'', 
 		''{bcrypt}$2a$10$dQWjpRaxiORPCqh4hEQVW.Ka.FkRLdzEvoSPJ26pQ6I7Fqo4wrDzG'', 1);	
 	END IF;
 	
 	IF NOT EXISTS (SELECT auth_id FROM auth WHERE auth_id = 2) THEN
 		INSERT INTO auth(auth_id, username, password, user_id)
-		VALUES (2, ''lara'', 
+		VALUES (2, ''larissa'', 
 		''{bcrypt}$2a$10$dQWjpRaxiORPCqh4hEQVW.Ka.FkRLdzEvoSPJ26pQ6I7Fqo4wrDzG'', 2);	
 	END IF;
 	
@@ -108,4 +107,41 @@ BEGIN
 	END IF;
 END
 '  LANGUAGE PLPGSQL;
-*/
+
+
+DO 
+'
+BEGIN
+
+	IF NOT EXISTS (SELECT * FROM atividade WHERE idatividade = 1) THEN
+		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
+		VALUES (1, ''Lets Work'', ''Atividade'', 0, 1);
+		
+		INSERT INTO janela values (4, ''MySpace'', ''Janela'', 0, 0, 1, 1);
+		INSERT INTO subarea values (7, 1, ''Main'', ''Subarea'', 0, ''casual'',4);
+		INSERT INTO ocupacao values (9, ''Gerais'', ''Ocupacao'', 0, 7);
+		INSERT INTO classe values (9, null, null, ''All'', ''Classe'', null, 0, null, null, null, 9);
+	END IF;
+	
+	IF NOT EXISTS (SELECT * FROM atividade WHERE idatividade = 2) THEN
+		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
+		VALUES (2, ''Lets Work'', ''Atividade'', 0, 2);
+		
+		INSERT INTO janela values (5, ''MySpace'', ''Janela'', 0, 0, 2, 1);
+		INSERT INTO subarea values (8, 1, ''Main'', ''Subarea'', 0, ''casual'',5);
+		INSERT INTO ocupacao values (10, ''Gerais'', ''Ocupacao'', 0, 8);
+		INSERT INTO classe values (10, null, null, ''All'', ''Classe'', null, 0, null, null, null, 10);
+	END IF;
+	
+	IF NOT EXISTS (SELECT * FROM atividade WHERE idatividade = 3) THEN
+		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
+		VALUES (3, ''Lets Work'', ''Atividade'', 0, 3);
+		
+		INSERT INTO janela values (6, ''MySpace'', ''Janela'', 0, 0, 3, 1);
+		INSERT INTO subarea values (9, 1, ''Main'', ''Subarea'', 0, ''casual'',6);
+		INSERT INTO ocupacao values (11, ''Gerais'', ''Ocupacao'', 0, 9);
+		INSERT INTO classe values (11, null, null, ''All'', ''Classe'', null, 0, null, null, null, 11);
+	END IF;
+END
+'  LANGUAGE PLPGSQL;
+

@@ -1,4 +1,4 @@
-package project.gerenciamentoIndividual.main.jpaModel;
+package project.gerenciamentoIndividual.main.model;
 
 import java.util.Collection;
 import java.util.Set;
@@ -21,19 +21,19 @@ import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
+import project.gerenciamentoIndividual.main.dtoModel.AuthDTO;
 import project.gerenciamentoIndividual.main.dtoModel.AuthenticationDTO;
 import project.gerenciamentoIndividual.main.interfaces.PasswordValidationConstraint;
-import project.gerenciamentoIndividual.main.model.Usuario;
 
 @Entity
 @Table(name = "auth")
-public class AuthJPA implements UserDetails {
+public class Auth implements UserDetails {
 
 	private final static long serialVersionUID = 1L;
 	
 	@Id
-	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_sequence")
-	@SequenceGenerator(name="user_sequence", sequenceName="user_seq",  allocationSize = 1, initialValue = 4)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="auth_sequence")
+	@SequenceGenerator(name="auth_sequence", sequenceName="auth_seq",  allocationSize = 1, initialValue = 4)
 	@Column(name="auth_id")
 	private Long _id;
 	
@@ -50,22 +50,22 @@ public class AuthJPA implements UserDetails {
 	private Usuario _user;
 	
 	@OneToOne(mappedBy = "_auth", cascade=CascadeType.ALL, orphanRemoval=true)
-	private TokenJPA _token;
+	private Token _token;
 	
 	@ManyToMany(fetch = FetchType.EAGER, cascade = {CascadeType.DETACH, CascadeType.REFRESH})
 	@JoinTable(name="Auth_Roles",
 	joinColumns= @JoinColumn(name="auth_id"), inverseJoinColumns = @JoinColumn(name="role_id"))
-	private Set<RoleJPA> _roles;
+	private Set<Role> _roles;
 	
-	public AuthJPA() {}
+	public Auth() {}
 	
-	public AuthJPA(AuthenticationDTO user) {
-		this._username = user.getNome();
-		this._password = user.getPassword();
-		this._user = new Usuario(user);
+	public Auth(AuthDTO auth) {
+		this._username = auth.getUsername();
+		this._password = auth.getPassword();
+		this._user = auth.getUser();
 	}
 	
-	public AuthJPA(String username, String email, String password, Usuario user) {
+	public Auth(String username, String password, Usuario user) {
 		this._username = username;
 		this._password = password;
 		this._user = user;
@@ -87,10 +87,10 @@ public class AuthJPA implements UserDetails {
 		return true;
 	}
 	//-----------------------------------------------
-	public Set<RoleJPA> getRoles() {
+	public Set<Role> getRoles() {
 		return this._roles;
 	}
-	public void setRoles(Set<RoleJPA> roles) {
+	public void setRoles(Set<Role> roles) {
 		this._roles = roles;
 	}
 	//-----------------------------------------------
@@ -124,6 +124,6 @@ public class AuthJPA implements UserDetails {
 		return String.format("Id:%d\n"
 				+ "UserName:%s\n"
 				+ "Password:%s\n"
-				+ "Email:%s\n", this._id, this._username, this._password);
+				+ "User:%s\n", this._id, this._username, this._password, this._user);
 	}
 }

@@ -31,7 +31,7 @@ public class Classe {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="classe_sequence")
-	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 9)
+	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 10)
 	private Long idclasse;
 	private String nome;
 	private Integer ordem;

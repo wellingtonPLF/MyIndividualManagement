@@ -30,7 +30,7 @@ public class Janela{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="janela_sequence")
-	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 4)
+	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 5)
 	private Long idjanela;
 	private String nome;
 	private Integer ordem;

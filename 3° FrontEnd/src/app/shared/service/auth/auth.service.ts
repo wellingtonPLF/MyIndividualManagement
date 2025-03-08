@@ -10,9 +10,14 @@ import { environment } from 'src/environments/environment';
 })
 export class AuthService {
 
-  URL_Auth = `${environment.apiUrl}/credentials`;
+  URL_Auth: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_Auth = `${environment.apiUrl}/credentials`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_Auth = newUrl;
   }
 
   public authentication(auth: Auth): Observable<StatusResult<string>>{

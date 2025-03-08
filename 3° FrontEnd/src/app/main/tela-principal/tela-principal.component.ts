@@ -7,6 +7,7 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { AuthService } from 'src/app/shared/service/auth/auth.service';
 import { HttpStatusCode } from '@angular/common/http';
+import { ServerService } from 'src/app/shared/service/server/server.service';
 
 @Component({
   selector: 'app-tela-principal',
@@ -15,15 +16,17 @@ import { HttpStatusCode } from '@angular/common/http';
 })
 export class TelaPrincipalComponent implements OnInit {
 
-  conta: boolean = false;
+  
   widthScreen: boolean = window.innerWidth >= 500;
   searchUser: any = { value: '', status: false};
 
   user$!: Observable<any>;
 
   isOnline: boolean = false;
+  isOffline: boolean = false;
+  conta: boolean = false;
 
-  constructor(private usuarioService: UsuarioService, private store: Store<any>, private authService: AuthService) {
+  constructor(private serverService: ServerService, private store: Store<any>, private userService: UsuarioService) {
     this.user$ = this.store.select('userReducer');
   }
 
@@ -32,22 +35,29 @@ export class TelaPrincipalComponent implements OnInit {
       this.widthScreen = window.innerWidth >= 500
     });
 
-    this.usuarioService.getAuthenticatedUser().subscribe(
+    this.serverService.getInfo().subscribe(
       {
-        next: it => {
-          if (parseInt(it.status) == HttpStatusCode.Unauthorized) {
-            this.isOnline = true; 
-          }
-          else {
-            this.conta = true;
-            this.store.dispatch({type: 'user', payload: it.data})
-          }
+        next: _ => {
+          this.userService.getAuthenticatedUser().subscribe(
+            {
+              next: it => {
+                if (parseInt(it.status) == HttpStatusCode.Unauthorized) {
+                  this.isOnline = true; 
+                }
+                else {
+                  this.conta = true;
+                  this.store.dispatch({type: 'user', payload: it.data})
+                }
+              },
+              error: _ => {}
+            }
+          )
         },
         error: (e) => {
-          this.isOnline = false;
+          this.isOffline = true;
         }
       }
-    );
+    )
   }
 
   search(): void{

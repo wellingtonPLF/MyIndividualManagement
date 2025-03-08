@@ -12,9 +12,14 @@ import { environment } from '../../../environments/environment';
 })
 export class ProjetoService {
   
-  URL_TASK = `${environment.apiUrl}/projeto`;
+  private URL_TASK: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_TASK = `${environment.apiUrl}/projeto`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_TASK = newUrl;
   }
 
   listar(): Observable<Projeto []>{

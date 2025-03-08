@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
 import jakarta.validation.Valid;
 import project.gerenciamentoIndividual.main.dtoModel.AuthDTO;
 import project.gerenciamentoIndividual.main.format.StatusResult;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
+import project.gerenciamentoIndividual.main.model.Auth;
 import project.gerenciamentoIndividual.main.service.AuthenticationService;
 
 @RestController
@@ -35,13 +35,13 @@ public class AuthController {
 		
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/credentials/acceptAuth")
-	public StatusResult<?> acceptAuth(@Valid @RequestBody AuthJPA auth) {
+	public StatusResult<?> acceptAuth(@Valid @RequestBody Auth auth) {
 		return this.authService.acceptAuth(auth);
 	}
 	
 	@PreAuthorize("hasAnyRole('ROLE_ADMIN','ROLE_USER')")
 	@PostMapping("/credentials/authUpdate")
-	public StatusResult<?> authUpdate(@Valid @RequestBody AuthJPA auth) {
+	public StatusResult<?> authUpdate(@Valid @RequestBody Auth auth) {
 		return this.authService.authUpdate(auth);
 	}
 	

@@ -16,7 +16,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import project.gerenciamentoIndividual.main.enumState.TokenType;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
+import project.gerenciamentoIndividual.main.model.Auth;
 
 @Service
 public class JwtUtil {
@@ -53,7 +53,7 @@ public class JwtUtil {
 	    return Keys.hmacShaKeyFor(keyBytes);
 	}
 
-	public String generateToken(AuthJPA authDetails, TokenType type) {
+	public String generateToken(Auth authDetails, TokenType type) {
 		Map<String, Object> extraClaims = new HashMap<>();
 	    return Jwts
 	        .builder()

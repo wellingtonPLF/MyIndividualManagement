@@ -1,4 +1,4 @@
-package project.gerenciamentoIndividual.main.jpaModel;
+package project.gerenciamentoIndividual.main.model;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -15,7 +15,7 @@ import project.gerenciamentoIndividual.main.enumState.RoleName;
 
 @Entity
 @Table(name = "roles")
-public class RoleJPA implements GrantedAuthority{
+public class Role implements GrantedAuthority{
 	private final static long serialVersionUID = 1L;
 	
 	@Id

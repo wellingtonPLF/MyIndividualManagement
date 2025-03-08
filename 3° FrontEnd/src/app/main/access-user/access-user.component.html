@@ -2,8 +2,8 @@
     <div style="margin-bottom: 12vh;">
         <h2 style="color: white;">Access Hostname</h2>
         <div style="display: flex; flex-direction: column;">
-            <input class="config" style="color: black;" id="access" type="text" placeholder="*******">
-            <button style="margin-top: 8px;" class="config" [routerLink]="['/login']">aplicar</button>
+            <input class="config" [(ngModel)]="hostname" style="color: black;" id="access" type="text" placeholder="*******">
+            <a href="{{localhost}}" (click)="onLinkClick($event)" style="margin-top: 8px;" class="config">aplicar</a>
             <button style="margin-top: 8px;" class="config" [routerLink]="['/']">voltar</button>
         </div>
     </div>

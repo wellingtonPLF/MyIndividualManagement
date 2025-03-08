@@ -46,30 +46,16 @@ export class CadastroUsuarioComponent implements OnInit {
   validateSignUp(): void{
     this.invalid = []
 
-    if(true){ //if(!this.reactiveForm.invalid){
-
-      const auth: Auth = {
-        id: 0,
-        roles: [],
-        username: "acordar1243",
-        password: "123!@#qweQWE",
-        email: "faaaaaaaaaaaaaag@email.com"
-      }
+    if(!this.reactiveForm.invalid){
 
       this.templateService.pesquisarPorId(1).subscribe(
         result => {
           UsuarioFactory.criarUsuario(result, this.usuario);
 
-          const user: Authentication = {...this.usuario, 
-            password: auth.password ?? '',
-            nome: auth.username ?? '',
-            email: auth.email ?? ''
-          };
-
-          this.usuarioService.inserir(user).subscribe({
+          this.usuarioService.inserir({auth: this.auth, user: this.usuario}).subscribe({
               next: _ => {
                 this.snackResult.success("Cadastro realizado com sucesso!")
-                // this.router.navigate(['management'])
+                this.router.navigate(['management'])
               },
               error: e => {
                 console.log(e);

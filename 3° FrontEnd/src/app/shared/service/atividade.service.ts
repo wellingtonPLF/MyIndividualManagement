@@ -11,9 +11,14 @@ import { environment } from '../../../environments/environment';
 })
 export class AtividadeService {
 
-  URL_ATIVIDADE = `${environment.apiUrl}/atividade`;
+  private URL_ATIVIDADE: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_ATIVIDADE = `${environment.apiUrl}/atividade`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_ATIVIDADE = newUrl;
   }
 
   listar(): Observable<Atividade []>{

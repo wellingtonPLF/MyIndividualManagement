@@ -2,8 +2,8 @@ package project.gerenciamentoIndividual.main.dtoModel;
 import java.util.Date;
 import java.util.List;
 
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
 import project.gerenciamentoIndividual.main.model.Atividade;
+import project.gerenciamentoIndividual.main.model.Auth;
 import project.gerenciamentoIndividual.main.model.Usuario;
 
 public class UserDTO  {

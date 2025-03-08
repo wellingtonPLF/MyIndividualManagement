@@ -10,9 +10,14 @@ import { environment } from '../../../environments/environment';
 })
 export class TemplateService {
 
-  URL_TEMPLATE = `${environment.apiUrl}/template`;
-  
+  private URL_TEMPLATE: string;
+
   constructor(private httpClient: HttpClient) {
+    this.URL_TEMPLATE = `${environment.apiUrl}/template`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_TEMPLATE = newUrl;
   }
 
   listar(): Observable<Template []>{
@@ -48,7 +53,6 @@ export class TemplateService {
         return data;
       }),
       catchError((error) => {
-        console.log(error)
         return throwError(() => error);
       })
     );

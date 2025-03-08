@@ -1,4 +1,4 @@
-package project.gerenciamentoIndividual.main.jpaModel;
+package project.gerenciamentoIndividual.main.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
@@ -13,7 +13,7 @@ import jakarta.persistence.Table;
 
 @Entity
 @Table(name = "token")
-public class TokenJPA {
+public class Token {
 	@Id
 	@GeneratedValue
 	@Column(name="token_id")
@@ -22,14 +22,14 @@ public class TokenJPA {
 	@OneToOne(fetch=FetchType.LAZY)
 	@JsonIgnore
 	@JoinColumn(name = "auth_id", unique = true)
-	private AuthJPA _auth;
+	private Auth _auth;
 	
 	@Column(name = "key", unique = true)
 	private String _token;
 
-	public TokenJPA() {}
+	public Token() {}
 	
-	public TokenJPA(String token, AuthJPA auth) {
+	public Token(String token, Auth auth) {
 		this._token = token;
 		this._auth = auth;
 	}
@@ -50,11 +50,18 @@ public class TokenJPA {
 		this._token = token;
 	}
 
-	public AuthJPA getAuth() {
+	public Auth getAuth() {
 		return this._auth;
 	}
 
-	public void setAuth(AuthJPA auth) {
+	public void setAuth(Auth auth) {
 		this._auth = auth;
+	}
+	
+	@Override
+	public String toString() {
+		return String.format("Id:%d\n"
+				+ "Token:%s\n"
+				+ "Auth:%s\n", this._id, this._token, this._auth);
 	}
 }

@@ -17,6 +17,11 @@ export class UsuarioService {
   URL_USUARIOS = `${environment.apiUrl}/usuarios`;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_USUARIOS = `${environment.apiUrl}/usuarios`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_USUARIOS = newUrl;
   }
 
   listar(): Observable<Usuario []>{
@@ -27,7 +32,7 @@ export class UsuarioService {
     );
   }
 
-  inserir(usuario: Usuario): Observable<Usuario>{
+  inserir(usuario: any): Observable<Usuario>{
     return this.httpClient.post<Usuario>(this.URL_USUARIOS, usuario).pipe(
       catchError((error) => {
         return throwError(() => error);

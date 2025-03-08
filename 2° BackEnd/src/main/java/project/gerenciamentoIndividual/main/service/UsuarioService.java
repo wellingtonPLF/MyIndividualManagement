@@ -3,7 +3,8 @@ package project.gerenciamentoIndividual.main.service;
 import project.gerenciamentoIndividual.main.repositories.UsuarioRepository;
 import project.gerenciamentoIndividual.main.util.CookieUtil;
 import project.gerenciamentoIndividual.main.format.StatusResult;
-import project.gerenciamentoIndividual.main.jpaModel.TokenJPA;
+import project.gerenciamentoIndividual.main.model.Auth;
+import project.gerenciamentoIndividual.main.model.Token;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -26,7 +27,6 @@ import project.gerenciamentoIndividual.main.dtoModel.UserDTO;
 import project.gerenciamentoIndividual.main.enumState.JwtType;
 import project.gerenciamentoIndividual.main.exception.AuthenticationExceptionResponse;
 import project.gerenciamentoIndividual.main.exception.InternalExceptionResult;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
 import project.gerenciamentoIndividual.main.util.JwtUtil;
 
 @Service
@@ -65,10 +65,10 @@ public class UsuarioService {
 
 	public StatusResult<?> getAuthenticatedUser() {
 		final String accessToken = CookieUtil.getCookieValue(this.request, this.accessTokenName);
-		final TokenJPA jwt = this.tokenService.findByToken(accessToken);
+		final Token jwt = this.tokenService.findByToken(accessToken);
 		final String authID = jwtService.extractSubject(jwt.getToken())
 				.orElseThrow(() -> new AuthenticationExceptionResponse(JwtType.EXPIRED_AT.toString()));
-		AuthJPA authDB = this.authService.findById(authID);
+		Auth authDB = this.authService.findById(authID);
 		Usuario userDB = this.userRepository.findById(authDB.getUser().getIdusuario()).orElseThrow();
 		UserDTO user = new UserDTO(userDB);
 		return new StatusResult<UserDTO>(HttpStatus.OK.value(), user);
@@ -82,27 +82,28 @@ public class UsuarioService {
 		return true;
 	}
 
-	public StatusResult<?> inserir(AuthenticationDTO usuario) {
+	public StatusResult<?> inserir(AuthenticationDTO authentication) {
 		int qnt = this.usuarioRepository.findAll().size();
+		Usuario usuario = authentication.getUser();
+		AuthDTO newAuth = authentication.getAuth();
 		if (qnt >= this.userLimit) {
 			throw new InternalExceptionResult("limit user achieved!");
 		}		
-		if (usuario.getEmail() == null || usuario.getEmail() == "") {
+		if (newAuth.getEmail() == null || newAuth.getEmail() == "") {
             throw new Error("Email inválido!");
         }
-		Optional<Usuario> findUser = this.userRepository.findBy_email(usuario.getEmail());
+		Optional<Usuario> findUser = this.userRepository.findBy_email(newAuth.getEmail());
     	if (findUser.isPresent()) {
     		throw new InternalExceptionResult("user already exist!");
         }
     	
-    	AuthJPA auth = this.authService.findByUsername(usuario.getNome());    	
+    	Auth auth = this.authService.findByUsername(newAuth.getUsername());    	
     	if (auth != null) {
     		throw new InternalExceptionResult("user already exist!");
         }
     	
-    	Usuario user = new Usuario(usuario);
-		Usuario userDB = this.usuarioRepository.save(user);
-		AuthJPA authDB = new AuthJPA(usuario);
+		Usuario userDB = this.usuarioRepository.save(usuario);
+		Auth authDB = new Auth(newAuth);
 		authDB.setUser(userDB);
 		this.authService.authInsert(authDB);
 		return new StatusResult<Usuario>(HttpStatus.OK.value(), userDB);

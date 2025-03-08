@@ -15,22 +15,21 @@ public class CookieUtil {
 		return (cookieAccess != null) ? cookieAccess.getValue() : null;
 	}
 	
-	public static void create(HttpServletResponse httpServletResponse, String name, String value, 
-			Boolean secure, String domain){
+	public static void create(HttpServletResponse httpServletResponse, String name, String value, HttpServletRequest req){
         Cookie cookie = new Cookie(name, value);
-        cookie.setSecure(secure);
+        cookie.setSecure(req.isSecure());
         cookie.setHttpOnly(true);
         cookie.setMaxAge(60 * 60 * 24 * 365);
-        cookie.setDomain(domain);
+        cookie.setDomain(req.getServerName());
         cookie.setPath("/");
         httpServletResponse.addCookie(cookie);
     }
-    public static void clear(HttpServletResponse httpServletResponse, String name){
+    public static void clear(HttpServletResponse httpServletResponse, String name, HttpServletRequest req){
         Cookie cookie = new Cookie(name, null);
         cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(1);
-        cookie.setDomain("localhost");
+        cookie.setDomain(req.getServerName());
         httpServletResponse.addCookie(cookie);
     }
 }

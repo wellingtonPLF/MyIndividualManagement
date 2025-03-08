@@ -7,18 +7,18 @@ export class LocalStorageService {
 
   constructor() { }
 
-  getToken(): string | null{
-    return localStorage.getItem('token');
+  getToken(tokenName: string) {
+    return localStorage.getItem(tokenName)
   }
 
-  setToken(token: string): void{
-    localStorage.setItem('token', token);
-    console.log("Token Add");
+  setToken(tokenName: string, token: string) {
+      localStorage.setItem(tokenName, token)
+      console.log('Token Add')
   }
 
-  removeToken(token: string): void{
-    localStorage.removeItem(token);
-    localStorage.clear();
-    console.log("Token Removido");
+  removeToken(tokenName: string) {
+      localStorage.removeItem(tokenName)
+      localStorage.clear()
+      console.log('Token Removido')
   }
 }

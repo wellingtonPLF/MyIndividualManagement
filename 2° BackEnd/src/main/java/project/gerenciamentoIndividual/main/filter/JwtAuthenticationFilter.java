@@ -20,8 +20,8 @@ import jakarta.servlet.http.HttpServletResponse;
 
 import project.gerenciamentoIndividual.main.enumState.JwtType;
 import project.gerenciamentoIndividual.main.exception.FilterExceptionResult;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
-import project.gerenciamentoIndividual.main.jpaModel.TokenJPA;
+import project.gerenciamentoIndividual.main.model.Auth;
+import project.gerenciamentoIndividual.main.model.Token;
 import project.gerenciamentoIndividual.main.repositories.AuthRepository;
 import project.gerenciamentoIndividual.main.repositories.TokenRepository;
 import project.gerenciamentoIndividual.main.util.CookieUtil;
@@ -49,14 +49,14 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 		final String authID;
 		final String jwt = CookieUtil.getCookieValue(request, this.accessToken);
 		try {
-			TokenJPA tokenDB = this.tokenRepository.findBy_token(jwt).orElse(null);
+			Token tokenDB = this.tokenRepository.findBy_token(jwt).orElse(null);
 			if (tokenDB != null) {
 				// (Expired == true) ? Exception : "userID"
 				authID = jwtService.extractSubject(jwt).orElseThrow(
 					() -> new FilterExceptionResult(JwtType.EXPIRED_AT)
 				);
 				// NotFoundExceptionResult
-				AuthJPA authDetails = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
+				Auth authDetails = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
 					() -> new FilterExceptionResult(JwtType.INVALID_USER)
 				);
 				//BasicAuth

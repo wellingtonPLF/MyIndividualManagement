@@ -21,8 +21,8 @@ import project.gerenciamentoIndividual.main.exception.AuthenticationExceptionRes
 import project.gerenciamentoIndividual.main.exception.InternalExceptionResult;
 import project.gerenciamentoIndividual.main.exception.NotFoundExceptionResult;
 import project.gerenciamentoIndividual.main.format.StatusResult;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
-import project.gerenciamentoIndividual.main.jpaModel.TokenJPA;
+import project.gerenciamentoIndividual.main.model.Auth;
+import project.gerenciamentoIndividual.main.model.Token;
 import project.gerenciamentoIndividual.main.model.Usuario;
 import project.gerenciamentoIndividual.main.repositories.AuthRepository;
 import project.gerenciamentoIndividual.main.repositories.UsuarioRepository;
@@ -52,7 +52,7 @@ public class AuthenticationService implements UserDetailsService{
 	private TokenService tokenService;
 
 	public StatusResult<?> authenticate(AuthDTO auth) {
-		AuthJPA authDB = null;
+		Auth authDB = null;
 		try {
 			if (auth.getEmail() != null) {
 				Usuario userDB = this.userRepository.findBy_email(auth.getEmail()).orElseThrow(
@@ -77,11 +77,10 @@ public class AuthenticationService implements UserDetailsService{
 			String jwtToken = jwtService.generateToken(authDB, TokenType.ACCESS_TOKEN);
 			String refreshToken = jwtService.generateToken(authDB, TokenType.REFRESH_TOKEN);
 			response.setContentType(null);
-			TokenJPA jwt = new TokenJPA(jwtToken, authDB);
-			this.tokenService.removeByAuthID(authDB.getId());
+			Token jwt = new Token(jwtToken, authDB);
 			this.tokenService.insertUpdate(jwt);
-			CookieUtil.create(response, this.accessTokenName, jwtToken, false, "localhost");
-			CookieUtil.create(response, this.refreshTokenName, refreshToken, false, "localhost");
+			CookieUtil.create(response, this.accessTokenName, jwtToken, request);
+			CookieUtil.create(response, this.refreshTokenName, refreshToken, request);			
 			return new StatusResult<String>(HttpStatus.OK.value(), "Success!");
 		}
 		catch (Exception e) {
@@ -91,13 +90,13 @@ public class AuthenticationService implements UserDetailsService{
 	
 	// ------------------------------------------------------------------------------------------
 
-	public List<AuthJPA> findAll(){
+	public List<Auth> findAll(){
 		return this.authRepository.findAll();
 	}
 	
 	public Boolean isLogged(){
 		String jwt = CookieUtil.getCookieValue(this.request, this.accessTokenName);
-		TokenJPA jwtDB;
+		Token jwtDB;
 		try {
 			jwtDB = this.tokenService.findByToken(jwt);
 		}
@@ -111,22 +110,22 @@ public class AuthenticationService implements UserDetailsService{
 	}
 	
 	
-	public AuthJPA findById(String authID) {
+	public Auth findById(String authID) {
 		return this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
 			() -> new NotFoundExceptionResult("The requested Id was not found.")
 		);
 	}
 	
-	public AuthJPA findByUsername(String username) {
-		Optional<AuthJPA> findAuth = this.authRepository.findBy_username(username);
+	public Auth findByUsername(String username) {
+		Optional<Auth> findAuth = this.authRepository.findBy_username(username);
     	if (findAuth.isPresent()) {
     		return findAuth.get();
         }
     	return null;
 	}
 	
-	public AuthJPA findByUserID(Long id) {
-		AuthJPA authDB = this.authRepository.findByUserID(id).orElseThrow(
+	public Auth findByUserID(Long id) {
+		Auth authDB = this.authRepository.findByUserID(id).orElseThrow(
 			() -> new NotFoundExceptionResult("The requested Id was not found.")
 		);
 		return authDB; 
@@ -137,8 +136,8 @@ public class AuthenticationService implements UserDetailsService{
 	}
 	
 	@Override
-	public AuthJPA loadUserByUsername(String username) {
-		AuthJPA user = this.authRepository.findBy_username(username).orElseThrow(
+	public Auth loadUserByUsername(String username) {
+		Auth user = this.authRepository.findBy_username(username).orElseThrow(
 			() -> new UsernameNotFoundException("User not Found: " + username)
 		);
 		return user;
@@ -146,27 +145,27 @@ public class AuthenticationService implements UserDetailsService{
 	
 	// ------------------------------------------------------------------------------------------
 	
-	public StatusResult<?> authInsert(AuthJPA auth) {
+	public StatusResult<?> authInsert(Auth auth) {
         try {
         	auth.setPassword(this.passwordEncoder.encode(auth.getPassword()));
         	if (auth.getPassword() == null || auth.getPassword() == "") {
                 throw new Error("Senha inválida!");
             }        	
             this.authRepository.save(auth);
-            return new StatusResult<AuthJPA>(HttpStatus.OK.value(), auth);
+            return new StatusResult<Auth>(HttpStatus.OK.value(), auth);
         }   
         catch(Exception e) {
         	throw new InternalExceptionResult(e.getMessage());
         } 
     }
 	
-	public StatusResult<?> authUpdate(AuthJPA auth){
+	public StatusResult<?> authUpdate(Auth auth){
 		final String accessToken = CookieUtil.getCookieValue(this.request, this.accessTokenName);
-		final TokenJPA jwtDB = this.tokenService.findByToken(accessToken);
+		final Token jwtDB = this.tokenService.findByToken(accessToken);
 		final String authID = jwtService.extractSubject(jwtDB.getToken()).orElseThrow(
 			() -> new AuthenticationExceptionResponse(JwtType.EXPIRED_AT.toString())
 		);
-		AuthJPA authDB = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
+		Auth authDB = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
 				() -> new UsernameNotFoundException("User not Found: " + auth.getUsername())
 		);
 		authDB.setPassword(this.passwordEncoder.encode(auth.getPassword()));
@@ -177,8 +176,8 @@ public class AuthenticationService implements UserDetailsService{
 		return new StatusResult<String>(HttpStatus.OK.value(), "Successfully!");
 	}
 	
-	public StatusResult<?> acceptAuth(AuthJPA auth){
-		AuthJPA authDB = this.authRepository.findBy_username(auth.getUsername()).orElseThrow(
+	public StatusResult<?> acceptAuth(Auth auth){
+		Auth authDB = this.authRepository.findBy_username(auth.getUsername()).orElseThrow(
 				() -> new UsernameNotFoundException("User not Found: " + auth.getUsername())
 		);
 		if(this.tokenService.getTokenValidation(authDB.getId()) == false) {
@@ -194,7 +193,7 @@ public class AuthenticationService implements UserDetailsService{
 	
 	public StatusResult<?> refresh() {
 		final String accessToken = CookieUtil.getCookieValue(this.request, this.accessTokenName);
-		final TokenJPA jwt = this.tokenService.findByToken(accessToken);
+		final Token jwt = this.tokenService.findByToken(accessToken);
 		final String expiredAcessToken = jwtService.extractSubject(jwt.getToken()).orElse(null);
 		if (expiredAcessToken == null) {
 			final String refreshToken = CookieUtil.getCookieValue(this.request, this.refreshTokenName);
@@ -204,15 +203,15 @@ public class AuthenticationService implements UserDetailsService{
 			final String authID = jwtService.extractSubject(refreshToken).orElseThrow(
 				() -> new AuthenticationExceptionResponse(JwtType.EXPIRED_RT.toString())
 			);
-			AuthJPA authDB = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
+			Auth authDB = this.authRepository.findById(Long.parseLong(authID)).orElseThrow(
 					() -> new AuthenticationExceptionResponse(JwtType.INVALID_USER.toString())
 			);
 			String jwtToken = jwtService.generateToken(authDB, TokenType.ACCESS_TOKEN);
 			String jwtRefresh = jwtService.generateToken(authDB, TokenType.REFRESH_TOKEN);
 			jwt.setToken(jwtToken);
 			this.tokenService.insertUpdate(jwt);
-			CookieUtil.create(response, this.accessTokenName, jwtToken, false, "localhost");
-			CookieUtil.create(response, this.refreshTokenName, jwtRefresh , false, "localhost");
+			CookieUtil.create(response, this.accessTokenName, jwtToken, request);
+			CookieUtil.create(response, this.refreshTokenName, jwtRefresh , request);
 			return new StatusResult<String>(HttpStatus.OK.value(), "Refresh Succefully Done");
 		}
 		else {
@@ -223,9 +222,9 @@ public class AuthenticationService implements UserDetailsService{
 	public StatusResult<?> logout() {
 		try {
 			final String jwt = CookieUtil.getCookieValue(this.request, this.accessTokenName);
-			TokenJPA jwtDB = tokenService.findByToken(jwt);
-			CookieUtil.clear(response, this.accessTokenName);
-		    CookieUtil.clear(response, this.refreshTokenName);
+			Token jwtDB = tokenService.findByToken(jwt);
+			CookieUtil.clear(response, this.accessTokenName, request);
+		    CookieUtil.clear(response, this.refreshTokenName, request);
 		    SecurityContextHolder.clearContext();
 		    tokenService.remove(jwtDB.getId());
 		    return new StatusResult<String>(HttpStatus.OK.value(), "LogOut Succefully Done");

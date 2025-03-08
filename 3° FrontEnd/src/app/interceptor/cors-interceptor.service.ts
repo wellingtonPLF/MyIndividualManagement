@@ -4,8 +4,7 @@ import {
   HttpHandler,
   HttpEvent,
   HttpInterceptor,
-  HttpHeaders,
-  HTTP_INTERCEPTORS
+  HttpHeaders
 } from '@angular/common/http';
 import { Observable } from 'rxjs';
 
@@ -19,8 +18,7 @@ export class CorsInterceptorService implements HttpInterceptor {
     const headers = new HttpHeaders({
       'X-CSRF-Token': '{{ csrftoken }}',
       'Content-Type': 'application/json',
-      'Access-Control-Allow-Origin': environment.apiUrl,
-      'ngrok-skip-browser-warning': '123'
+      'ngrok-skip-browser-warning': '1'
     });
 
     const modifiedRequest = request.clone({

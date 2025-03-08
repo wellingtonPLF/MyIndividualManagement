@@ -14,9 +14,14 @@ import { environment } from '../../../environments/environment';
 })
 export class JanelaService {
 
-  URL_JANELAS = `${environment.apiUrl}/janela`;
+  private URL_JANELAS: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_JANELAS = `${environment.apiUrl}/janela`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_JANELAS = newUrl;
   }
 
   listar(): Observable<Janela []>{

@@ -19,16 +19,11 @@ import jakarta.persistence.Table;
 import jakarta.persistence.Temporal;
 import jakarta.persistence.TemporalType;
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Past;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
-import project.gerenciamentoIndividual.main.dtoModel.AuthenticationDTO;
-import project.gerenciamentoIndividual.main.dtoModel.UserDTO;
-import project.gerenciamentoIndividual.main.jpaModel.AuthJPA;
 import project.gerenciamentoIndividual.main.serializer.UsuarioSerializer;
 
 @Entity
@@ -37,7 +32,7 @@ import project.gerenciamentoIndividual.main.serializer.UsuarioSerializer;
 public class Usuario {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="user_sequence")
 	@SequenceGenerator(name = "user_sequence", sequenceName = "user_seq", allocationSize = 1, initialValue = 4)
 	@Column(name = "user_id")
 	private Long idusuario;
@@ -58,7 +53,7 @@ public class Usuario {
 	private Date _bornDate;
 	
 	@OneToOne(mappedBy = "_user", cascade=CascadeType.ALL, orphanRemoval=true)
-	private AuthJPA _auth;
+	private Auth _auth;
 	//--------------------------------------------------------------------------------
 	@Column(columnDefinition = "TEXT")
 	private String img;
@@ -80,23 +75,6 @@ public class Usuario {
 
 	}
 	
-	public Usuario(AuthenticationDTO user) {
-		this.idusuario = user.getId();
-		this._nome = user.getNome();
-		this._bornDate= user.getBornDate();
-		this._email= user.getEmail();
-		this.img = user.getImg();
-		this.objectType = user.getObjectType();
-		this.atividades = user.getAtividades();
-	}
-	
-	public Usuario(UserDTO user) {
-		this.idusuario = user.getId(); 
-		this._nome = user.getNome();
-		this._bornDate= user.getBornDate();
-		this._email= user.getEmail();
-	}
-
 	public Long getIdusuario() {
 		return idusuario;
 	}
@@ -110,10 +88,10 @@ public class Usuario {
 	public void setBornDate(Date bornDate) {
 		this._bornDate = bornDate;
 	}
-	public AuthJPA getAuth() {
+	public Auth getAuth() {
 		return this._auth;
 	}
-	public void setAuth(AuthJPA auth) {
+	public void setAuth(Auth auth) {
 		this._auth = auth;
 	}
 
@@ -170,6 +148,16 @@ public class Usuario {
 		return String.format("Id:%d\n"
 				+ "Name:%s\n"
 				+ "BornDate:%s\n"
-				+ "Atividades:%s\n", this.idusuario, this._nome, this._bornDate, this.atividades);
+				+ "Email:%s\n"
+				+ "Img:%s\n"
+				+ "Type:%s\n"
+				+ "Atividades:%s\n",
+				this.idusuario,
+				this._nome,
+				this._bornDate,
+				this._email,
+				this.img,
+				this.objectType,
+				this.atividades);
 	}
 }

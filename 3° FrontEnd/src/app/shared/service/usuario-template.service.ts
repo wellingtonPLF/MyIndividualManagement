@@ -10,9 +10,14 @@ import { environment } from '../../../environments/environment';
 })
 export class UsuarioTemplateService {
 
-  URL_USUARIOS_TEMPLATE = `${environment.apiUrl}/usuarioTemplate`;
+  private URL_USUARIOS_TEMPLATE: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_USUARIOS_TEMPLATE = `${environment.apiUrl}/usuarioTemplate`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_USUARIOS_TEMPLATE = newUrl;
   }
 
   listar(): Observable<UsuarioTemplate []>{

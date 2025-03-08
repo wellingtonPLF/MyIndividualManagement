@@ -7,7 +7,7 @@
 
   <div class="nav-fill" style="z-index: 10000;">
     <div *ngIf="isOnline" style="width: 30px; height: 30px;"></div>
-    <div *ngIf="!isOnline" id="experience"
+    <div *ngIf="isOffline" id="experience"
     [routerLink]="['/experience']">Experience</div>
   </div>
 

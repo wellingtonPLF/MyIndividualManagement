@@ -13,9 +13,14 @@ import { environment } from '../../../environments/environment';
 })
 export class CasualService {
 
-  URL_TASK = `${environment.apiUrl}/casual`;
+  private URL_TASK: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_TASK = `${environment.apiUrl}/casual`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_TASK = newUrl;
   }
 
   listar(): Observable<Casual []>{

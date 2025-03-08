@@ -28,10 +28,8 @@ export class TelaManagementComponent implements OnInit{
   isLoggedIn: boolean = false;
   activity$!: Observable<any>;
 
-  constructor(private accountService: SessionStorageService,
-              private fshare: FuncShareService, private authService: AuthService,
-              private store: Store<any>, private userService: UsuarioService,
-              private accountServiceLocal: LocalStorageService) {
+  constructor(private fshare: FuncShareService, private authService: AuthService,
+              private store: Store<any>, private userService: UsuarioService) {
     this.atividade = new Atividade('');
     this.usuario = new Usuario();
     this.user$ = this.store.select('userReducer');
@@ -66,25 +64,20 @@ export class TelaManagementComponent implements OnInit{
   }
 
   signOut(): void{
-    this.accountService.removeToken('my-token');
-    this.accountServiceLocal.removeToken('my-token');
+    this.authService.logOut().subscribe(
+      {
+        next: _ => {
+          console.log("Log Out!")
+        },
+        error: (e: any) => {}
+      }
+    )
   }
 
   hideLeft(): void {
     this.hide = !this.hide
     this.fshare.sendClickEvent(this.hide);
     this.store.dispatch({type: 'hideLeftSide', payload: this.hide})
-  }
-
-  seeValue() {
-    // this.activity$.subscribe(
-    //   it => {
-    //     console.log(`Position: ${it.position}`)
-    //     for (let x of it.list) {
-    //       console.log(x)
-    //     }
-    //   }
-    // )
   }
 }
  

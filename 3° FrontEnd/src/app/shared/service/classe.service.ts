@@ -11,9 +11,14 @@ import { environment } from '../../../environments/environment';
 })
 export class ClasseService {
 
-  URL_CLASSE = `${environment.apiUrl}/classe`;
+  private URL_CLASSE: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_CLASSE = `${environment.apiUrl}/classe`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_CLASSE = newUrl;
   }
 
   listar(): Observable<Classe []>{

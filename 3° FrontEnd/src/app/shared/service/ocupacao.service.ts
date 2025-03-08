@@ -11,9 +11,14 @@ import { environment } from '../../../environments/environment';
 })
 export class OcupacaoService {
 
-  URL_OCUPACAO = `${environment.apiUrl}/ocupacao`;
+  private URL_OCUPACAO: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_OCUPACAO = `${environment.apiUrl}/ocupacao`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_OCUPACAO = newUrl;
   }
 
   listar(): Observable<Ocupacao []>{

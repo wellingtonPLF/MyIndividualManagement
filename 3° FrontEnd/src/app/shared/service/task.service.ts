@@ -11,9 +11,14 @@ import { environment } from '../../../environments/environment';
 })
 export class TaskService {
 
-  URL_TASK = `${environment.apiUrl}/task`;
+  private URL_TASK: string;
 
   constructor(private httpClient: HttpClient) {
+    this.URL_TASK = `${environment.apiUrl}/task`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_TASK = newUrl;
   }
 
   listar(): Observable<Task []>{

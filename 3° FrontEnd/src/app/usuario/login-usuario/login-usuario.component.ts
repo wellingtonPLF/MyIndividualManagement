@@ -1,9 +1,6 @@
-import {Component, ContentChild, ElementRef, OnInit} from '@angular/core';
-import {Usuario} from "../../shared/model/usuario";
+import {Component, OnInit} from '@angular/core';
 import {UsuarioService} from "../../shared/service/usuario.service";
 import {Router} from "@angular/router";
-import {SessionStorageService} from "../../shared/service/session-storage.service";
-import {LocalStorageService} from "../../shared/service/local-storage.service";
 import { Store } from '@ngrx/store';
 import { AuthService } from 'src/app/shared/service/auth/auth.service';
 import { Auth } from 'src/app/shared/model/auth';

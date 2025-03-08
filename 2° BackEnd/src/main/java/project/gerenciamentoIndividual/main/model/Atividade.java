@@ -12,6 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.SequenceGenerator;
 import jakarta.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
@@ -26,7 +27,8 @@ import project.gerenciamentoIndividual.main.serializer.AtividadeSerializer;
 public class Atividade{
 	
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="atividade_sequence")
+	@SequenceGenerator(name="atividade_sequence", sequenceName="atividade_seq",  allocationSize = 1, initialValue = 2)
 	private Long idatividade;
 	private int ordem;
 	private String nome;

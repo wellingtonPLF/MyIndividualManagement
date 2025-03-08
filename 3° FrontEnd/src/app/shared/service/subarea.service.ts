@@ -11,9 +11,14 @@ import { environment } from '../../../environments/environment';
 })
 export class SubareaService {
 
-  URL_SUBAREA = `${environment.apiUrl}/subarea`;
-  
+  private URL_SUBAREA: string;
+
   constructor(private httpClient: HttpClient) {
+    this.URL_SUBAREA = `${environment.apiUrl}/subarea`;
+  }
+
+  setApiUrl(newUrl: string) {
+    this.URL_SUBAREA = newUrl;
   }
 
   listar(): Observable<Subarea []>{

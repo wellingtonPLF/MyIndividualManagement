@@ -40,7 +40,7 @@ h2 {
 
 #access:focus {
     outline: unset;
-    border-color: #20c4b6;
+    border-color:  rgb(11, 220, 235);;
 }
 
 .config:focus {
@@ -48,5 +48,11 @@ h2 {
 }
 
 .config:hover {
-    border-color: #20c4b6
+    border-color:  rgb(11, 220, 235);
+}
+
+#access_user a {
+    text-decoration: unset;
+    text-align: center;
+    line-height: 35px;
 }

@@ -22,6 +22,7 @@ public class SecurityConfig {
     private JwtEntryPoint jwtEntryPoint;
 		
 	private static final String[] PERMIT_LIST_URLS = {
+			"/",
 			"/usuarios/**",
 			"/credentials/**",
 			"/atividade/**",
