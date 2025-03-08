@@ -6,12 +6,10 @@
   </div>
 
   <div class="nav-fill" style="z-index: 10000;">
-    <div *ngIf="isOnline" style="width: 30px; height: 30px;"></div>
-    <div *ngIf="isOffline" id="experience"
-    [routerLink]="['/experience']">Experience</div>
+    <div *ngIf="!searchUser.active" style="width: 30px; height: 30px;"></div>
   </div>
 
-  <div *ngIf="false" class="nav-fill" style="z-index: 10000;">
+  <div *ngIf="searchUser.active" class="nav-fill" style="z-index: 10000;">
     <input id="searchButton" [ngClass]="{'search_animation': searchUser.status}" [(ngModel)]="searchUser.value"
     [ngStyle]="{ 'width': searchUser.status ? '100%' : '0', 'margin-left': searchUser.status ? '5.4vw' : '0', 
     'padding': searchUser.status ? '0 10px' : '0', 'border': searchUser.status ? '2px solid #69A6E2': '' }"
@@ -25,15 +23,17 @@
 
   <app-user-list *ngIf="searchUser.status"></app-user-list>
 
-  <div *ngIf="isOnline" class="nav-right" [ngClass]="{'nav-right-change': !searchUser.status && !widthScreen && !conta}"
+  <div class="nav-right" [ngClass]="{'nav-right-change': !searchUser.status && !widthScreen && !conta}"
   [ngStyle]="{'display': searchUser.status && !widthScreen  ? 'none' : '', 'width': !conta ? '190px': '125px'}">
+
+  <div *ngIf="isOffline" id="experience" [routerLink]="['/experience']">Experience</div>
 
     <div [ngClass]="{'icon': conta, 'displayNone': !conta}">
       <button class="buttonStyle" style="width: 50px; height: 50px;" [routerLink]="['/management']">
         <mat-icon [attr.aria-hidden]="'false'">account_circle</mat-icon></button>
     </div>
 
-    <div [ngClass]="{'sign': !conta, 'displayNone': conta}">
+    <div [ngClass]="{'sign': isOnline, 'displayNone': !isOnline}">
       <button class="buttonStyle" style="margin-right: 10px; width: 75px; height: 70px;" [routerLink]="['/login']">Get in</button>
       <button style="background-color: white; color: #30618a; height: 70px; width: 70px; border: unset; border-radius: 100%; font-size: 15px; font-weight: 600;" [routerLink]="['/cadastro']">Sign up</button>
     </div>

@@ -18,7 +18,7 @@ export class TelaPrincipalComponent implements OnInit {
 
   
   widthScreen: boolean = window.innerWidth >= 500;
-  searchUser: any = { value: '', status: false};
+  searchUser: any = { value: '', status: false, active: false };
 
   user$!: Observable<any>;
   userSubscription!: Subscription;
@@ -26,6 +26,7 @@ export class TelaPrincipalComponent implements OnInit {
   isOnline: boolean = false;
   isOffline: boolean = false;
   conta: boolean = false;
+  
 
   constructor(private serverService: ServerService, private store: Store<any>, private userService: UsuarioService) {
     this.user$ = this.store.select('userReducer');
@@ -39,12 +40,17 @@ export class TelaPrincipalComponent implements OnInit {
     this.serverService.getInfo().subscribe(
       {
         next: _ => {
-          this.userSubscription = this.user$.subscribe(
-            it => {
-              if (it.id > 0) {
-                this.conta = true
-              }
-              this.isOnline = true; 
+          this.userService.getAuthenticatedUser().subscribe(
+            {
+              next: it => {
+                if (parseInt(it.status) != HttpStatusCode.Unauthorized) {
+                  this.conta = true; 
+                }
+                else {
+                  this.isOnline = true;
+                }
+              },
+              error: _ => {}
             }
           )
         },

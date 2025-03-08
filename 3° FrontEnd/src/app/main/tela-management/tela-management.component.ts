@@ -74,10 +74,8 @@ export class TelaManagementComponent implements OnInit{
   signOut(): void{
     this.authService.logOut().subscribe(
       {
-        next: _ => {
-          this.store.dispatch({type: 'user', payload: INITIAL_RX_USER_STATE}) 
-        },
-        error: (e: any) => {}
+        next: _ => {},
+        error: _ => {}
       }
     )
   }
