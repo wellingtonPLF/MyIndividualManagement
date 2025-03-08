@@ -13,7 +13,7 @@ import {SessionStorageService} from "../../shared/service/session-storage.servic
 import {LocalStorageService} from "../../shared/service/local-storage.service";
 import {CasualService} from "../../shared/service/casual.service";
 import {ProjetoService} from "../../shared/service/projeto.service";
-import {Observable, forkJoin} from "rxjs";
+import {Observable, Subscription, forkJoin} from "rxjs";
 import {Casual} from "../../shared/model/casual";
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
@@ -37,6 +37,7 @@ export class OcupacaoListComponent implements OnInit {
 
   variable$!: Observable<any>;
   user$!: Observable<any>;
+  userSubscription!: Subscription;
 
   @ViewChild('myDiv', { static: false }) myDiv!: ElementRef;
 
@@ -70,7 +71,7 @@ export class OcupacaoListComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.user$.subscribe(
+    this.userSubscription = this.user$.subscribe(
       it => {
         const usuarioID = it.idusuario
         this.casualService.getRequestCasualTask(usuarioID).subscribe(
@@ -134,6 +135,12 @@ export class OcupacaoListComponent implements OnInit {
         )
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   ngOnChanges(): void{

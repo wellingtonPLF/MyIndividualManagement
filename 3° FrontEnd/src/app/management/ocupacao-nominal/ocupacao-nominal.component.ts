@@ -14,7 +14,7 @@ import {DialogComponent} from "../../dialogs/dialog/dialog.component";
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
 
@@ -36,6 +36,7 @@ export class OcupacaoNominalComponent implements OnInit {
   qntItens: number = 2;
   leftSide = false;
   variable$!: Observable<any>;
+  ocupationSubscription!: Subscription;
 
   constructor(private ocupacaoService: OcupacaoService, private registry: RegistryStore,
     private dialog: MatDialog, private classService: ClasseService, private fshare: FuncShareService, private dataService: DataService,
@@ -67,7 +68,7 @@ export class OcupacaoNominalComponent implements OnInit {
       this.calcQntItens(this.leftSide)
     });
     // ------------------------------------------------------------------------------------------------------------------------------------------------  
-    this.ocupation$.subscribe(
+    this.ocupationSubscription = this.ocupation$.subscribe(
       it => {
         if (!it.local) {
           this.subarea = {...it.parent};
@@ -91,8 +92,13 @@ export class OcupacaoNominalComponent implements OnInit {
           }
         }
       }
-    )
-        
+    )  
+  }
+
+  ngOnDestroy(): void {
+    if (this.ocupationSubscription) {
+      this.ocupationSubscription.unsubscribe();
+    }
   }
 
   addOccupation(): void{

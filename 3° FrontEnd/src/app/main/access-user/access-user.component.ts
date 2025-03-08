@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { LocalStorageService } from 'src/app/shared/service/local-storage.service';
-import { environment, protocol } from 'src/environments/environment';
+import { protocol } from 'src/environments/environment';
 
 @Component({
   selector: 'app-access-user',

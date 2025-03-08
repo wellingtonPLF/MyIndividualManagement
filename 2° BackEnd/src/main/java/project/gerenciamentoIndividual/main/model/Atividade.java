@@ -28,7 +28,7 @@ public class Atividade{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="atividade_sequence")
-	@SequenceGenerator(name="atividade_sequence", sequenceName="atividade_seq",  allocationSize = 1, initialValue = 2)
+	@SequenceGenerator(name="atividade_sequence", sequenceName="atividade_seq",  allocationSize = 1, initialValue = 4)
 	private Long idatividade;
 	private int ordem;
 	private String nome;

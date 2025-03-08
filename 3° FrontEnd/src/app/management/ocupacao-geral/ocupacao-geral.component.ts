@@ -11,7 +11,7 @@ import {MatDialog} from "@angular/material/dialog";
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
 import { DataService } from 'src/app/shared/service/data.service';
 
@@ -27,6 +27,7 @@ export class OcupacaoGeralComponent implements OnInit {
   ocupacoes!: Array<Ocupacao>;
   ocupation$!:Observable<any>;
   ocupations_limit: number = 7;
+  ocupationSubscription!: Subscription;
 
   logicExecuted = false;
   leftSide = false;
@@ -76,7 +77,7 @@ export class OcupacaoGeralComponent implements OnInit {
     });
     // ------------------------------------------------------------------------------------------------------------
 
-    this.ocupation$.subscribe(
+    this.ocupationSubscription = this.ocupation$.subscribe(
       it => {
         if (!it.local) {
           this.subarea = {...it.parent};
@@ -95,6 +96,12 @@ export class OcupacaoGeralComponent implements OnInit {
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.ocupationSubscription) {
+      this.ocupationSubscription.unsubscribe();
+    }
   }
 
   addOcupacao(): void{

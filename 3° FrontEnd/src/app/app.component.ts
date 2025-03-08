@@ -1,6 +1,7 @@
 import {Component} from '@angular/core';
 import { UsuarioService } from './shared/service/usuario.service';
-import { AuthService } from './shared/service/auth/auth.service';
+import { HttpStatusCode } from '@angular/common/http';
+import { Store } from '@ngrx/store';
 
 @Component({
   selector: 'app-root',
@@ -10,6 +11,18 @@ import { AuthService } from './shared/service/auth/auth.service';
 export class AppComponent {
   title = 'myIndividualManagement';
 
-  constructor(public authService: AuthService){}
-  ngOnInit(): void{}
+  constructor(private store: Store<any>, private userService: UsuarioService){}
+  
+  ngOnInit(): void{
+    this.userService.getAuthenticatedUser().subscribe(
+      {
+        next: it => {
+          if (parseInt(it.status) != HttpStatusCode.Unauthorized) {
+            this.store.dispatch({type: 'user', payload: it.data}) 
+          }
+        },
+        error: _ => {}
+      }
+    )
+  }
 }

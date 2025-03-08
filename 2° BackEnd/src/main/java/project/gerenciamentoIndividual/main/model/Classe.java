@@ -31,7 +31,7 @@ public class Classe {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="classe_sequence")
-	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 10)
+	@SequenceGenerator(name="classe_sequence", sequenceName="classe_seq",  allocationSize = 1, initialValue = 12)
 	private Long idclasse;
 	private String nome;
 	private Integer ordem;
@@ -58,11 +58,11 @@ public class Classe {
 	@JsonBackReference(value="ocupacao_Classe")
 	private Ocupacao ocupacao;
 	
-	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) //HERE
 	@JsonManagedReference(value="classe_Casual")
 	private List<Casual> casual = new ArrayList<Casual>();
 	
-	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
+	@OneToMany(mappedBy="classe", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) //HERE
 	@JsonManagedReference(value="classe_Projeto")
 	private List<Projeto> projeto = new ArrayList<Projeto>();
 	

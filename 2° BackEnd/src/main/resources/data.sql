@@ -2,7 +2,7 @@ DO
 '
 BEGIN
 	IF NOT EXISTS (SELECT idjanela FROM janela WHERE idjanela = 1) THEN
-		insert into janela values (1, ''MySpace'', ''Janela'', 0, null, null, null);
+		insert into janela values (1, null, ''MySpace'', ''Janela'', 0, null, null);
 		insert into subarea values (1, 1, ''Main'', ''Subarea'', 0, ''casual'',1);
 		insert into ocupacao values (1, ''Gerais'', ''Ocupacao'', 0, 1);
 		insert into classe values (1, null, null, ''All'', ''Classe'', null, 0, null, null, null, 1);
@@ -10,7 +10,7 @@ BEGIN
 	END IF;
 	
 	IF NOT EXISTS (SELECT idjanela FROM janela WHERE idjanela = 2) THEN
-		insert into janela values (2, ''Planning'', ''Janela'', 0, null, null, null);
+		insert into janela values (2, null, ''Planning'', ''Janela'', 0, null, null);
 		insert into subarea values (2, 1, ''Main'', ''Subarea'', 0, ''casual'',2);
 		insert into ocupacao values (2, ''Ocupation'', ''Ocupacao'', 0, 2);
 		insert into classe values (2, null, null,''Anything'', ''Classe'', null, 0, null, null, null, 2);
@@ -30,7 +30,7 @@ BEGIN
 	END IF;
 	
 	IF NOT EXISTS (SELECT idjanela FROM janela WHERE idjanela = 3) THEN
-		insert into janela values (3, ''Execution'', ''Janela'', 0, null, null, null);
+		insert into janela values (3, null, ''Execution'', ''Janela'', 0, null, null);
 		insert into subarea values (6, 3, ''Result'', ''Subarea'', 0, ''show'', 3);
 		insert into ocupacao values (6, ''Ocupation'', ''Ocupacao'', 0, 6);
 		insert into classe values (6, null, null, ''Minhas Tarefas'', ''Classe'', null, 0, null, null, null, 6);
@@ -117,7 +117,7 @@ BEGIN
 		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
 		VALUES (1, ''Lets Work'', ''Atividade'', 0, 1);
 		
-		INSERT INTO janela values (4, ''MySpace'', ''Janela'', 0, 0, 1, 1);
+		INSERT INTO janela values (4, null, ''MySpace'', ''Janela'', 0, 1, 1);
 		INSERT INTO subarea values (7, 1, ''Main'', ''Subarea'', 0, ''casual'',4);
 		INSERT INTO ocupacao values (9, ''Gerais'', ''Ocupacao'', 0, 7);
 		INSERT INTO classe values (9, null, null, ''All'', ''Classe'', null, 0, null, null, null, 9);
@@ -127,7 +127,7 @@ BEGIN
 		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
 		VALUES (2, ''Lets Work'', ''Atividade'', 0, 2);
 		
-		INSERT INTO janela values (5, ''MySpace'', ''Janela'', 0, 0, 2, 1);
+		INSERT INTO janela values (5, null, ''MySpace'', ''Janela'', 0, 2, 1);
 		INSERT INTO subarea values (8, 1, ''Main'', ''Subarea'', 0, ''casual'',5);
 		INSERT INTO ocupacao values (10, ''Gerais'', ''Ocupacao'', 0, 8);
 		INSERT INTO classe values (10, null, null, ''All'', ''Classe'', null, 0, null, null, null, 10);
@@ -137,7 +137,7 @@ BEGIN
 		INSERT INTO atividade(idatividade, nome, object_type, ordem, idusuario)
 		VALUES (3, ''Lets Work'', ''Atividade'', 0, 3);
 		
-		INSERT INTO janela values (6, ''MySpace'', ''Janela'', 0, 0, 3, 1);
+		INSERT INTO janela values (6, null, ''MySpace'', ''Janela'', 0, 3, 1);
 		INSERT INTO subarea values (9, 1, ''Main'', ''Subarea'', 0, ''casual'',6);
 		INSERT INTO ocupacao values (11, ''Gerais'', ''Ocupacao'', 0, 9);
 		INSERT INTO classe values (11, null, null, ''All'', ''Classe'', null, 0, null, null, null, 11);

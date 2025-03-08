@@ -30,7 +30,7 @@ public class Janela{
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="janela_sequence")
-	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 5)
+	@SequenceGenerator(name="janela_sequence", sequenceName="janela_seq",  allocationSize = 1, initialValue = 7)
 	private Long idjanela;
 	private String nome;
 	private Integer ordem;
@@ -53,7 +53,7 @@ public class Janela{
 	@JsonBackReference(value="template_Janela_Compoe")
 	private Template compoeTemplate;
 	
-	@OneToMany(mappedBy="janela", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
+	@OneToMany(mappedBy="janela", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) //HERE
 	@JsonManagedReference(value="janela_Subarea")
 	private List<Subarea> subareas = new ArrayList<Subarea>();
 	

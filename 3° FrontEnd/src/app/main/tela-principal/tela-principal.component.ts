@@ -4,7 +4,7 @@ import {LocalStorageService} from "../../shared/service/local-storage.service";
 import {Usuario} from "../../shared/model/usuario";
 import {UsuarioService} from "../../shared/service/usuario.service";
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { AuthService } from 'src/app/shared/service/auth/auth.service';
 import { HttpStatusCode } from '@angular/common/http';
 import { ServerService } from 'src/app/shared/service/server/server.service';
@@ -21,6 +21,7 @@ export class TelaPrincipalComponent implements OnInit {
   searchUser: any = { value: '', status: false};
 
   user$!: Observable<any>;
+  userSubscription!: Subscription;
 
   isOnline: boolean = false;
   isOffline: boolean = false;
@@ -38,26 +39,26 @@ export class TelaPrincipalComponent implements OnInit {
     this.serverService.getInfo().subscribe(
       {
         next: _ => {
-          this.userService.getAuthenticatedUser().subscribe(
-            {
-              next: it => {
-                if (parseInt(it.status) == HttpStatusCode.Unauthorized) {
-                  this.isOnline = true; 
-                }
-                else {
-                  this.conta = true;
-                  this.store.dispatch({type: 'user', payload: it.data})
-                }
-              },
-              error: _ => {}
+          this.userSubscription = this.user$.subscribe(
+            it => {
+              if (it.id > 0) {
+                this.conta = true
+              }
+              this.isOnline = true; 
             }
           )
         },
-        error: (e) => {
+        error: _ => {
           this.isOffline = true;
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
   }
 
   search(): void{

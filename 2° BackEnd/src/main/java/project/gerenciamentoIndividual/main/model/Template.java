@@ -41,7 +41,7 @@ public class Template{
 	@JsonManagedReference(value="template_Janela_Compoe")
 	private Janela janela_c;
 	
-	@OneToMany(mappedBy="template", cascade= {CascadeType.PERSIST}, fetch=FetchType.EAGER) //HERE
+	@OneToMany(mappedBy="template", cascade= {CascadeType.PERSIST}, fetch=FetchType.LAZY) //HERE
 	@JsonManagedReference(value="template_Janela")
 	private List<Janela> janelas = new ArrayList<Janela>();
 	

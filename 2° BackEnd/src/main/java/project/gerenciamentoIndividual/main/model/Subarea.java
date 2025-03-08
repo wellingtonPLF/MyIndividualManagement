@@ -28,7 +28,7 @@ public class Subarea {
 
 	@Id
 	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator="subarea_sequence")
-	@SequenceGenerator(name="subarea_sequence", sequenceName="subarea_seq",  allocationSize = 1, initialValue = 8)
+	@SequenceGenerator(name="subarea_sequence", sequenceName="subarea_seq",  allocationSize = 1, initialValue = 10)
 	private Long idsubarea;
 	private String nome;
 	private String tipo; //CASUAL OU PROJETO
@@ -41,7 +41,7 @@ public class Subarea {
 	@JsonBackReference(value="janela_Subarea")
 	private Janela janela;
 	
-	@OneToMany(mappedBy="subarea", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.EAGER) //HERE
+	@OneToMany(mappedBy="subarea", cascade=CascadeType.ALL, orphanRemoval=true, fetch=FetchType.LAZY) //HERE
 	@JsonManagedReference(value="subarea_Ocupacao")
 	private List<Ocupacao> ocupacoes = new ArrayList<Ocupacao>();
 	

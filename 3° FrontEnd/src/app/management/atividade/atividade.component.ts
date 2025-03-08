@@ -11,7 +11,7 @@ import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-scr
 import { DataService } from 'src/app/shared/service/data.service';
 import { Store } from '@ngrx/store';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-atividade',
@@ -26,6 +26,7 @@ export class AtividadeComponent implements OnInit {
   atividades!:  Array<Atividade>;
   activity$!: Observable<any>;
   activity_limit: number = 10;
+  atividadeSubscription!: Subscription;
 
   constructor(private dataService: DataService, private templateService: TemplateService, private store: Store<any>,
     private atividadeService: AtividadeService, public dialog: MatDialog) {
@@ -34,7 +35,7 @@ export class AtividadeComponent implements OnInit {
 
   ngOnInit(): void {
     this.index = 0;
-    this.activity$.subscribe(
+    this.atividadeSubscription = this.activity$.subscribe(
       it => {
         if (!it.local) {
           this.atividades = OrdemDependency.ordenar([...it.list])
@@ -47,6 +48,12 @@ export class AtividadeComponent implements OnInit {
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.atividadeSubscription) {
+      this.atividadeSubscription.unsubscribe();
+    }
   }
 
   addAtividade(): void{

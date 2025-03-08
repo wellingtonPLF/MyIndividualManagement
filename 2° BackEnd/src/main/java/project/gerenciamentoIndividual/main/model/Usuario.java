@@ -67,7 +67,7 @@ public class Usuario {
 	 * List<UsuarioTemplate> usuarioTemplates = new ArrayList<UsuarioTemplate>();
 	 */
 
-	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER) //HERE
+	@OneToMany(mappedBy = "usuario", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.LAZY) //HERE
 	@JsonManagedReference(value = "usuario_Atv")
 	private List<Atividade> atividades = new ArrayList<Atividade>();
 

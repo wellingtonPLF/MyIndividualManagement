@@ -15,7 +15,7 @@ import {SubareaTemplateComponent} from "../subarea-template/subarea-template.com
 import {DialogComponent} from "../../dialogs/dialog/dialog.component";
 
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { DataService } from 'src/app/shared/service/data.service';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
 import { Subarea } from 'src/app/shared/model/subarea';
@@ -32,6 +32,7 @@ export class WorkspaceComponent implements OnInit  {
   windows!: Array<Janela>;
   window$!: Observable<any>;
   windows_limit: number = 5;
+  windowSubscription!: Subscription;
 
   window!: Janela;
   subarea!: Subarea;
@@ -51,7 +52,7 @@ export class WorkspaceComponent implements OnInit  {
       this.enable = false;
     }
 
-    this.window$.subscribe(
+    this.windowSubscription = this.window$.subscribe(
       it => {
         if (!it.local) {
           this.atividade = {...it.parent};
@@ -76,6 +77,12 @@ export class WorkspaceComponent implements OnInit  {
         }
       }
     )
+  }
+
+  ngOnDestroy(): void {
+    if (this.windowSubscription) {
+      this.windowSubscription.unsubscribe();
+    }
   }
 
   addJanela(): void{

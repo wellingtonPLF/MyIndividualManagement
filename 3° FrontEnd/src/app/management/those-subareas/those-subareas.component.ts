@@ -9,7 +9,7 @@ import {EditDialogComponent} from "../edit-dialog/edit-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {OrdemDependency} from "../../shared/solid/ordemDependency";
 import {RemovalScreenDialogComponent} from "../removal-screen-dialog/removal-screen-dialog.component";
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { RegistryStore } from 'src/app/shared/ngRx/registryStore';
 import { DataService } from 'src/app/shared/service/data.service';
@@ -30,6 +30,7 @@ export class ThoseSubareasComponent implements OnInit {
   subarea!: Subarea;
   templateName!: String;
   selectedSubarea!: Subarea;
+  subareaSubscription!: Subscription;
 
   @Output() subareaEmitter = new EventEmitter<Subarea>();
 
@@ -41,7 +42,7 @@ export class ThoseSubareasComponent implements OnInit {
 
   ngOnInit(): void {
     this.index = 0;
-    this.subarea$.subscribe(
+    this.subareaSubscription = this.subarea$.subscribe(
       it => {
         if (!it.local) {
           this.janela = {...it.parent};
@@ -79,6 +80,13 @@ export class ThoseSubareasComponent implements OnInit {
       }
     )
   }
+
+  ngOnDestroy(): void {
+    if (this.subareaSubscription) {
+      this.subareaSubscription.unsubscribe();
+    }
+  }
+
 
   addSubarea(): void{
     if(this.subareas.length < this.subareas_limit){

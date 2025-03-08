@@ -6,9 +6,10 @@ import {Atividade} from "../../shared/model/atividade";
 import { FuncShareService } from 'src/app/shared/utils/func-share.service';
 import { ScreenWidthSize } from 'src/app/shared/enum/screenWidthSize';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { UsuarioService } from 'src/app/shared/service/usuario.service';
 import { AuthService } from 'src/app/shared/service/auth/auth.service';
+import { INITIAL_RX_USER_STATE } from 'src/app/shared/ngRx/state/user.rx_state';
 
 @Component({
   selector: 'app-tela-management',
@@ -17,6 +18,7 @@ import { AuthService } from 'src/app/shared/service/auth/auth.service';
 })
 export class TelaManagementComponent implements OnInit{
   //Must Be instanced
+  userSubscription!: Subscription;
   user$!: Observable<any>;
   usuario!: Usuario;
   atividade!: Atividade;
@@ -45,7 +47,7 @@ export class TelaManagementComponent implements OnInit{
       }
     });
 
-    this.user$.subscribe(
+    this.userSubscription = this.user$.subscribe(
       it => {
         this.usuario = {...it}
         this.isLoggedIn = true;
@@ -63,11 +65,17 @@ export class TelaManagementComponent implements OnInit{
     }
   }
 
+  ngOnDestroy(): void {
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
+    }
+  }
+
   signOut(): void{
     this.authService.logOut().subscribe(
       {
         next: _ => {
-          console.log("Log Out!")
+          this.store.dispatch({type: 'user', payload: INITIAL_RX_USER_STATE}) 
         },
         error: (e: any) => {}
       }
