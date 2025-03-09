@@ -8,6 +8,7 @@ import {Component, EventEmitter, OnInit, Output} from '@angular/core';
 export class RemovalScreenDialogComponent implements OnInit {
 
   @Output() deleteClick = new EventEmitter<any>();
+  @Output() cancelClick = new EventEmitter<any>();
 
   constructor() { }
 
@@ -16,5 +17,9 @@ export class RemovalScreenDialogComponent implements OnInit {
 
   remover(): void{
     this.deleteClick.emit()
+  }
+
+  onCancel() {
+    this.cancelClick.emit();
   }
 }

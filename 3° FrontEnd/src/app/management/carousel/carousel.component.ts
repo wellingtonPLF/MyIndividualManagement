@@ -38,11 +38,10 @@ export class CarouselComponent implements OnInit {
   //Usado quando o button add for removido
   showAdd: number = 1;
 
-  constructor(public classeService: ClasseService, private router: Router, private taskService: TaskService,
+  constructor(public classeService: ClasseService,
     private registry: RegistryStore, private dataService: DataService, 
     private dialog: MatDialog, public templateService: TemplateService,
     private casualService: CasualService, private projetoService: ProjetoService) {
-
   }
 
   ngOnInit(): void {}
@@ -56,7 +55,7 @@ export class CarouselComponent implements OnInit {
       if(this.objeto.objectType == "Ocupacao"){
         this.lista = OrdemDependency.ordenar(this.objeto.classes);
       }
-      if(this.objeto.objectType == "Classe"){
+      else if(this.objeto.objectType == "Classe"){
         if (this.subareaTipo == "Projeto") {
           const listaRef = this.refatorarLista(this.objeto.projeto);
           this.lista = OrdemDependency.ordenar(listaRef);
@@ -66,6 +65,9 @@ export class CarouselComponent implements OnInit {
           this.lista = OrdemDependency.ordenar(listaRef)
         }
       }
+      else {
+        this.lista = [...this.objeto]
+      }      
       this.paginas()
       this.resto = (this.lista.length ?? 0) - this.multiplo();
     }  

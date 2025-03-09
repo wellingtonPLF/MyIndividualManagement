@@ -33,6 +33,7 @@ export class TemplatesComponent implements OnInit {
   //----------------- Paginação -------------------------//
   eventlength = 3;
   pageIndex: number = 1;
+  wasDropped: boolean = false;
   //-----------------------------------------------------//
 
   transferringItem: any = undefined;
@@ -53,18 +54,14 @@ export class TemplatesComponent implements OnInit {
     )
   }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   drop(event: CdkDragDrop<string[]>, index: number) {
-    let idTemplate : number;
-    /*let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
+    let idTemplate : number = 0;
+    let dialogRef = this.dialog.open(RemovalScreenDialogComponent);
 
-    dialogRef.componentInstance.deleteClick.subscribe(
-      result =>{
-
-      })*/
-
+    this.transferringItem = undefined;
+    
     if(event.previousContainer.data.length == 1){
       transferArrayItem(event.previousContainer.data,
         event.container.data,
@@ -80,25 +77,32 @@ export class TemplatesComponent implements OnInit {
         event.currentIndex);
 
       idTemplate = this.janelas_templates[index][0].idtemplate;
-
     }
-    this.templateService.pesquisarPorId(idTemplate).subscribe(
-      result => {
-        let window!: Janela;
-        window = JanelaFactory.criarJanela(result, this.janelas[this.indexItens(index)].ordem);
-        window.atividade = this.data;
-        window.idjanela = this.janelas[this.indexItens(index)].idjanela;
-        window.nome = this.janelas[this.indexItens(index)].nome
-        this.janelaService.atualizar(window).subscribe(
-          it => {
-            this.janelas[this.indexItens(index)] = it;
-            this.changeEmitter.emit(it);
-          }
-        )
-      }
-    )
 
-    this.transferringItem = undefined;
+    dialogRef.componentInstance.deleteClick.subscribe(
+      value =>{
+        if (!value) {
+          this.templateService.pesquisarPorId(idTemplate).subscribe(
+            result => {
+              let window!: Janela;
+              window = JanelaFactory.criarJanela(result, this.janelas[this.indexItens(index)].ordem);
+              window.atividade = this.data;
+              window.idjanela = this.janelas[this.indexItens(index)].idjanela;
+              window.nome = this.janelas[this.indexItens(index)].nome
+              this.janelaService.atualizar(window).subscribe(
+                it => {
+                  this.janelas[this.indexItens(index)] = it;
+                  this.changeEmitter.emit(it);
+                }
+              )
+            }
+          )
+        }
+        else {
+          this.removeBox(index)
+        }
+        
+    })
   }
 
   entered() {

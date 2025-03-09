@@ -37,6 +37,10 @@ snack-bar-container.success{
   padding: 0px;
 }
 
+.backgroundColorWhite .mat-mdc-dialog-container .mdc-dialog__surface{
+  background-color: white;
+}
+
 .mat-mdc-icon-button.mat-mdc-button-base {
   padding: 0px !important;
   font-size: 20px !important;

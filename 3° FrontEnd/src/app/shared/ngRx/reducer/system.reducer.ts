@@ -24,15 +24,15 @@ export const activityReducer = (state = INITIAL_RX_ACTIVITY_STATE, action: any) 
                 return state;
             }
             let result = action.payload.parent != undefined? 
-            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list, local: action.payload.local } : 
-            {...state, position: action.payload.position, list: action.payload.list, local: action.payload.local }
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list, local: action.payload.local, elementRemoved: action.payload.elementRemoved } : 
+            {...state, position: action.payload.position, list: action.payload.list, local: action.payload.local, elementRemoved: action.payload.elementRemoved }
 
             result = result.position != undefined?
-            { ...result } : {...state, parent: result.parent, list: result.list, local: result.local }
+            { ...result } : {...state, parent: result.parent, list: result.list, local: result.local, elementRemoved: result.elementRemoved }
             result = result.list != undefined? 
-            { ...result } : {...state, parent: result.parent, position: result.position, local: result.local}
+            { ...result } : {...state, parent: result.parent, position: result.position, local: result.local, elementRemoved: result.elementRemoved}
             result = result.local != undefined? 
-            { ...result } : { parent: result.parent, position: result.position, list: result.list, local: false }
+            { ...result } : { parent: result.parent, position: result.position, list: result.list, local: false, elementRemoved: result.elementRemoved }
             return result
         default:
             return state
@@ -46,15 +46,15 @@ export const windowReducer = (state = INITIAL_RX_WINDOW_STATE, action: any) => {
                 return state;
             }
             let result = action.payload.parent != undefined? 
-            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list, local: action.payload.local } : 
-            {...state, position: action.payload.position, list: action.payload.list, local: action.payload.local }
+            { parent: action.payload.parent, position: action.payload.position, list: action.payload.list, local: action.payload.local, elementRemoved: action.payload.elementRemoved } : 
+            {...state, position: action.payload.position, list: action.payload.list, local: action.payload.local, elementRemoved: action.payload.elementRemoved }
 
             result = result.position != undefined?
-            { ...result } : {...state, parent: result.parent, list: result.list, local: result.local }
+            { ...result } : {...state, parent: result.parent, list: result.list, local: result.local, elementRemoved: result.elementRemoved}
             result = result.list != undefined? 
-            { ...result } : {...state, parent: result.parent, position: result.position, local: result.local}
+            { ...result } : {...state, parent: result.parent, position: result.position, local: result.local, elementRemoved: result.elementRemoved}
             result = result.local != undefined? 
-            { ...result } : { parent: result.parent, position: result.position, list: result.list, local: false }
+            { ...result } : { parent: result.parent, position: result.position, list: result.list, local: false, elementRemoved: result.elementRemoved}
             return result
         default:
             return state

@@ -54,6 +54,10 @@ export class WorkspaceComponent implements OnInit  {
 
     this.windowSubscription = this.window$.subscribe(
       it => {
+        let selectedChild: number | undefined;
+        if (it.elementRemoved) {
+          selectedChild = it.elementRemoved.value == "subarea" ? it.elementRemoved.position : undefined
+        }
         if (!it.local) {
           this.atividade = {...it.parent};
           if (it.list.length != 0) {
@@ -62,7 +66,7 @@ export class WorkspaceComponent implements OnInit  {
               next: result => {
                 this.windows = OrdemDependency.ordenar(result.janelas);
                 this.window = this.windows[0];
-                this.store.dispatch({type: 'subarea', payload: { list: [...this.windows[it.position].subareas], parent: this.windows[it.position] }})
+                this.store.dispatch({type: 'subarea', payload: { position: selectedChild, list: [...this.windows[it.position].subareas], parent: this.windows[it.position] }})
               },
               error: (_) => {
                 this.windows = OrdemDependency.ordenar([...it.list]);
@@ -154,18 +158,18 @@ export class WorkspaceComponent implements OnInit  {
               {
                 next: async _ => {
                   this.windows.splice(index, 1),
-                  await this.registry.dispatcher('window', [...this.windows]);
+                  await this.registry.dispatcher('window', [...this.windows], this.index);
                 },
                 error: async _ => {
                   this.windows.splice(index, 1)
-                  await this.registry.dispatcher('window', [...this.windows]);
+                  await this.registry.dispatcher('window', [...this.windows], this.index);
                 }
               }
             )  
         }
       );
     }
-  } 
+  }
 
   enviarJanelas(index: number): void {
     this.store.dispatch({type: 'window', payload: { list: [...this.windows], position: index, local: true }})
@@ -181,7 +185,7 @@ export class WorkspaceComponent implements OnInit  {
   openChangeSubarea(): void{
     this.dialog.open(SubareaTemplateComponent, {
       panelClass: 'dialogPadding',
-      data: this.window
+      data: this.windows[this.index]
     })
   }
 
@@ -196,9 +200,7 @@ export class WorkspaceComponent implements OnInit  {
         for (let i = 0; i < this.windows.length; i++){
           if (this.windows[i].idjanela == result.idjanela){
             this.windows.splice(i, 1, result)
-            if(result.idjanela == this.window.idjanela){
-              this.window = this.windows[i];
-            }
+            this.store.dispatch({type: 'window', payload: { list: [...this.windows], position: this.index }})
           }
         }
       }

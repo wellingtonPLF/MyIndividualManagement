@@ -43,6 +43,7 @@
     </div>
   </div>
   <div id="ocupation">
+    
       <div *ngIf="subarea != undefined" style="min-width: 350px;" [ngClass]="{'noPaddingTop': subarea.estilo == 2}">
         <app-ocupacao-list *ngIf="subarea.estilo == 3" [subarea]="subarea"></app-ocupacao-list>
         <app-ocupacao-geral *ngIf="subarea.estilo == 1"></app-ocupacao-geral>

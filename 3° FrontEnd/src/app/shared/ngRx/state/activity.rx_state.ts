@@ -6,6 +6,7 @@ import { INITIAL_RX_WINDOW_STATE } from "./window.rx_state";
 export const INITIAL_RX_ACTIVITY_STATE: RX_Type = {
     position: 0,
     local: false,
+    elementRemoved: undefined,
     parent: INITIAL_USER_STATE,
     list: [{
         ...INITIAL_ACTIVITY_STATE,

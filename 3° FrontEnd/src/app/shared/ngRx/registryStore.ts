@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { ObjStructure } from '../types/general';
+import { SelectionType } from '../types/ngRx';
 
 @Injectable({
   providedIn: 'root'
@@ -23,17 +24,17 @@ export class RegistryStore {
       this.classReducer$ = this.store.select('classReducer');
     }
 
-    async dispatcher(type: string, payload: Array<any>): Promise<void> { 
+    async dispatcher(type: string, payload: Array<any>, selected?: number): Promise<void> { 
       const { list, position: activityPosition }: ObjStructure = await this.getInfo(this.activityReducer$);
       const { position: windowPosition }: ObjStructure = await this.getInfo(this.windowReducer$);
       const { position: subareaPosition }: ObjStructure = await this.getInfo(this.subareaReducer$);
       const { position: ocupationPosition }: ObjStructure = await this.getInfo(this.ocupationReducer$);
-
+      
       let activityList;
       if (type == "activity") {
         activityList = JSON.parse(JSON.stringify(payload));
       }
-      else {        
+      else {
         activityList = JSON.parse(JSON.stringify(list));
         const window = activityList[activityPosition!].janelas[windowPosition!];
 
@@ -50,7 +51,11 @@ export class RegistryStore {
           window.subareas[subareaPosition!].ocupacoes[ocupationPosition!].classes = payload
         }
       }
-      this.store.dispatch({type: 'activity', payload: { position: activityPosition, list: activityList } })
+      const result: any = { position: activityPosition, list: activityList }
+      if (selected != undefined) {
+        result.elementRemoved = { value: type, position: selected };
+      }
+      this.store.dispatch({type: 'activity', payload: result })
     }
 
     async getInfo(reducer: Observable<any>): Promise<any> {

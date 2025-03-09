@@ -7,6 +7,7 @@ import { INITIAL_RX_SUBAREA_STATE } from "./subarea.rx_state";
 export const INITIAL_RX_WINDOW_STATE: RX_Type = {
     position: 0,
     local: false,
+    elementRemoved: undefined,
     parent: INITIAL_ACTIVITY_STATE,
     list: [{
         ...INITIAL_WINDOW_STATE,

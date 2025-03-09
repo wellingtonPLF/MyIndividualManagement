@@ -160,7 +160,7 @@ export class ThoseSubareasComponent implements OnInit {
             {
               next: async _ => {
               this.subareas.splice(value, 1)
-              await this.registry.dispatcher('subarea', [...this.subareas]);
+              await this.registry.dispatcher('subarea', [...this.subareas], this.index);
             },
             error: async _ => {
               this.subareas.splice(value, 1)

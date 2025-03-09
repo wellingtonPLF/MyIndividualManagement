@@ -4,34 +4,34 @@
       <i [attr.aria-hidden]="'false'" class="fas fa-times"></i>
     </div>
   </div>
-  <div style="display: flex; flex-direction: column;justify-content: center; align-items: center">
+  <div style="display: flex; flex-direction: column;justify-content: center;">
     <div>
       <div>Informação:</div>
       <textarea rows="5" cols="95" [(ngModel)]="classe.info"  spellcheck="false"
                 (keyup)="saveEdit($event, 'info')"></textarea>
     </div>
-    <div style="display: flex; justify-content: center; align-items: center;">
-      <div style="margin-right: 10px">
+    <div style="display: flex; align-items: center;">
+      <div class="bloco">
         <div>
           <div>Por que:</div>
-          <textarea rows="5" cols="45" [(ngModel)]="classe.porque" spellcheck="false"
+          <textarea rows="5" [(ngModel)]="classe.porque" spellcheck="false"
                     (keyup)="saveEdit($event, 'porque')"></textarea>
         </div>
         <div>
           <div>O que:</div>
-          <textarea rows="5" cols="45" [(ngModel)]="classe.oque" spellcheck="false"
+          <textarea rows="5" [(ngModel)]="classe.oque" spellcheck="false"
                     (keyup)="saveEdit($event, 'oque')"></textarea>
         </div>
       </div>
-      <div>
+      <div class="bloco">
         <div>
           <div>Quando:</div>
-          <textarea rows="5" cols="45" [(ngModel)]="classe.quando" spellcheck="false"
+          <textarea rows="5" [(ngModel)]="classe.quando" spellcheck="false"
                     (keyup)="saveEdit($event, 'quando')"></textarea>
         </div>
         <div>
           <div>Como:</div>
-          <textarea rows="5" cols="45" [(ngModel)]="classe.como" spellcheck="false"
+          <textarea rows="5" [(ngModel)]="classe.como" spellcheck="false"
                     (keyup)="saveEdit($event, 'como')"></textarea>
         </div>
       </div>

@@ -37,10 +37,14 @@ export class AtividadeComponent implements OnInit {
     this.index = 0;
     this.atividadeSubscription = this.activity$.subscribe(
       it => {
+        let selectedChild: number | undefined;
+        if (it.elementRemoved) {
+          selectedChild = it.elementRemoved.value == "window" ? it.elementRemoved.position : undefined
+        }
         if (!it.local) {
           this.atividades = OrdemDependency.ordenar([...it.list])
           this.index = it.position;
-          this.store.dispatch({type: 'window', payload: { list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position]}})
+          this.store.dispatch({type: 'window', payload: { position: selectedChild, elementRemoved: selectedChild ? undefined: it.elementRemoved, list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position]}})
         }
         if (this.index != it.position) {
           this.index = it.position;
@@ -125,9 +129,11 @@ export class AtividadeComponent implements OnInit {
             {
               next: _ => {
                 this.atividades.splice(index, 1)
-                this.store.dispatch({type: 'activity', payload: { position: this.index, list: [...this.atividades], local: true }})
+                this.store.dispatch({type: 'activity', payload: { position: this.index, list: [...this.atividades] }})
               },
-              error: _ => this.atividades.splice(index, 1)
+              error: _ => { 
+                this.atividades.splice(index, 1)
+              }
             }
           )
         }

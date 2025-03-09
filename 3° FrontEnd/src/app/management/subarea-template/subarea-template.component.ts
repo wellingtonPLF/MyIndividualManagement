@@ -22,7 +22,7 @@ export class SubareaTemplateComponent implements OnInit {
     this.janelaService.pesquisarPorId(this.data.idjanela).subscribe(
       it => {
         this.janela = it;
-        this.subareas = it.subareas;
+        this.subareas = it.subareas.filter((item) => item.estilo != 3);
       }
     )
   }

@@ -103,12 +103,11 @@ export class ClasseCreationComponent implements OnInit {
 
   showInfo(): void{
     this.dialog.open(ClasseInfoComponent, {
-      width: '800px',
       height: '520px',
       data: {
         datakey: this.classe.idclasse
       },
-      panelClass: 'dialogPadding'
+      panelClass: ['dialogPadding','backgroundColorWhite'],
     });
   }
 
