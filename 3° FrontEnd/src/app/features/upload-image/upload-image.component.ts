@@ -29,13 +29,13 @@ export class UploadImageComponent implements OnInit {
       reader.readAsDataURL(this.selectedFile);
       reader.onload = (_event) => {
         this.url = reader.result;
+        this.usuario.img = this.url;
         this.usuarioService.pesquisarPorId(this.usuario.idusuario!).subscribe(
           {
             next: result => {
               const match = this.url.match(/data:image\/([^;]+)/);
               const imgData = `${result.idusuario}.${match[1]};${this.url}`;
               result.img = imgData
-              this.usuario.img = `data:${imgData.split('data:')[1]}`
               this.usuarioService.atualizar(result).subscribe(
                 _ => {}
               )
