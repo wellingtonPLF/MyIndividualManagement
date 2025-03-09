@@ -38,10 +38,10 @@ public class UserDTO  {
         this._atividades = user.getAtividades();
 	}
 	
-	public Long getId() {
+	public Long getIdusuario() {
 		return this._idusuario;
 	}
-	public void setId(Long id) {
+	public void setIdusuario(Long id) {
 		this._idusuario = id;
 	}
     public String getNome() {

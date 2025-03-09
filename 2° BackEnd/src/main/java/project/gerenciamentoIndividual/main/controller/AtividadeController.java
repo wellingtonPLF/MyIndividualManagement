@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
+import project.gerenciamentoIndividual.main.dtoModel.TestDTO;
 import project.gerenciamentoIndividual.main.model.Atividade;
 import project.gerenciamentoIndividual.main.model.Usuario;
+import project.gerenciamentoIndividual.main.repositories.UsuarioRepository;
 import project.gerenciamentoIndividual.main.service.AtividadeService;
 
 @RestController
@@ -46,7 +48,7 @@ public class AtividadeController {
 
    @PreAuthorize("permitAll()")
    @PostMapping("/atividade")
-   public Atividade inserirAtividade(@RequestBody Atividade atividade){
+   public Atividade inserirAtividade(@RequestBody Atividade atividade) {
        return this.atividadeService.inserirOuAtualizar(atividade);
    }
    

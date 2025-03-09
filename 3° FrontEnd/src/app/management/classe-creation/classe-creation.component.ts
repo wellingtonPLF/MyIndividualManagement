@@ -27,9 +27,12 @@ export class ClasseCreationComponent implements OnInit {
 
   ngOnInit(): void {
     this.classeService.pesquisarPorId(this.data.datakey).subscribe(
-      it => {
-        this.classe = it;
-        this.calcQntItens()
+      {
+        next: it => {
+          this.classe = it;
+          this.calcQntItens()
+        },
+        error: _ => {}
       }
     );
 
@@ -48,7 +51,7 @@ export class ClasseCreationComponent implements OnInit {
     }, 1000);
   }
 
-  calcQntItens(value?: boolean): void {
+  calcQntItens(): void {
     const windowWidth = window.innerWidth
     const leftSide = 0
     const paddingWorkSpace = 20

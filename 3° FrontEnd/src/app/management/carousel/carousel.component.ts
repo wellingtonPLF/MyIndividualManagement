@@ -45,48 +45,35 @@ export class CarouselComponent implements OnInit {
 
   }
 
-  ngOnInit(): void {
+  ngOnInit(): void {}
+
+  ngOnChanges(): void {
     if (this.dificuldade == 'any'){
       this.showAdd = 0;
     }
-    this.escolhido = 0;
-
-    if(this.objeto.objectType == "Classe"){
-      if(this.subareaTipo == 'casual'){
-        const listaRef = this.refatorarLista(this.objeto.casual);
-        this.lista = OrdemDependency.ordenar(listaRef)
+    this.escolhido = 0;  
+    if(this.objeto != undefined){
+      if(this.objeto.objectType == "Ocupacao"){
+        this.lista = OrdemDependency.ordenar(this.objeto.classes);
       }
-      else if (this.subareaTipo == 'projeto'){
-        const listaRef = this.refatorarLista(this.objeto.projeto);
-        this.lista = OrdemDependency.ordenar(listaRef);
+      if(this.objeto.objectType == "Classe"){
+        if (this.subareaTipo == "Projeto") {
+          const listaRef = this.refatorarLista(this.objeto.projeto);
+          this.lista = OrdemDependency.ordenar(listaRef);
+        }
+        else {
+          const listaRef = this.refatorarLista(this.objeto.casual);
+          this.lista = OrdemDependency.ordenar(listaRef)
+        }
       }
       this.paginas()
-      this.resto = this.lista.length - this.multiplo();
-    }
-  }
-
-  ngOnChanges(): void {
-    if(this.objeto.objectType != "Classe"){
-      if(this.objeto != undefined){
-        if(this.objeto.objectType == "Ocupacao"){
-          this.lista = OrdemDependency.ordenar(this.objeto.classes);
-        }
-        else{
-          this.lista = this.objeto;
-        }
-        this.paginas()
-        this.resto = this.lista.length - this.multiplo();
-      }
-    }
+      this.resto = (this.lista.length ?? 0) - this.multiplo();
+    }  
   }
 
   refatorarLista(list: Array<Task>): Array<Task>{
     let novaLista = new Array<Task>();
-    for(let i of list){
-      if(i.dificuldade == this.dificuldade && i.etiqueta != 'success'){
-        novaLista.push(i)
-      }
-    }
+    novaLista = list.filter( (item: Task) => item.dificuldade == this.dificuldade && item.etiqueta != 'success')
     return novaLista;
   }
 
@@ -132,6 +119,7 @@ export class CarouselComponent implements OnInit {
             this.projetoService.inserir(task).subscribe(
               it => {
                 this.lista.push(it)
+                this.objeto.projeto.push(it)
                 this.resto = this.lista.length - this.multiplo();
                 this.paginas()
                 if(this.resto == 0){
@@ -150,6 +138,7 @@ export class CarouselComponent implements OnInit {
             this.casualService.inserir(task).subscribe(
               it => {
                 this.lista.push(it)
+                this.objeto.casual.push(it)
                 this.resto = this.lista.length - this.multiplo();
                 this.paginas()
                 if(this.resto == 0){
@@ -222,7 +211,7 @@ export class CarouselComponent implements OnInit {
       let dialogRef = this.dialog.open(TaskDialogComponent, {
         data:{
           datakey: index,
-          key: this.objeto
+          key: { casual: this.lista }
         },
         panelClass: 'taskFile'
       });
@@ -323,7 +312,8 @@ export class CarouselComponent implements OnInit {
   }
 
   calc(): number{
-    const result = (this.lista.length/this.qntItens);
+    const listLenght = this.lista.length ?? 0;
+    const result = (listLenght/this.qntItens);
     return Math.floor(result);
   }
 

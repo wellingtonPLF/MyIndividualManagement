@@ -13,16 +13,3 @@ export class Usuario{
 
   constructor() {}
 }
-
-
-export class Authentication{
-  idusuario!: number;
-  nome!: string;
-  email!: string;
-  img!: string;
-  objectType!: string;
-  password!: string;
-  atividades: Array<Atividade> = new Array<Atividade>();
-
-  constructor() {}
-}

@@ -26,6 +26,7 @@ import project.gerenciamentoIndividual.main.dtoModel.AuthenticationDTO;
 import project.gerenciamentoIndividual.main.dtoModel.UserDTO;
 import project.gerenciamentoIndividual.main.enumState.JwtType;
 import project.gerenciamentoIndividual.main.exception.AuthenticationExceptionResponse;
+import project.gerenciamentoIndividual.main.exception.BadRequestExceptionResult;
 import project.gerenciamentoIndividual.main.exception.InternalExceptionResult;
 import project.gerenciamentoIndividual.main.util.JwtUtil;
 
@@ -86,27 +87,28 @@ public class UsuarioService {
 		int qnt = this.usuarioRepository.findAll().size();
 		Usuario usuario = authentication.getUser();
 		AuthDTO newAuth = authentication.getAuth();
+		
 		if (qnt >= this.userLimit) {
 			throw new InternalExceptionResult("limit user achieved!");
 		}		
-		if (newAuth.getEmail() == null || newAuth.getEmail() == "") {
+		if (usuario.getEmail() == null || usuario.getEmail() == "") {
             throw new Error("Email inválido!");
         }
-		Optional<Usuario> findUser = this.userRepository.findBy_email(newAuth.getEmail());
+		Optional<Usuario> findUser = this.userRepository.findBy_email(usuario.getEmail());
     	if (findUser.isPresent()) {
-    		throw new InternalExceptionResult("user already exist!");
+    		throw new BadRequestExceptionResult("user email already in use!");
         }
     	
     	Auth auth = this.authService.findByUsername(newAuth.getUsername());    	
     	if (auth != null) {
-    		throw new InternalExceptionResult("user already exist!");
+    		throw new InternalExceptionResult("user username already in use!");
         }
     	
-		Usuario userDB = this.usuarioRepository.save(usuario);
-		Auth authDB = new Auth(newAuth);
+    	Auth authDB = new Auth(newAuth);    	
+		Usuario userDB = this.usuarioRepository.save(usuario);		
 		authDB.setUser(userDB);
 		this.authService.authInsert(authDB);
-		return new StatusResult<Usuario>(HttpStatus.OK.value(), userDB);
+		return new StatusResult<Usuario>(HttpStatus.OK.value(), usuario);
 	}
 
 	@Transactional

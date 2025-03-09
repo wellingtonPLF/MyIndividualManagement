@@ -24,6 +24,7 @@ import jakarta.validation.constraints.Past;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 
+import project.gerenciamentoIndividual.main.dtoModel.AuthenticationDTO;
 import project.gerenciamentoIndividual.main.serializer.UsuarioSerializer;
 
 @Entity
@@ -73,6 +74,14 @@ public class Usuario {
 
 	public Usuario() {
 
+	}
+	
+	public Usuario(AuthenticationDTO authenticationDTO) {
+		this._email = authenticationDTO.getUser().getEmail(); 
+		this._nome = authenticationDTO.getUser().getNome();
+		this._bornDate = authenticationDTO.getUser().getBornDate();
+		this.img = authenticationDTO.getUser().getImg();
+		this.atividades = authenticationDTO.getUser().getAtividades();
 	}
 	
 	public Long getIdusuario() {

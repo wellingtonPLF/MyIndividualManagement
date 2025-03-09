@@ -98,6 +98,7 @@ public class Atividade{
 	public String toString() {
 		return String.format("Id:%d\n"
 				+ "Name:%s\n"
-				+ "Ordem:%s\n", this.idatividade, this.nome,this.ordem);
+				+ "Ordem:%s\n"
+				, this.idatividade, this.nome,this.ordem);
 	}
 }

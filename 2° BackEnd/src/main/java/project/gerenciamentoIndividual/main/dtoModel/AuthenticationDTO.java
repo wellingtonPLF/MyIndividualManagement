@@ -22,4 +22,12 @@ public class AuthenticationDTO {
 	public void setUser(Usuario user) {
 		this.user = user;
 	}
+	
+	@Override
+	public String toString() {
+		return String.format("Usuario:%d\n"
+				+ "Auth:%s\n",
+				this.user,
+				this.auth);
+	}
 }

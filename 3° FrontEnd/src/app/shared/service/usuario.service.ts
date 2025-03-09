@@ -7,7 +7,7 @@ import {catchError, map} from "rxjs/operators";
 import { environment } from '../../../environments/environment';
 import { StatusResult } from '../interfaces/I_StatusResult';
 import { UserResponse } from '../types/system';
-import { Auth } from '../model/auth';
+import { Authentication } from '../model/authentication';
 
 @Injectable({
   providedIn: 'root'
@@ -32,8 +32,8 @@ export class UsuarioService {
     );
   }
 
-  inserir(usuario: any): Observable<Usuario>{
-    return this.httpClient.post<Usuario>(this.URL_USUARIOS, usuario).pipe(
+  inserir(authentication: Authentication): Observable<Usuario>{
+    return this.httpClient.post<Usuario>(this.URL_USUARIOS, Authentication.refract(authentication)).pipe(
       catchError((error) => {
         return throwError(() => error);
       })

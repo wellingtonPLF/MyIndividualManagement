@@ -63,6 +63,7 @@ public class AuthDTO  {
 		return String.format("Id:%d\n"
 				+ "UserName:%s\n"
 				+ "Email:%s\n"
-				+ "UserID:%s\n", this._idauth, this._username, this._email, this._user.getIdusuario());
+				+ "Password:%s\n"
+				+ "User:%s\n", this._idauth, this._username, this._email, this._password, this._user);
 	}
 }

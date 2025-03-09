@@ -23,11 +23,10 @@ export class AuthGuard {
           }
         }
       ),
-      catchError(
-        error => {
-          return throwError(() => error)
-        }
-      )
+      catchError(() => {
+        this.router.navigate(['/']);
+        return [false];
+      })
     )
   }
 }

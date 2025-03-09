@@ -22,11 +22,13 @@ export class AccessUserComponent {
       if (this.hostname != '' && this.hostname.includes(protocol)) {
           const lastValue = this.hostname.charAt(this.hostname.length - 1)
           if (lastValue == "/") {
-              localStorage.setToken('backendHostname', this.hostname.slice(0, this.hostname.length - 1))
+            this.hostname = this.hostname.slice(0, this.hostname.length - 1)
           }
-          localStorage.setToken('backendHostname', this.hostname)
+          if (this.hostname.length > 40) {
+            this.localStorage.setToken('backendHostname', this.hostname)
+            window.location.href = this.localhost
+          }
       }
     }
-    window.location.href = this.localhost
   }
 }

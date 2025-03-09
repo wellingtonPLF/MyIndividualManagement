@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {UsuarioService} from "../../shared/service/usuario.service";
-import {Authentication, Usuario} from "../../shared/model/usuario";
+import {Usuario} from "../../shared/model/usuario";
 import {Router} from "@angular/router";
 import {FormGroup} from "@angular/forms";
 import {SignupvalidationService} from "../../shared/service/signupvalidation.service";
@@ -9,6 +9,7 @@ import {TemplateService} from "../../shared/service/template.service";
 import {UsuarioFactory} from "../../shared/factoryDirectory/usuarioFactory";
 import { Auth } from 'src/app/shared/model/auth';
 import { AuthService } from 'src/app/shared/service/auth/auth.service';
+import { HttpStatusCode } from '@angular/common/http';
 
 @Component({
   selector: 'app-cadastro-usuario',
@@ -51,23 +52,22 @@ export class CadastroUsuarioComponent implements OnInit {
       this.templateService.pesquisarPorId(1).subscribe(
         result => {
           UsuarioFactory.criarUsuario(result, this.usuario);
-
+          this.usuario.nome = this.auth.username ?? '';
           this.usuarioService.inserir({auth: this.auth, user: this.usuario}).subscribe({
               next: _ => {
                 this.snackResult.success("Cadastro realizado com sucesso!")
                 this.router.navigate(['management'])
               },
               error: e => {
-                console.log(e);
-                // if(validar[0].nome == this.auth.username){
-                //   this.invalid.push('username')
-                //   this.invalid.push('nameInUse')
-                // }
-                // if(validar[0].nome == this.auth.username){
-                //   this.invalid.push('email')
-                //   this.invalid.push('emailInUse')
-                // }
-                
+                this.usuario.atividades = []
+                if(e.status == HttpStatusCode.InternalServerError){
+                  this.invalid.push('username')
+                  this.invalid.push('nameInUse')
+                }
+                if(e.status == HttpStatusCode.BadRequest){
+                  this.invalid.push('email')
+                  this.invalid.push('emailInUse')
+                }
               }
             }
           )

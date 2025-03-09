@@ -29,8 +29,10 @@ export class AtividadeService {
     );
   }
 
-  inserir(atividade: Atividade): Observable<Atividade>{
-    return this.httpClient.post<Atividade>(this.URL_ATIVIDADE, atividade).pipe(
+  inserir(atividade: Atividade): Observable<Atividade> {
+    // const x = { auth: atividade, user: atividade.usuario!.idusuario };
+    const x = atividade;
+    return this.httpClient.post<Atividade>(this.URL_ATIVIDADE, x).pipe(
       catchError((error) => {
         return throwError(() => error);
       })
