@@ -87,6 +87,7 @@ export class UsuarioService {
   }
 
   atualizar(usuario: Usuario): Observable<Usuario> {
+    console.log(usuario)
     return this.httpClient.put<Usuario>(`${this.URL_USUARIOS}/${usuario.idusuario}`, usuario).pipe(
       catchError((error) => {
         return throwError(() => error);

@@ -27,6 +27,8 @@ public class UsuarioSerializer extends JsonSerializer<Usuario> {
         jsonGenerator.writeStringField("img", base64Image);
         jsonGenerator.writeStringField("objectType", user.getObjectType());
         
+        System.out.println("HERE 1!!!!!!!!!!!!!!");
+        
         // Serialize the list of Atividades
         jsonGenerator.writeFieldName("atividades");
         jsonGenerator.writeStartArray();

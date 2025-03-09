@@ -71,8 +71,7 @@ public class UsuarioService {
 				.orElseThrow(() -> new AuthenticationExceptionResponse(JwtType.EXPIRED_AT.toString()));
 		Auth authDB = this.authService.findById(authID);
 		Usuario userDB = this.userRepository.findById(authDB.getUser().getIdusuario()).orElseThrow();
-		UserDTO user = new UserDTO(userDB);
-		return new StatusResult<UserDTO>(HttpStatus.OK.value(), user);
+		return new StatusResult<Usuario>(HttpStatus.OK.value(), userDB);
 	}
 
 	public Boolean checkLimit() {
@@ -127,9 +126,10 @@ public class UsuarioService {
 		} catch (IOException e) {
 			System.err.println("Error saving image: " + e.getMessage());
 		}
-
-		usuario.setImg(imageName);
-		return this.usuarioRepository.save(usuario);
+		
+		Usuario userDB = this.usuarioRepository.findById(usuario.getIdusuario()).orElse(null);
+		userDB.setImg(imageName);
+		return this.usuarioRepository.save(userDB);
 	}
 
 	public void apagar(Long idusuario) {

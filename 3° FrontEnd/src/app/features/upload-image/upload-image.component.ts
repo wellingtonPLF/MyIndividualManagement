@@ -14,8 +14,7 @@ export class UploadImageComponent implements OnInit {
 
   constructor(private usuarioService: UsuarioService) { }
 
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
   ngOnChanges(): void{
     if(this.usuario != undefined){
@@ -30,12 +29,13 @@ export class UploadImageComponent implements OnInit {
       reader.readAsDataURL(this.selectedFile);
       reader.onload = (_event) => {
         this.url = reader.result;
-        this.usuarioService.pesquisarPorId(this.usuario.idusuario).subscribe(
+        this.usuarioService.pesquisarPorId(this.usuario.idusuario!).subscribe(
           {
             next: result => {
-
               const match = this.url.match(/data:image\/([^;]+)/);
-              result.img = `${result.idusuario}.${match[1]};${this.url}`;
+              const imgData = `${result.idusuario}.${match[1]};${this.url}`;
+              result.img = imgData
+              this.usuario.img = `data:${imgData.split('data:')[1]}`
               this.usuarioService.atualizar(result).subscribe(
                 _ => {}
               )
