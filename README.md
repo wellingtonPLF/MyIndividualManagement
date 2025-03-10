@@ -31,6 +31,11 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Java](https://www.java.com/)
 - [TypeScript](https://www.typescriptlang.org/)
 - [Jwt](https://jwt.io/)
+- [Scss](https://sass-lang.com/)
+- [Yarn](https://yarnpkg.com/)
+- [NgRx](https://ngrx.io/)
+- [Git](https://git-scm.com/)
+- [HTML5](https://developer.mozilla.org/pt-BR/docs/Web/HTML)
 
 ## 💻 Projeto
 
