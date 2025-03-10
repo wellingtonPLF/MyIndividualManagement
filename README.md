@@ -28,7 +28,9 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 
 - [Angular](https://angular.io/)
 - [Spring Boot](https://spring.io/)
+- [Java](https://www.java.com/)
 - [TypeScript](https://www.typescriptlang.org/)
+- [Jwt](https://jwt.io/)
 
 ## 💻 Projeto
 
