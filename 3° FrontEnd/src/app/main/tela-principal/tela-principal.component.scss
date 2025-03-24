@@ -155,10 +155,6 @@
 
   $imgWidth: 50vh;
 
-  > :first-child {
-    margin-right: 10vh;
-  }
-
   img {
     width: calc($imgWidth + 150px);
     height: $imgWidth;
@@ -185,6 +181,12 @@
   display: flex;
   width: fit-content;
   align-items: center;
+}
+
+@media screen and (min-width: 1125px) {
+  .screen > div:nth-child(2){
+    padding: 0px 0px 0px 10vw;
+  }  
 }
 
 @media screen and (max-width: 1400px) {
@@ -238,12 +240,18 @@
 
 @media screen and (max-width: 435px) {
   .screen{
-    $imgWidth: 20vh;
+    $imgWidth: 80vw;
 
     img {
-      width: calc($imgWidth + 150px);
-      height: $imgWidth;
+      width: $imgWidth;
+      height: $imgWidth - 20vw;
+      min-width: 270px;
+      min-height: 225px;
     }
+  }
+
+  #access{
+    font-size: 10vw;
   }
 
   .screen h1{ 
@@ -256,5 +264,9 @@
 @media screen and (max-width: 320px) {
   .nav-fill input {
     margin-left: 18px !important;
+  }
+
+  #access{
+    font-size: 30px;
   }
 }

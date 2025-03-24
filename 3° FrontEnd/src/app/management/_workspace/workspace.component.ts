@@ -31,7 +31,7 @@ export class WorkspaceComponent implements OnInit  {
   
   windows!: Array<Janela>;
   window$!: Observable<any>;
-  windows_limit: number = 5;
+  windows_limit: number = 2;
   windowSubscription!: Subscription;
 
   window!: Janela;

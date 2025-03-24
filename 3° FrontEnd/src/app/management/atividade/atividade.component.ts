@@ -41,11 +41,9 @@ export class AtividadeComponent implements OnInit {
         if (it.elementRemoved) {
           selectedChild = it.elementRemoved.value == "window" ? it.elementRemoved.position : undefined
         }
-        if (!it.local) {
-          this.atividades = OrdemDependency.ordenar([...it.list])
-          this.index = it.position;
-          this.store.dispatch({type: 'window', payload: { position: selectedChild, elementRemoved: selectedChild ? undefined: it.elementRemoved, list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position]}})
-        }
+        this.atividades = OrdemDependency.ordenar([...it.list])
+        this.index = it.position;
+        this.store.dispatch({type: 'window', payload: { position: selectedChild, elementRemoved: selectedChild ? undefined: it.elementRemoved, list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position]}})
         if (this.index != it.position) {
           this.index = it.position;
           this.store.dispatch({type: 'window', payload: { list: [...this.atividades[it.position].janelas], parent: this.atividades[it.position], position: 0 }})
@@ -55,7 +53,8 @@ export class AtividadeComponent implements OnInit {
   }
 
   ngOnDestroy(): void {
-    if (this.atividadeSubscription) {
+    const fullURL = window.location.pathname;
+    if (this.atividadeSubscription && fullURL == '/') {
       this.atividadeSubscription.unsubscribe();
     }
   }

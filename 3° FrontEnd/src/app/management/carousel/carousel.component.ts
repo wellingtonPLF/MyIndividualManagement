@@ -161,11 +161,9 @@ export class CarouselComponent implements OnInit {
                 let task!: Casual;
                 const classe = it.janela_c.subareas[0].ocupacoes[0].classes[0]
                 task = TaskFactory.criarCasualTask(this.dificuldade, ordem, classe);
-                
                 this.lista.push({...task});
                 const saveClass: Classe = {...this.objeto};
                 saveClass.casual = [...this.lista];
-
                 await this.registry.dispatcher('class', [saveClass]);
               }
             )
@@ -290,8 +288,7 @@ export class CarouselComponent implements OnInit {
       day = `0${day}`
     }
     const date = `${year}-${month}-${day}`
-    const myDate = lista.data
-    return date == myDate
+    return date == lista.data
   }
 
   left(): void{

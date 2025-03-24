@@ -1,7 +1,7 @@
 <div style="width: 100%; height: 100%; display: flex; justify-content: center; background-color: #1976d2;">
   <div id="management" [ngStyle]="{'max-width.px': maxWidthScreen}">
     <!-- ---------------------------------Left------------------------------------------ -->
-    <div id="leftSide" *ngIf="!hide" [ngStyle]="{'border-right': (hide || windowBool)? 'unset': '#1976d2 solid 3px'}">
+    <div id="leftSide" [ngStyle]="{'border-right': (hide || windowBool)? 'unset': '#1976d2 solid 3px', display: !hide ? '': 'none'}">
       <div class="top-left">
         <app-upload-image [usuario]="usuario"></app-upload-image>
       </div>

@@ -39,6 +39,11 @@ export class TelaManagementComponent implements OnInit{
   }
 
   ngOnInit(): void {
+    if (window.innerWidth < 640) {
+      this.hide = true
+      this.fshare.sendClickEvent(this.hide);
+    }
+
     window.addEventListener('resize', () => {
       this.windowBool = window.innerWidth > 642
       if (window.innerWidth < 645 && this.hide == false) {

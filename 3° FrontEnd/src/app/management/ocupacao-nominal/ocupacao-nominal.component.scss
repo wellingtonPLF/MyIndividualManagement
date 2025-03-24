@@ -85,6 +85,13 @@ input:focus, textarea:focus, select:focus{
   border-radius: 12px;
 }
 
+
+@media screen and (max-width: 400px) {
+  .close > div:first-child {
+    display: none !important;
+  }   
+}
+
 .close div:nth-child(2){
   display: flex;
   margin-right: 10px;
