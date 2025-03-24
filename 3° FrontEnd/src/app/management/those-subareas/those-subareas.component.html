@@ -35,7 +35,7 @@
         </span>
     </div>
     <select name="select" class="subarea selected" style="border: unset;" [(ngModel)]="selectedSubarea" (click)="enviarSubarea()">
-      <option *ngFor="let subarea of subareas; let i = index"  [ngValue]="subarea">{{subarea.nome}}</option>
+      <option *ngFor="let subarea of subareas; let i = index" [ngValue]="subarea">{{subarea.nome}}</option>
     </select>
     <div (click)="deleteSubarea()" class="right-left right selected">
         <span id="span2">

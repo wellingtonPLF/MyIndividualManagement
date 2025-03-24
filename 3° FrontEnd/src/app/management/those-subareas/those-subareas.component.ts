@@ -60,6 +60,7 @@ export class ThoseSubareasComponent implements OnInit {
                 this.subarea = this.subareas[0];
                 this.subareaEmitter.emit(this.subareas[0]);
                 this.store.dispatch({type: 'ocupation', payload: { list: [...this.subareas[it.position].ocupacoes], parent: this.subareas[it.position] }})
+                this.selectedSubarea = this.subarea
               }
             })
             this.janelaService.pesquisarTemplateByIdJanela(this.janela.idjanela).subscribe({
